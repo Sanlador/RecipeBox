@@ -1,3 +1,5 @@
+# Scrum Event Log
+
 Meeting October 3rd: 
 
 
@@ -11,7 +13,7 @@ To do:
 >* Archieved:
 ><br/>Start doing unit testing (Everyone) 
 ><br/>Populated data information to textview through a local test database (Danny) 
->To do:
+>* To do:
 ><br/>Think about the integration test (Everyone) 
 ><br/>Learn how to use recyclerview in Android Studio (Danny) 
  
@@ -24,10 +26,10 @@ To do:
   
 >October.15.2019 
 >* Achieved: 
-><br/>
+>
 >* To do: 
-><br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
-><br/>Fix the compatability of package in Android Studio (Everyone) 
+><br/> Fix Java DRIVER error in Android Studio (Richard/Ali) 
+><br/> Fix the compatability of package in Android Studio (Everyone) 
   
 >October.16.2019 
 >* Achieved: 
