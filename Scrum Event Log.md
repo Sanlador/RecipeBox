@@ -23,13 +23,13 @@ To do:
 >><br/>Learn how to use recyclerview in Android Studio (Danny) 
   
 >October.15.2019 
->>* Achieved: 
->><br/>
->>* To do: 
->><br/>Fix Java DRIVER error in Android Studio (Richard/Ali)
->><br/>Fix the compatability of package in Android Studio (Everyone)
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>Fix Java DRIVER error in Android Studio (Richard/Ali)
+><br/>Fix the compatability of package in Android Studio (Everyone)
   
->October..2019 
+>October.16.2019 
 >>* Achieved: 
 >><br/>Got recycler view working in Android Studio (Danny)
 >>* To do: 
