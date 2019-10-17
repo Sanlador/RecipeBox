@@ -26,8 +26,8 @@ To do:
 >* Achieved: 
 ><br/>
 >* To do: 
-><br/>Fix Java DRIVER error in Android Studio (Richard/Ali)
-><br/>Fix the compatability of package in Android Studio (Everyone)
+><br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
+><br/>Fix the compatability of package in Android Studio (Everyone) 
   
 >October.16.2019 
 >>* Achieved: 
