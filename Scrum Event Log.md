@@ -63,10 +63,10 @@ To do:
  
 >October..2019 
 >>* Achieved: 
-  Pre-processed ingredients dataset (Saurabh) 
+  <br/>Pre-processed ingredients dataset (Saurabh) 
 >>* To do: 
-  Fix Java DRIVER error in Android Studio (Richard/Ali) 
-  Learn how to use recyclerview in Android Studio (Danny) 
+  <br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
+  <br/>Learn how to use recyclerview in Android Studio (Danny) 
   
 October.15.2019 
 Achieved: 
