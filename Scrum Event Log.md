@@ -1,15 +1,43 @@
 # Scrum Event Log
 
-Meeting October 3rd: 
+>October.3.2019 
+>>* Achieved:
+>><br/>Discuss what time suits us the best for the daily scrum meeting
+>>* To do: 
+>><br/>Create user stories
 
+>October.4.2019 
+>>* Achieved: 
+>><br/>
+>>* To do: 
+>><br/>
 
+>October.7.2019 
+>>* Achieved: 
+>><br/>
+>>* To do: 
+>><br/>
 
+>October.8.2019 
+>>* Achieved: 
+>><br/>
+>>* To do: 
+>><br/>
+
+>October.9.2019 
+>>* Achieved: 
+>><br/>
+>>* To do: 
+>><br/>
+
+>October.10.2019 
+>>* Achieved: 
+>><br/>
+>>* To do: 
+>><br/>Try to figure out how to implement unit/integration test
+>><br/>Figure out how to populate textview 
   
-To do:
-  Try to figure out how to implement unit/integration test
-  Figure out how to populate textview 
-  
->October.13.2019 
+>October.11.2019 
 >* Archieved:
 ><br/>Start doing unit testing (Everyone) 
 ><br/>Populated data information to textview through a local test database (Danny) 
@@ -45,6 +73,5 @@ To do:
 >>* Achieved: 
 >><br/>
 >>* To do: 
->><br/>
 >><br/>
 --->
