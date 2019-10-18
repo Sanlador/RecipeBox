@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    //value used in unit testing to verify the output of using the search bar
-    public String testOutput;
+    //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
+    //HIGHLY INSECURE
+    public String testOutput[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,11 +61,30 @@ public class MainActivity extends AppCompatActivity {
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                String output;
                 //call query function
                 Log.d("Test", "Running DBQuery");
                 try{
-                    testOutput = new DBQuery().execute(query).get();
-                    Log.d("Query Input", testOutput);
+                    output = new DBQuery().execute(query).get();
+                    //Log.d("Query Output", output);
+                    String[] parsedOutput;
+                    if (output.split("]").length > 0)
+                    {
+                        parsedOutput = output.split("]");
+                        testOutput = parsedOutput;
+                        for (int i = 0; i < parsedOutput.length; i++)
+                        {
+                            Log.d("Parsed result", parsedOutput[i]);
+                        }
+                    }
+                    else
+                    {
+                        parsedOutput = new String[] {output};
+                        testOutput = parsedOutput;
+                        Log.d("Parsed result", parsedOutput[0]);
+                    }
+
+
                 }
                 catch (Exception e) {
 

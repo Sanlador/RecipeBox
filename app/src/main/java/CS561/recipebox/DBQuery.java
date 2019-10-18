@@ -7,37 +7,36 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBQuery extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         {
             if (params[0].length() < 1) {
-                return "";
+                return null;
             }
             Log.d("Function", "Launching Query");
-            List<String> output = new ArrayList<String>();
+            String output = "";
 
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
             String user = "recipeOSU";
             String password = "recipe32!";
-            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;database=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection connection = null;
 
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String selectSql = "SELECT * FROM sys.databases";
+                String selectSql = "SELECT * FROM Cookbook WHERE Recipes LIKE '%" + params[0] + "%'";
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
                     while (resultSet.next()) {
-                        Log.d("Output", resultSet.getString(1) + " "
-                                + resultSet.getString(2));
+                        output += (resultSet.getString(1) + " "
+                                + resultSet.getString(2))
+                                + "]";
                     }
                     connection.close();
                 }
@@ -46,8 +45,11 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Log.e("Exception:", e.toString());
             }
             //temporary output. Will change once DB connection is implemented.
-            return params[0];
-            //return output;
+
+            if (output.length() > 0)
+                output = output.substring(0, output.length() - 1);
+            //return params[0];
+            return output;
         }
     }
 
