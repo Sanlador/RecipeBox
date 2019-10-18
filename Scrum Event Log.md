@@ -66,7 +66,13 @@
 ><br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
 ><br/>Fix the compatability of package in Android Studio (Everyone) 
 
-    
+>October.17.2019 
+>* Achieved:
+><br/>Fixed the compatability of package in Android Studio
+><br/>Fixed the connection issue from fire wall
+><br/>Search bar working functionally in local database
+>* To do: 
+><br/>Populae data into recyclerview from local data set
 
 <!--- Template
 >October..2019 
