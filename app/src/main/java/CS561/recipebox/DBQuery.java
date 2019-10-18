@@ -1,6 +1,7 @@
 package CS561.recipebox;
 
 import android.os.AsyncTask;
+<<<<<<< Updated upstream
 import android.util.Log;
 
 import java.sql.Connection;
@@ -77,4 +78,15 @@ public class DBQuery extends AsyncTask<String, String, String>
     /* (non-Javadoc)
      * @see android.os.AsyncTask#onProgressUpdate(Progress[])
      */
+=======
+
+public class DBQuery extends AsyncTask<String, String, String>
+{
+
+
+    @Override
+    protected String doInBackground(String... strings) {
+        return null;
+    }
+>>>>>>> Stashed changes
 }
