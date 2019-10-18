@@ -1,7 +1,6 @@
 package CS561.recipebox;
 
 import android.os.AsyncTask;
-<<<<<<< Updated upstream
 import android.util.Log;
 
 import java.sql.Connection;
@@ -11,15 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBQuery extends AsyncTask<String, String, String>
-{
+public class DBQuery extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         {
             if (params[0].length() < 1) {
                 return "";
             }
-            Log.d("Function","Launching Query");
+            Log.d("Function", "Launching Query");
             List<String> output = new ArrayList<String>();
 
             String host = "recipebox01.database.windows.net";
@@ -29,25 +27,21 @@ public class DBQuery extends AsyncTask<String, String, String>
             String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;database=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection connection = null;
 
-            try
-            {
+            try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
                 String selectSql = "SELECT * FROM sys.databases";
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
-                     ResultSet resultSet = statement.executeQuery(selectSql))
-                {
-                    while (resultSet.next())
-                    {
+                     ResultSet resultSet = statement.executeQuery(selectSql)) {
+                    while (resultSet.next()) {
                         Log.d("Output", resultSet.getString(1) + " "
                                 + resultSet.getString(2));
                     }
                     connection.close();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
@@ -78,15 +72,4 @@ public class DBQuery extends AsyncTask<String, String, String>
     /* (non-Javadoc)
      * @see android.os.AsyncTask#onProgressUpdate(Progress[])
      */
-=======
-
-public class DBQuery extends AsyncTask<String, String, String>
-{
-
-
-    @Override
-    protected String doInBackground(String... strings) {
-        return null;
-    }
->>>>>>> Stashed changes
 }
