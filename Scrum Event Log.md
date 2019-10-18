@@ -74,6 +74,12 @@
 >* To do: 
 ><br/>Populae data into recyclerview from local data set
 
+>October.18.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
+
 <!--- Template
 >October..2019 
 >* Achieved: 
