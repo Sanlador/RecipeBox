@@ -1,86 +1,89 @@
-Meeting October 3rd: 
+# Scrum Event Log
 
+>October.3.2019 
+>* Achieved:
+><br/>Discuss what time suits us the best for the daily scrum meeting
+>* To do: 
+><br/>Create user stories
 
-, October, 2019
-Archieved:
-  
-To do:
+>October.4.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
 
-, October, 2019
-Archieved:
-  
-To do:
+>October.7.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
 
-, October, 2019
-Archieved:
-  
-To do:
+>October.8.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
 
-, October, 2019
-Archieved:
-  
-To do:
+>October.9.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
 
-, October, 2019
-Archieved:
+>October.10.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>Try to figure out how to implement unit/integration test
+><br/>Figure out how to populate textview 
   
-To do:
-
-, October, 2019
-Archieved:
-  
-To do:
-
-, October, 2019
-Archieved:
-  
-To do:
-
-, October, 2019
-Archieved:
-  
-To do:
-
-, October, 2019
-Archieved:
-  
-To do:
-
-10, October, 2019
-Archieved:
-  
-To do:
-  Try to figure out how to implement unit/integration test
-  Figure out how to populate textview 
-  
-11, October, 2019
-Archieved:
-  Start doing unit testing (Everyone) 
-  Populated data information to textview through a local test database (Danny) 
-To do:
-  Think about the integration test (Everyone) 
-  Learn how to use recyclerview in Android Studio (Danny) 
+>October.11.2019 
+>* Archieved:
+><br/>Start doing unit testing (Everyone) 
+><br/>Populated data information to textview through a local test database (Danny) 
+>* To do:
+><br/>Think about the integration test (Everyone) 
+><br/>Learn how to use recyclerview in Android Studio (Danny) 
  
-14, October, 2019 
-Achieved: 
-  Pre-processed ingredients dataset (Saurabh) 
-To do: 
-  Fix Java DRIVER error in Android Studio (Richard/Ali) 
-  Learn how to use recyclerview in Android Studio (Danny) 
+>October.14.2019 
+>* Achieved: 
+><br/>Pre-processed ingredients dataset (Saurabh) 
+>* To do: 
+><br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
+><br/>Learn how to use recyclerview in Android Studio (Danny) 
   
-15, October, 2019 
-Achieved: 
+>October.15.2019 
+>* Achieved: 
+>
+>* To do: 
+><br/> Fix Java DRIVER error in Android Studio (Richard/Ali) 
+><br/> Fix the compatability of package in Android Studio (Everyone) 
   
-To do: 
-    Fix Java DRIVER error in Android Studio (Richard/Ali) 
-    Fix the compatability of package in Android Studio (Everyone) 
+>October.16.2019 
+>* Achieved: 
+><br/>Got recycler view working in Android Studio (Danny)
+>* To do: 
+><br/>Fix Java DRIVER error in Android Studio (Richard/Ali) 
+><br/>Fix the compatability of package in Android Studio (Everyone) 
 
-16, October, 2019 
-Achieved: 
-  Got recycler view working in Android Studio (Danny) 
-  
-To do:
-    Fix Java DRIVER error in Android Studio (Richard/Ali) 
-    Fix the compatability of package in Android Studio (Everyone) 
+>October.17.2019 
+>* Achieved:
+><br/>Fixed the compatability of package in Android Studio
+><br/>Fixed the connection issue from fire wall
+><br/>Search bar working functionally in local database
+>* To do: 
+><br/>Populae data into recyclerview from local data set
 
-  
+>October.18.2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
+
+<!--- Template
+>October..2019 
+>* Achieved: 
+><br/>
+>* To do: 
+><br/>
+--->
