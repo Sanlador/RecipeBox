@@ -7,32 +7,33 @@
 ><br/>Create user stories
 
 >October.4.2019 
->* Achieved: 
-><br/>
+>* Achieved:
+><br/>Made three user stories for the first sprint
 >* To do: 
-><br/>
+><br/>Find some data set for our project
 
 >October.7.2019 
 >* Achieved: 
-><br/>
+><br/>Found a variety of data set
 >* To do: 
-><br/>
+><br/>Choose a data set amongst all
+><br/>Upload data set to MySQL
 
 >October.8.2019 
 >* Achieved: 
-><br/>
+><br/>Chose the data set that is suitable for this project
 >* To do: 
-><br/>
+><br/>Connect data base with App
 
 >October.9.2019 
 >* Achieved: 
-><br/>
+><br/>Connected data base and output it on the web page
 >* To do: 
-><br/>
+><br/>Find some information for unit/integration test and learn how to do it.
 
 >October.10.2019 
 >* Achieved: 
-><br/>
+><br/>Designate tasks to everyone on virtual scrum board
 >* To do: 
 ><br/>Try to figure out how to implement unit/integration test
 ><br/>Figure out how to populate textview 
@@ -76,9 +77,9 @@
 
 >October.18.2019 
 >* Achieved: 
-><br/>
+><br/>Intergration/unit test on search bar
 >* To do: 
-><br/>
+><br/>Population information in to recyclerview and integrate it with search bar
 
 <!--- Template
 >October..2019 
