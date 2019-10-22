@@ -81,6 +81,12 @@
 >* To do: 
 ><br/>Population information in to recyclerview and integrate it with search bar
 
+>October.21.2019 
+>* Achieved: 
+><br/>Uploaded dataset onto Azure
+>* To do: 
+><br/>Integrate recyclerview and search bar together
+
 <!--- Template
 >October..2019 
 >* Achieved: 
