@@ -87,6 +87,12 @@
 >* To do: 
 ><br/>Integrate recyclerview and search bar together
 
+>October.22.2019 
+>* Achieved: 
+><br/>Designated tasks for the rest of sprint 1
+>* To do: 
+><br/>Fix the adapter issue in recyclerview
+
 <!--- Template
 >October..2019 
 >* Achieved: 
