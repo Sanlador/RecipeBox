@@ -1,5 +1,6 @@
 package CS561.recipebox;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
@@ -90,9 +91,9 @@ public class queryTest {
         for (int i = 0; i < testInput.size(); i++)
         {
 
-            Espresso.onView(withId(R.id.searchView)).perform(clickXY(20,20));
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity, 20,20));
             Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
-            Espresso.onView(withId(R.id.searchView)).perform(clickXY(1000,20));
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity, 1000,20));
             Log.d("Unit Test input", testInput.get(i));
             if (i < 4)
                 assert(activity.testOutput[0] == "Chef John's French Fries 1 russet potato, cut into evenly sized strips;1 russet potato, cut into evenly sized strips");   //incorrect value in DB, will fix later
@@ -113,24 +114,25 @@ public class queryTest {
         }
     }
 
-    public static ViewAction clickXY(final int x, final int y){
-        return new GeneralClickAction(
-                Tap.SINGLE,
-                new CoordinatesProvider() {
-                    @Override
-                    public float[] calculateCoordinates(View view) {
+    public static ViewAction clickPosition (MainActivity activity, int x, int y)
+    {
+        CoordinatesProvider coordProvider = new CoordinatesProvider() {
+            @Override
+            public float[] calculateCoordinates(View view)
+            {
+                return coords(activity, x, y);
+            }
+        };
+        return new GeneralClickAction(Tap.SINGLE, coordProvider, Press.FINGER);
+    }
 
-                        final int[] screenPos = new int[2];
-                        view.getLocationOnScreen(screenPos);
-
-                        final float screenX = screenPos[0] + x;
-                        final float screenY = screenPos[1] + y;
-                        float[] coordinates = {screenX, screenY};
-
-                        return coordinates;
-                    }
-                },
-                Press.FINGER);
+    public static float[] coords(MainActivity activity, int x, int y)
+    {
+        int[] screenCoords = new int[2];
+        View view = activity.findViewById(R.id.searchView);
+        view.getLocationOnScreen(screenCoords);
+        float[] coordinates = {screenCoords[0] + x, screenCoords[1] + y};
+        return coordinates;
     }
 }
 

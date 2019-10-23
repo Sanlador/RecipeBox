@@ -49,6 +49,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
             if (output.length() > 0)
                 output = output.substring(0, output.length() - 1);
             //return params[0];
+            Log.d("Test", "Exiting DBQuery");
             return output;
         }
     }
