@@ -92,6 +92,7 @@
 ><br/>Designated tasks for the rest of sprint 1
 >* To do: 
 ><br/>Fix the adapter issue in recyclerview
+><br/>Learn to scrape data from web sites
 
 <!--- Template
 >October..2019 
