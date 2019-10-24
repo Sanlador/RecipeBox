@@ -1,13 +1,15 @@
 import pyodbc
 import pandas as pd
 
+test = 1 
+server = 'recipebox01.database.windows.net'
+database = 'RecipeDB'
+username = 'recipeOSU'
+password = 'recipe32!'
+driver= '{ODBC Driver 17 for SQL Server}'
 
 def connect_to_DB():
-	server = 'recipebox01.database.windows.net'
-	database = 'RecipeDB'
-	username = 'recipeOSU'
-	password = 'recipe32!'
-	driver= '{ODBC Driver 17 for SQL Server}'
+
 	cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
 	cursor = cnxn.cursor()
 	if(not cursor):
@@ -22,18 +24,28 @@ def db_connection_test():
 	else:
 		print("Test Failed: Cannot Connect to the Database")
 
-def load_dataset(excel_file, cursor):
-	query = "SELECT count(*) FROM Cookbook"
+def count_rows_dataset():
+	cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
+	cursor = cnxn.cursor()
+	query = "SELECT count(*) FROM RecipeBook"
 	cursor.execute(query)
-	data = cursor.fetchall() 
-	print(data)
-	#data = pd.read_excel(excel_file, sheet_name = 'Cookbooks') 
+	data = cursor.fetchone() 
+	return data[0]; 
 
+##Row Count Test: Check to see if the database returns the correct number of rows
+def testCount_rows_dataset():
+	numRows = count_rows_dataset() 
+	##Currently there are 39,522 recipes in the database. 0
+	if(numRows == 39522):
+		print("Test Passed: Correct Number of Rows were returned!")
+	else:
+		print("Test Failed: Incorrect Number of Rows were Returned!")
 
 def main():
-	excel_file = '/Users/alikarimyar/Downloads/Recipes.xlsx' 
-	db_connection_test(); 
-	load_dataset(excel_file, cursor)
+	if(test == 0):
+		db_connection_test()
+	elif(test == 1):
+		testCount_rows_dataset()
 
 if __name__ == "__main__" :
 	main()
