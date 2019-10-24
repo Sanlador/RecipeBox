@@ -10,16 +10,15 @@
 
 >October.4.2019 
 >* Achieved:
-><br/>Made three user stories for the first sprint
+><br/>Created three user stories for our first sprint
 >* To do: 
-><br/>Find some data set for our project
+><br/>Find a usable dataset for our project
 
 >October.7.2019 
 >* Achieved: 
-><br/>Found a variety of data set
+><br/>Found an appropriate dataset that contains basic recipes, ingredients, and instructions.
 >* To do: 
-><br/>Choose a data set amongst all
-><br/>Upload data set to MySQL
+><br/>Upload the dataset to a temporary OSU-provided MySQL database.
 
 >October.8.2019 
 >* Achieved: 
