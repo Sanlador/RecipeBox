@@ -2,9 +2,11 @@
 
 >October.3.2019 
 >* Achieved:
+><br/>Come up with the 'basic' idea of our project
 ><br/>Discuss what time suits us the best for the daily scrum meeting
 >* To do: 
-><br/>Create user stories
+><br/>Create user stories for out project. 
+><br/>Figure out which tools to use to implement. 
 
 >October.4.2019 
 >* Achieved:
