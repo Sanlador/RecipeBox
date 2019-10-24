@@ -43,8 +43,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String[] s = {"Test"};
+        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+        // Initialize recipes
+        recipes = Recipe.createRecipesList(0, s);
+        // Create adapter passing in the sample user data
+        RecipesAdapter adapter = new RecipesAdapter(recipes);
+        // Attach the adapter to the recyclerview to populate items
+        rvRecipes.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -96,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
                         // Lookup the recyclerview in activity layout
                         RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-                        // Initialize contacts
-                        recipes = Recipe.createContactsList(parsedOutput.length, parsedOutput);
+                        // Initialize recipes
+                        recipes = Recipe.createRecipesList(parsedOutput.length, parsedOutput);
                         // Create adapter passing in the sample user data
                         RecipesAdapter adapter = new RecipesAdapter(recipes);
                         // Attach the adapter to the recyclerview to populate items

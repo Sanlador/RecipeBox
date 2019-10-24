@@ -2,7 +2,7 @@ package CS561.recipebox;
 
 import java.util.ArrayList;
 
-// Struct of Contact
+// Struct of Recipe
 public class Recipe {
     private String rName;
     private String rInfo;
@@ -22,8 +22,8 @@ public class Recipe {
 
     private static int lastRecipeId = 0;
 
-    // Use class Contact to create an list of information
-    public static ArrayList<Recipe> createContactsList(int numRecipes, String[] parsedOutput) {
+    // Use class Recipe to create an list of information
+    public static ArrayList<Recipe> createRecipesList(int numRecipes, String[] parsedOutput) {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
         for (int i = 0; i <= numRecipes; i++) {

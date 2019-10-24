@@ -4,21 +4,32 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
-    // Store a member variable for the contacts
+    // Store a member variable for the recipes
     private List<Recipe> mRecipes;
 
-    // Pass in the contact array into the constructor
+    ////////////////////////////////////////
+    private AdapterView.OnItemClickListener onItemClickListener;
+
+    // Pass in the recipe array into the constructor
     public RecipesAdapter(List<Recipe> recipes) {
-        mRecipes = recipes;
+        this.mRecipes = recipes;
+        //mRecipes = recipes;
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     // Provide a direct reference to each of the views within a data item
@@ -29,7 +40,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public TextView infoTextView;
-        public Button messageButton;
+        public Button recipeButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -38,10 +49,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
-            nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            infoTextView = (TextView) itemView.findViewById(R.id.contact_info);
-            messageButton = (Button) itemView.findViewById(R.id.message_button);
+            nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+            infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
         }
     }
 
@@ -52,11 +62,26 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.item_contact, parent, false);
+        View recipeView = inflater.inflate(R.layout.item_recipe, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(recipeView);
         return viewHolder;
+    }
+
+    public void updateData(ArrayList<Recipe> viewModels) {
+        mRecipes.clear();
+        mRecipes.addAll(viewModels);
+        notifyDataSetChanged();
+    }
+    public void addItem(int position, Recipe viewModel) {
+        mRecipes.add(position, viewModel);
+        notifyItemInserted(position);
+    }
+
+    public void removeRecipe(int postion) {
+        mRecipes.remove(postion);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -64,19 +89,19 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public void onBindViewHolder(RecipesAdapter.ViewHolder viewHolder, int position) {
 
         // Get the data model based on position
-        Recipe contact = mRecipes.get(position);
+        Recipe recipe = mRecipes.get(position);
 
         // Set item views based on your views and data model
         TextView nameTextView = viewHolder.nameTextView;
-        nameTextView.setText(contact.getName());
+        nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        infoTextView.setText(contact.getInfo());
+        infoTextView.setText(recipe.getInfo());
 
         /*
         Button button = viewHolder.messageButton;
-        button.setText(contact.isOnline() ? "Message" : "Offline");
-        button.setEnabled(contact.isOnline());
+        button.setText(recipe.isOnline() ? "Message" : "Offline");
+        button.setEnabled(recipe.isOnline());
         */
 
 
