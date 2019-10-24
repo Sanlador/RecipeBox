@@ -94,6 +94,12 @@
 ><br/>Fix the adapter issue in recyclerview
 ><br/>Learn to scrape data from web sites
 
+>October.23.2019 
+>* Achieved: 
+><br/>Attached the adapter on recyclerview
+>* To do: 
+><br/>Discuss what we need to do in the next sprint in retrospective log
+
 <!--- Template
 >October..2019 
 >* Achieved: 
