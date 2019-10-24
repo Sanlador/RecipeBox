@@ -1,7 +1,8 @@
 import pyodbc
 import pandas as pd
+import xlrd 
 
-test = 1 
+test = 2 
 server = 'recipebox01.database.windows.net'
 database = 'RecipeDB'
 username = 'recipeOSU'
@@ -41,11 +42,53 @@ def testCount_rows_dataset():
 	else:
 		print("Test Failed: Incorrect Number of Rows were Returned!")
 
+def load_toDb():
+	cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
+	cursor = cnxn.cursor()
+	#For testing purposes, I have only one recipe in this excel sheet, which we will insert into the DB. 
+	#Title: Shams' Special 
+	book = xlrd.open_workbook("/Users/alikarimyar/Downloads/Recipes.xlsx")
+	sheet = book.sheet_by_name("Cookbook")
+	query = """INSERT INTO dbo.RecipeBook (ID, Ingredients, Instructions, Picture_link, Title) VALUES (?, ?, ?, ?, ?)"""
+	for r in range(1, sheet.nrows):
+		if(len(sheet.cell(r,4).value) < 100):
+			ID	= sheet.cell(r,0).value
+			Ingredients	= sheet.cell(r,1).value
+			Instructions = sheet.cell(r,2).value
+			Picture_link = sheet.cell(r,3).value
+			Title	= sheet.cell(r,4).value
+			
+
+			# Assign values from each row
+			values = (ID, Ingredients, Instructions, Picture_link, Title)
+
+
+
+			# Execute sql Query
+			cursor.execute(query, values)
+
+	cursor.commit()
+	cursor.close()
+
+##Test to see whether datasets can be loaded into our DB
+def Testload_toDb():
+	cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password)
+	cursor = cnxn.cursor()
+	query = """SELECT Title FROM dbo.RecipeBook WHERE Title LIKE '%Shams%'"""
+	cursor.execute(query) 
+	data = cursor.fetchone()
+	if(data[0] == 'Shams Special'):
+		print("Test Passed: Correct Data is inserted in DB")
+	else:
+		print("Test Failed: Either data incorrectly was inserted into DB or wasn't inserted at all!")
+
 def main():
 	if(test == 0):
 		db_connection_test()
 	elif(test == 1):
 		testCount_rows_dataset()
+	elif(test == 2):
+		Testload_toDb()
 
 if __name__ == "__main__" :
 	main()
