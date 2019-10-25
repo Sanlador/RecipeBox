@@ -101,6 +101,12 @@
 >* To do: 
 ><br/>Discuss what we need to do in the next sprint in retrospective log
 
+>October.24.2019 
+>* Achieved: 
+><br/>Display dataset successfully through search bar that implemented in the project
+>* To do: 
+><br/>Do the unit/integration test
+
 <!--- Template
 >October..2019 
 >* Achieved: 
