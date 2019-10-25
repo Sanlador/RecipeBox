@@ -1,6 +1,7 @@
 package CS561.recipebox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Struct of Recipe
 public class Recipe {
@@ -24,11 +25,16 @@ public class Recipe {
     private static int lastRecipeId = 0;
 
     // Use class Recipe to create an list of information
-    public static ArrayList<Recipe> createRecipesList(int numRecipes, String[] parsedOutput) {
+    public static ArrayList<Recipe> createRecipesList(int numRecipes, List<String[]> parsedOutput) {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
+        // 0 : ID
+        // 1 : Ingredient
+        // 2 : Instruction
+        // 3 : Picture Link
+        // 4 : Titile
         for (int i = 0; i <= numRecipes; i++) {
-            recipes.add(new Recipe("Recipe : " + (i+1) , parsedOutput[i]));
+            recipes.add(new Recipe(parsedOutput.get(4)[i] , parsedOutput.get(1)[i]));
         }
 
         return recipes;
