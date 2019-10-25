@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     // Store a member variable for the recipes
     private List<Recipe> mRecipes;
 
-    ////////////////////////////////////////
+    // Later on
     private AdapterView.OnItemClickListener onItemClickListener;
 
     // Pass in the recipe array into the constructor
@@ -69,16 +71,20 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         return viewHolder;
     }
 
-    public void updateData(ArrayList<Recipe> viewModels) {
+    // Later on
+    public void updateData(ArrayList<Recipe> recipes) {
         mRecipes.clear();
-        mRecipes.addAll(viewModels);
+        mRecipes.addAll(recipes);
         notifyDataSetChanged();
     }
-    public void addItem(int position, Recipe viewModel) {
-        mRecipes.add(position, viewModel);
+
+    // Later on
+    public void addItem(int position, Recipe recipe) {
+        mRecipes.add(position, recipe);
         notifyItemInserted(position);
     }
 
+    // Later on
     public void removeRecipe(int postion) {
         mRecipes.remove(postion);
         notifyDataSetChanged();
@@ -103,13 +109,26 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         button.setText(recipe.isOnline() ? "Message" : "Offline");
         button.setEnabled(recipe.isOnline());
         */
-
-
     }
 
     @Override
     public int getItemCount() {
         return mRecipes.size();
     }
+
+
+/*  // Later on
+    public void onClick(final View v) {
+        // Give some time to the ripple to finish the effect
+        if (onItemClickListener != null) {
+            new Handler().p {
+
+                public void run() {
+                    onItemClickListener.onItemClick(v, (ViewModel) v.getTag());
+                }
+            }, 0);
+        }
+    }
+ */
 
 }

@@ -20,6 +20,7 @@ public class Recipe {
         return rInfo;
     }
 
+    // not necessary
     private static int lastRecipeId = 0;
 
     // Use class Recipe to create an list of information
@@ -27,7 +28,7 @@ public class Recipe {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
         for (int i = 0; i <= numRecipes; i++) {
-            recipes.add(new Recipe("Recipe : " + lastRecipeId++, parsedOutput[i]));
+            recipes.add(new Recipe("Recipe : " + (i+1) , parsedOutput[i]));
         }
 
         return recipes;
