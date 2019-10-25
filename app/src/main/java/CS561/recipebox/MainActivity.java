@@ -13,7 +13,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +21,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //ArrayList<Recipe> recipes;
 
     // try something new
-    ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+    public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
     public RecyclerView rvRecipes;
     public RecipesAdapter adapter;
     public String output;
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Test", "Running DBQuery");
                 try{
                     output = new DBQuery().execute(query).get();
-                    //Log.d("Query Output", output);
+                    Log.d("Query Output", output);
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     String[] parsedOutput;
                     if (output.split("]").length > 0)
@@ -119,20 +117,24 @@ public class MainActivity extends AppCompatActivity {
 
                         // Update recyclerview
                         recipes.clear();
-                        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-                        // Initialize recipes
-                        recipes = Recipe.createRecipesList(parsedOutput.length-1, parsedOutput);
-                        // Create adapter passing in the sample user data
-                        RecipesAdapter adapter = new RecipesAdapter(recipes);
-                        // Attach the adapter to the recyclerview to populate items
-                        rvRecipes.setAdapter(adapter);
-                        // Set layout manager to position the items
-                        rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        if (parsedOutput[0].length() > 1)
+                        {
+                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+                            // Initialize recipes
+                            recipes = Recipe.createRecipesList(parsedOutput.length-1, parsedOutput);
+                            // Create adapter passing in the sample user data
+                            RecipesAdapter adapter = new RecipesAdapter(recipes);
+                            // Attach the adapter to the recyclerview to populate items
+                            rvRecipes.setAdapter(adapter);
+                            // Set layout manager to position the items
+                            rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        }
                     }
                     else
                     {
                         parsedOutput = new String[] {output};
                         testOutput = parsedOutput;
+                        recipes.clear();
                         Log.d("Parsed result", parsedOutput[0]);
                     }
                 }
