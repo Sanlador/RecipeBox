@@ -22,9 +22,9 @@
 
 >October.8.2019 
 >* Achieved: 
-><br/>Chose the data set that is suitable for this project
+><br/>Uploaded dataset to a MySQL database
 >* To do: 
-><br/>Connect data base with App
+><br/>Connect database with App
 
 >October.9.2019 
 >* Achieved: 
