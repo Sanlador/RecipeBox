@@ -2,22 +2,23 @@
 
 >October.3.2019 
 >* Achieved:
+><br/>Come up with the 'basic' idea of our project
 ><br/>Discuss what time suits us the best for the daily scrum meeting
 >* To do: 
-><br/>Create user stories
+><br/>Create user stories for out project. 
+><br/>Figure out which tools to use to implement. 
 
 >October.4.2019 
 >* Achieved:
-><br/>Made three user stories for the first sprint
+><br/>Created three user stories for our first sprint
 >* To do: 
-><br/>Find some data set for our project
+><br/>Find a usable dataset for our project
 
 >October.7.2019 
 >* Achieved: 
-><br/>Found a variety of data set
+><br/>Found an appropriate dataset that contains basic recipes, ingredients, and instructions.
 >* To do: 
-><br/>Choose a data set amongst all
-><br/>Upload data set to MySQL
+><br/>Upload the dataset to a temporary OSU-provided MySQL database.
 
 >October.8.2019 
 >* Achieved: 
@@ -80,6 +81,31 @@
 ><br/>Intergration/unit test on search bar
 >* To do: 
 ><br/>Population information in to recyclerview and integrate it with search bar
+
+>October.21.2019 
+>* Achieved: 
+><br/>Uploaded dataset onto Azure
+>* To do: 
+><br/>Integrate recyclerview and search bar together
+
+>October.22.2019 
+>* Achieved: 
+><br/>Designated tasks for the rest of sprint 1
+>* To do: 
+><br/>Fix the adapter issue in recyclerview
+><br/>Learn to scrape data from web sites
+
+>October.23.2019 
+>* Achieved: 
+><br/>Attached the adapter on recyclerview
+>* To do: 
+><br/>Discuss what we need to do in the next sprint in retrospective log
+
+>October.24.2019 
+>* Achieved: 
+><br/>Display dataset successfully through search bar that implemented in the project
+>* To do: 
+><br/>Do the unit/integration test
 
 <!--- Template
 >October..2019 
