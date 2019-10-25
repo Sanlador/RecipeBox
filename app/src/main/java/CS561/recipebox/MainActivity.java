@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create a temporary "box" for attaching adapter
-        String[] s = {"Test"};
+        String[] s = {"Test", "Test", "Test", "Test", "Test"};
+        // Create a temporary "box" for attaching adapter
+        List<String[]> initializer = new ArrayList<String[]>();
+        initializer.add(s);
         RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
 
         // Initialize recipes
-        recipes = Recipe.createRecipesList(0, s);
+        recipes = Recipe.createRecipesList(0, initializer);
         // Create adapter passing in the sample user data
         RecipesAdapter adapter = new RecipesAdapter(recipes);
         // Attach the adapter to the recyclerview to populate items
@@ -62,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Still don't know how to make adapter attached without creating one RecipeList
         recipes.clear();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -102,26 +105,31 @@ public class MainActivity extends AppCompatActivity {
                     output = new DBQuery().execute(query).get();
                     Log.d("Query Output", output);
                     // get the biggest category from the result of search, which is all info from database of each recipe
-                    String[] parsedOutput;
-                    if (output.split("]").length > 0)
+                    List<String[]> parsedOutput = new ArrayList<String[]>();
+                    String[] splitOutput;
+
+                    //Parse output
+                    if (output.split("$").length > 0)
                     {
-                        parsedOutput = output.split("]");
-                        testOutput = parsedOutput;
-                        Log.d("Output without parsed", output);
-                        Log.d("Length of result", String.valueOf(parsedOutput.length));
-                        for (int i = 0; i < parsedOutput.length; i++)
+                        splitOutput = output.split("~");
+                        parsedOutput.add(splitOutput);
+                        testOutput = splitOutput;
+                        for (int i = 0; i < splitOutput.length; i++)
+                        Log.d("Output without parse", output);
+                        Log.d("Length of result", String.valueOf(parsedOutput.size()));
+                        for (int i = 0; i < parsedOutput.size(); i++)
                         {
                             //Log.d("New Line", "");
-                            Log.d("Parsed result " + (i+1), parsedOutput[i]);
+                            Log.d("Parsed result " + (i+1), parsedOutput.get(i)[0]);
                         }
 
                         // Update recyclerview
                         recipes.clear();
-                        if (parsedOutput[0].length() > 1)
+                        if (parsedOutput.get(0).length > 1)
                         {
                             RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
                             // Initialize recipes
-                            recipes = Recipe.createRecipesList(parsedOutput.length-1, parsedOutput);
+                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
                             // Create adapter passing in the sample user data
                             RecipesAdapter adapter = new RecipesAdapter(recipes);
                             // Attach the adapter to the recyclerview to populate items
@@ -132,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        parsedOutput = new String[] {output};
-                        testOutput = parsedOutput;
+                        splitOutput = new String[] {output};
+                        testOutput = splitOutput;
                         recipes.clear();
-                        Log.d("Parsed result", parsedOutput[0]);
+                        Log.d("Parsed result", splitOutput[0]);
                     }
                 }
                 catch (Exception e) {

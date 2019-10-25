@@ -34,7 +34,7 @@ public class Recipe {
         // 3 : Picture Link
         // 4 : Titile
         for (int i = 0; i <= numRecipes; i++) {
-            recipes.add(new Recipe(parsedOutput.get(4)[i] , parsedOutput.get(1)[i]));
+            recipes.add(new Recipe(parsedOutput.get(i)[4] , parsedOutput.get(i)[1]));
         }
 
         return recipes;

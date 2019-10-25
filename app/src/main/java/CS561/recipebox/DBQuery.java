@@ -29,14 +29,17 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String selectSql = "SELECT TOP 200 * FROM Cookbook WHERE Recipes LIKE '%" + params[0] + "%'";
+                String selectSql = "SELECT TOP 200 * FROM RecipeBook WHERE Title LIKE '%" + params[0] + "%'";
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
                     while (resultSet.next()) {
-                        output += (resultSet.getString(1) + " "
-                                + resultSet.getString(2))
-                                + "]";
+                        output += (resultSet.getString(1) + "~"
+                                + resultSet.getString(2) + "~"
+                                + resultSet.getString(3) + "~"
+                                + resultSet.getString(4) + "~"
+                                + resultSet.getString(5))
+                                + "$";
                     }
                     connection.close();
                 }
