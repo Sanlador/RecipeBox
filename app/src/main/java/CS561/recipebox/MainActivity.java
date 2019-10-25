@@ -13,14 +13,28 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    //ArrayList<Recipe> recipes;
+
+    // try something new
+    public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
+    public RecyclerView rvRecipes;
+    public RecipesAdapter adapter;
+    public String output;
+    public String[] parsedOutput;
+
 
     //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
     //HIGHLY INSECURE
@@ -32,9 +46,27 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create a temporary "box" for attaching adapter
+        String[] s = {"Test"};
+        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+
+        // Initialize recipes
+        recipes = Recipe.createRecipesList(0, s);
+        // Create adapter passing in the sample user data
+        RecipesAdapter adapter = new RecipesAdapter(recipes);
+        // Attach the adapter to the recyclerview to populate items
+        rvRecipes.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        // Still don't know how to make adapter attached without creating one RecipeList
+        recipes.clear();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -60,31 +93,50 @@ public class MainActivity extends AppCompatActivity {
 
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
+            // parameter query here is the words what users just type in
             public boolean onQueryTextSubmit(String query) {
                 String output;
                 //call query function
                 Log.d("Test", "Running DBQuery");
                 try{
                     output = new DBQuery().execute(query).get();
-                    //Log.d("Query Output", output);
+                    Log.d("Query Output", output);
+                    // get the biggest category from the result of search, which is all info from database of each recipe
                     String[] parsedOutput;
                     if (output.split("]").length > 0)
                     {
                         parsedOutput = output.split("]");
                         testOutput = parsedOutput;
+                        Log.d("Output without parsed", output);
+                        Log.d("Length of result", String.valueOf(parsedOutput.length));
                         for (int i = 0; i < parsedOutput.length; i++)
                         {
-                            Log.d("Parsed result", parsedOutput[i]);
+                            //Log.d("New Line", "");
+                            Log.d("Parsed result " + (i+1), parsedOutput[i]);
+                        }
+
+                        // Update recyclerview
+                        recipes.clear();
+                        if (parsedOutput[0].length() > 1)
+                        {
+                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+                            // Initialize recipes
+                            recipes = Recipe.createRecipesList(parsedOutput.length-1, parsedOutput);
+                            // Create adapter passing in the sample user data
+                            RecipesAdapter adapter = new RecipesAdapter(recipes);
+                            // Attach the adapter to the recyclerview to populate items
+                            rvRecipes.setAdapter(adapter);
+                            // Set layout manager to position the items
+                            rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                         }
                     }
                     else
                     {
                         parsedOutput = new String[] {output};
                         testOutput = parsedOutput;
+                        recipes.clear();
                         Log.d("Parsed result", parsedOutput[0]);
                     }
-
-
                 }
                 catch (Exception e) {
 
@@ -102,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     @Override

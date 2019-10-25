@@ -29,7 +29,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String selectSql = "SELECT * FROM Cookbook WHERE Recipes LIKE '%" + params[0] + "%'";
+                String selectSql = "SELECT TOP 200 * FROM Cookbook WHERE Recipes LIKE '%" + params[0] + "%'";
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
