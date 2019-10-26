@@ -34,12 +34,12 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
                     while (resultSet.next()) {
-                        output += (resultSet.getString(1) + "~"
-                                + resultSet.getString(2) + "~"
-                                + resultSet.getString(3) + "~"
-                                + resultSet.getString(4) + "~"
+                        output += (resultSet.getString(1) + "```"
+                                + resultSet.getString(2) + "```"
+                                + resultSet.getString(3) + "```"
+                                + resultSet.getString(4) + "```"
                                 + resultSet.getString(5))
-                                + "$";
+                                + "~~~";
                     }
                     connection.close();
                 }

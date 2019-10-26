@@ -107,16 +107,18 @@ public class MainActivity extends AppCompatActivity {
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
                     String[] splitOutput;
-
                     //Parse output
-                    if (output.split("$").length > 0)
+                    if (output.split("~~~").length > 0)
                     {
-                        splitOutput = output.split("~");
-                        parsedOutput.add(splitOutput);
+                        String[] parse;
+                        splitOutput = output.split("~~~");
+                        for (String s: splitOutput)
+                        {
+                            parse = s.split("```");
+                            parsedOutput.add(parse);
+                        }
+
                         testOutput = splitOutput;
-                        for (int i = 0; i < splitOutput.length; i++)
-                        Log.d("Output without parse", output);
-                        Log.d("Length of result", String.valueOf(parsedOutput.size()));
                         for (int i = 0; i < parsedOutput.size(); i++)
                         {
                             //Log.d("New Line", "");
