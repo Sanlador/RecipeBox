@@ -1,9 +1,11 @@
 package CS561.recipebox;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -162,6 +164,16 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Input", newText);
                 }
                 return false;
+            }
+        });
+
+        Button button = findViewById(R.id.testButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), recipe_ui.class);
+                String[] x = {"Test"};
+                intent.putExtra("Input", x);
+                startActivity(intent);
             }
         });
     }
