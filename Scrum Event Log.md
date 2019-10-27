@@ -19,24 +19,22 @@
 ><br/>Found an appropriate dataset that contains basic recipes, ingredients, and instructions.
 >* To do: 
 ><br/>Upload the dataset to a temporary OSU-provided MySQL database.
-><br/>Create a basic search bar in the app
 
 >October.8.2019 
 >* Achieved: 
-><br/>Uploaded dataset to a MySQL database
+><br/>Chose the data set that is suitable for this project
 >* To do: 
-><br/>Connect database with App
+><br/>Connect data base with App
 
 >October.9.2019 
 >* Achieved: 
-><br/>Connected data base and output it on screen
+><br/>Connected data base and output it on the web page
 >* To do: 
 ><br/>Find some information for unit/integration test and learn how to do it.
 
 >October.10.2019 
 >* Achieved: 
 ><br/>Designate tasks to everyone on virtual scrum board
-><br/>App search bar can search through database. 
 >* To do: 
 ><br/>Try to figure out how to implement unit/integration test
 ><br/>Figure out how to populate textview 
@@ -58,7 +56,7 @@
   
 >October.15.2019 
 >* Achieved: 
-><br/> Uploaded pre-processed data set (~40k rows) to our final Azure database. 
+>
 >* To do: 
 ><br/> Fix Java DRIVER error in Android Studio (Richard/Ali) 
 ><br/> Fix the compatability of package in Android Studio (Everyone) 
@@ -108,6 +106,12 @@
 ><br/>Display dataset successfully through search bar that implemented in the project
 >* To do: 
 ><br/>Do the unit/integration test
+
+>October..2019 
+>* Achieved: 
+><br/>Intergration/unit test
+>* To do: 
+><br/>Adding more UI elements in the next sprint
 
 <!--- Template
 >October..2019 
