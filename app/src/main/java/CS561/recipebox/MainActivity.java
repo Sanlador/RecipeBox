@@ -114,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         testOutput = splitOutput;
-                        for (int i = 0; i < parsedOutput.size(); i++)
-                        {
-                            //Log.d("New Line", "");
-                            Log.d("Parsed result " + (i+1), parsedOutput.get(i)[0]);
-                        }
 
                         // Update recyclerview
                         recipes.clear();
@@ -140,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         splitOutput = new String[] {output};
                         testOutput = splitOutput;
                         recipes.clear();
-                        Log.d("Parsed result", splitOutput[0]);
+                        //Log.d("Parsed result", splitOutput[0]);
                     }
                 }
                 catch (Exception e) {
