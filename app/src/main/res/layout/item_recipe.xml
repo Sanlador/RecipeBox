@@ -6,29 +6,16 @@
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
+    android:id="@+id/parent"
     >
 
     <TextView
         android:id="@+id/recipe_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="67dp"
         android:layout_weight="1"
-        />
-
-    <TextView
-        android:id="@+id/recipe_info"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
-
-    <Button
-        android:id="@+id/recipe_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="10sp"
-        />
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
 </LinearLayout>

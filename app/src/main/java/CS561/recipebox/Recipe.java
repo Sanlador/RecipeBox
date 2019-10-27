@@ -7,10 +7,12 @@ import java.util.List;
 public class Recipe {
     private String rName;
     private String rInfo;
+    private String rIngredients;
 
-    public Recipe(String name, String info) {
+    public Recipe(String name, String ingredients, String info) {
         rName = name;
         rInfo = info;
+        rIngredients = ingredients;
     }
 
     public String getName() {
@@ -19,6 +21,11 @@ public class Recipe {
 
     public String getInfo() {
         return rInfo;
+    }
+
+    public String getIngredients()
+    {
+        return rIngredients;
     }
 
     // not necessary
@@ -34,7 +41,7 @@ public class Recipe {
         // 3 : Picture Link
         // 4 : Titile
         for (int i = 0; i <= numRecipes; i++) {
-            recipes.add(new Recipe(parsedOutput.get(i)[4] , parsedOutput.get(i)[1]));
+            recipes.add(new Recipe(parsedOutput.get(i)[4] , parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
         }
 
         return recipes;

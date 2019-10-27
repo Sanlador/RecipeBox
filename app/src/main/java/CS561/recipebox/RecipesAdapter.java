@@ -1,32 +1,36 @@
 package CS561.recipebox;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     // Store a member variable for the recipes
     private List<Recipe> mRecipes;
+    private Context mContext;
 
     // Later on
     private AdapterView.OnItemClickListener onItemClickListener;
 
     // Pass in the recipe array into the constructor
-    public RecipesAdapter(List<Recipe> recipes) {
+    public RecipesAdapter(List<Recipe> recipes, Context context) {
         this.mRecipes = recipes;
+        this.mContext = context;
         //mRecipes = recipes;
     }
 
@@ -36,13 +40,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public TextView infoTextView;
         public Button recipeButton;
+        LinearLayout parent;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -52,8 +57,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-            infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
-            recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
+            //infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
+            parent = itemView.findViewById(R.id.parent);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "onClick " + getPosition());
         }
     }
 
@@ -102,13 +113,19 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        infoTextView.setText(recipe.getInfo());
+        //infoTextView.setText(recipe.getInfo());
 
-        /*
-        Button button = viewHolder.messageButton;
-        button.setText(recipe.isOnline() ? "Message" : "Offline");
-        button.setEnabled(recipe.isOnline());
-        */
+        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, recipe_ui.class);
+                intent.putExtra("Info", mRecipes.get(position).getInfo());
+                intent.putExtra("Name", mRecipes.get(position).getName());
+                intent.putExtra("ingredients", mRecipes.get(position).getIngredients());
+                mContext.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
