@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAction;
@@ -32,7 +33,7 @@ import static org.junit.Assert.assertThat;
 //Uses testClass as a template to run tests to confirm that query system is correctly implemented
 @MediumTest
 @RunWith(AndroidJUnit4.class)
-public class queryTest {
+public class pageTest {
 
     int main()
     {
@@ -50,6 +51,8 @@ public class queryTest {
     @Rule
     public ActivityTestRule<MainActivity> rule  = new  ActivityTestRule<>(MainActivity.class);
 
+
+
     @Test
     public void testSearchBar() throws Exception {
         Log.d("Test", "Test executed.");
@@ -60,22 +63,14 @@ public class queryTest {
         Random rand = new Random();
 
         List<String> testInput = new ArrayList<String>();
-        testInput.add("Fries");
-        testInput.add("fries");
-        testInput.add("fRies");
-        testInput.add("FRIES");
-        testInput.add("");
-        testInput.add("sTEAK");
-        testInput.add("STEAK");
-        testInput.add("Ste");
-        testInput.add("Steak");
-        testInput.add("sliders");
-        testInput.add("sliders.");
-        testInput.add("Sliders");
         testInput.add("s");
+        testInput.add("S");
+        testInput.add("Pie");
+        testInput.add("Key Lime");
+        testInput.add("x");
 
 
-        String randInput;
+        /*String randInput;
         for (int i = 0; i < 10; i++)
         {
             randInput = "";
@@ -85,32 +80,26 @@ public class queryTest {
                 randInput += (char)(rand.nextInt(26) + 'a');
             }
             testInput.add(randInput);
-        }
+        }*/
 
 
         for (int i = 0; i < testInput.size(); i++)
         {
-
-            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity, 20,20));
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
             Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
-            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity, 1000,20));
+
             Log.d("Unit Test input", testInput.get(i));
-            if (i < 4)
-                assert(activity.testOutput[0] == "Chef John's French Fries 1 russet potato, cut into evenly sized strips;1 russet potato, cut into evenly sized strips");   //incorrect value in DB, will fix later
-            else if (i == 4)
-                assert(activity.testOutput.length == 0);
-            else if (i > 4 && i < 10)
-                assert(activity.testOutput[0] == "Marsala Marinated Skirt Steak 2/3 cup Marsala wine; 1/4 cup ketchup; 6 cloves garlic, minced; 2 teaspoons kosher salt; 1 teaspoon dried rosemary; 1 teaspoon ground black pepper; 1 (1 1/2-pound) skirt steak, cut in half across the grain;");
-            else if (i >= 9 && i < 12)
-                assert(activity.testOutput[0] == "Slider-Style Mini Burgers 2 pounds ground beef; 1 (1.25 ounce) envelope onion soup mix; 1/2 cup mayonnaise; 2 cups shredded Cheddar cheese; 24 dinner rolls;1/2 cup sliced pickles;");
-            else if (i == 12)
-            {
-                assert(activity.testOutput[0] == "Slider-Style Mini Burgers 2 pounds ground beef; 1 (1.25 ounce) envelope onion soup mix; 1/2 cup mayonnaise; 2 cups shredded Cheddar cheese; 24 dinner rolls;1/2 cup sliced pickles;");
-                assert(activity.testOutput[1] == "Marsala Marinated Skirt Steak 2/3 cup Marsala wine; 1/4 cup ketchup; 6 cloves garlic, minced; 2 teaspoons kosher salt; 1 teaspoon dried rosemary; 1 teaspoon ground black pepper; 1 (1 1/2-pound) skirt steak, cut in half across the grain;");
-                assert(activity.testOutput[2] == "Chef John's French Fries 1 russet potato, cut into evenly sized strips;1 russet potato, cut into evenly sized strips");
-            }
-            else if (i > 12)
-                assert(activity.testOutput.length == 0);
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,250));
+            TextView textView = activity.findViewById(R.id.title);
+            if (i < 3)
+                assert(textView.getText().toString() == "Chef John's Fisherman's Pie");
+            else if (i < 4)
+                assert(textView.getText().toString() == "Key Lime Pie VII");
+            else
+                assert(textView.getText().toString() == "Six Can Chicken Tortilla Soup");
+            Activity s = rule.getActivity();
+            Espresso.pressBack();
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,1000,20));
         }
     }
 
@@ -127,6 +116,27 @@ public class queryTest {
     }
 
     public static float[] coords(MainActivity activity, int x, int y)
+    {
+        int[] screenCoords = new int[2];
+        View view = activity.findViewById(R.id.searchView);
+        view.getLocationOnScreen(screenCoords);
+        float[] coordinates = {screenCoords[0] + x, screenCoords[1] + y};
+        return coordinates;
+    }
+
+    public static ViewAction clickPosition (Activity activity, int x, int y)
+    {
+        CoordinatesProvider coordProvider = new CoordinatesProvider() {
+            @Override
+            public float[] calculateCoordinates(View view)
+            {
+                return coords(activity, x, y);
+            }
+        };
+        return new GeneralClickAction(Tap.SINGLE, coordProvider, Press.FINGER);
+    }
+
+    public static float[] coords(Activity activity, int x, int y)
     {
         int[] screenCoords = new int[2];
         View view = activity.findViewById(R.id.searchView);

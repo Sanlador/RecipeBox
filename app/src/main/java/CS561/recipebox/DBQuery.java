@@ -9,12 +9,15 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DBQuery extends AsyncTask<String, String, String> {
+
     @Override
     protected String doInBackground(String... params) {
         {
             if (params[0].length() < 1) {
                 return null;
             }
+
+
             Log.d("Function", "Launching Query");
             String output = "";
 
@@ -29,14 +32,17 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String selectSql = "SELECT * FROM Cookbook WHERE Recipes LIKE '%" + params[0] + "%'";
+                String selectSql = "SELECT TOP 20 * FROM RecipeBook WHERE Title LIKE '%" + params[0] + "%'";
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
                     while (resultSet.next()) {
-                        output += (resultSet.getString(1) + " "
-                                + resultSet.getString(2))
-                                + "]";
+                        output += (resultSet.getString(1) + "```"
+                                + resultSet.getString(2) + "```"
+                                + resultSet.getString(3) + "```"
+                                + resultSet.getString(4) + "```"
+                                + resultSet.getString(5))
+                                + "~~~";
                     }
                     connection.close();
                 }
@@ -49,6 +55,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
             if (output.length() > 0)
                 output = output.substring(0, output.length() - 1);
             //return params[0];
+            Log.d("Test", "Exiting DBQuery");
             return output;
         }
     }
