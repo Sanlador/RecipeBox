@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
     //HIGHLY INSECURE
     public String testOutput[];
+    String savedQuery;
+    private int loadCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,47 @@ public class MainActivity extends AppCompatActivity {
                 if (!recyclerView.canScrollVertically(1)) {
                     //Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
                     Log.d("System","Scrolling hits the bottom");
+                    loadCounter++;
+                    try
+                    {
+                        String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
+                        if (addedOutput.split("~~~").length > 0)
+                        {
+                            List<String[]> parsedOutput = new ArrayList<String[]>();
+                            String[] parse;
+                            String[] splitOutput = addedOutput.split("~~~");
+                            for (String s: splitOutput)
+                            {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+                            }
 
+                            testOutput = splitOutput;
+
+                            // Update recyclerview
+                            //recipes.clear();
+                            if (parsedOutput.get(0).length > 1)
+                            {
+                                //RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+                                // Initialize recipes
+                                ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
+                                addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+                                // Create adapter passing in the sample user data
+                                recipes.addAll(addedRecipes);
+                                adapter.notifyDataSetChanged();
+                                RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
+                                // Attach the adapter to the recyclerview to populate items
+                                rvRecipes.setAdapter(adapter);
+                                // Set layout manager to position the items
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                                rvRecipes.setLayoutManager(linearLayoutManager);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
             }
         });
@@ -107,12 +146,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             // parameter query here is the words what users just type in
             public boolean onQueryTextSubmit(String query) {
+                savedQuery = query;
                 String output;
                 //call query function
                 Log.d("Test", "Running DBQuery");
                 try{
-                    output = new DBQuery().execute(query).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + query).get();
                     Log.d("Query Output", output);
+                    loadCounter++;
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
                     String[] splitOutput;

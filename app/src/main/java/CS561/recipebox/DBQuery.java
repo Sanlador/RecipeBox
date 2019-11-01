@@ -10,6 +10,8 @@ import java.sql.Statement;
 
 public class DBQuery extends AsyncTask<String, String, String> {
 
+    private int pageNumber = 10;
+
     @Override
     protected String doInBackground(String... params) {
         {
@@ -32,7 +34,18 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String selectSql = "SELECT TOP 20 * FROM RecipeBook WHERE Title LIKE '%" + params[0] + "%'";
+                String[] Q = params[0].split("#");
+
+                int loadCounter = Integer.parseInt(Q[0]);
+
+                String query = Q[1];
+
+                String selectSql = "select *\n" +
+                        "from (\n" +
+                        "\tselect *,ROW_NUMBER()Over(Order By ID) as rn\n" +
+                        "\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
+
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
                      ResultSet resultSet = statement.executeQuery(selectSql)) {
