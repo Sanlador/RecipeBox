@@ -114,30 +114,35 @@ public class MainActivity extends AppCompatActivity {
 
                             testOutput = splitOutput;
 
-                            // Update recyclerview
-                            //recipes.clear();
+
+
                             if (parsedOutput.get(0).length > 1)
                             {
-                                //RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-                                // Initialize recipes
-                                ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
-                                addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
-                                // Create adapter passing in the sample user data
-                                recipes.addAll(addedRecipes);
-                                adapter.notifyDataSetChanged();
-                                RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
-                                // Attach the adapter to the recyclerview to populate items
-                                rvRecipes.setAdapter(adapter);
-                                // Set layout manager to position the items
-                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-                                rvRecipes.setLayoutManager(linearLayoutManager);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
+                                        addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+
+                                        for (Recipe r :addedRecipes) {
+                                            recipes.add(r);
+                                        }
+                                        int insertIndex = loadCounter * 10;
+                                        recipes.addAll(insertIndex, addedRecipes);
+
+                                        adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
+                                        RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
+                                        rvRecipes.setAdapter(adapter);
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                                        rvRecipes.setLayoutManager(linearLayoutManager);
+                                        rvRecipes.scrollToPosition(insertIndex+ 1);
+                                    }
+                                });
                             }
+
                         }
                     }
-                    catch (Exception e)
-                    {
-
-                    }
+                    catch (Exception e){}
                 }
             }
         });
@@ -151,9 +156,10 @@ public class MainActivity extends AppCompatActivity {
                 //call query function
                 Log.d("Test", "Running DBQuery");
                 try{
+                    loadCounter = 0;
                     output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + query).get();
                     Log.d("Query Output", output);
-                    loadCounter++;
+
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
                     String[] splitOutput;
