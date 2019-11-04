@@ -24,21 +24,21 @@ public class MainActivity extends AppCompatActivity {
 
     //ArrayList<Recipe> recipes;
 
-    // try something new
     public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
     public RecyclerView rvRecipes;
     public RecipesAdapter adapter;
     public String output;
     public String[] parsedOutput;
 
-
     //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
     //HIGHLY INSECURE
     public String testOutput[];
+    String savedQuery;
+    private int loadCounter = 0;
+    public int recyclerViewLen;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvRecipes.setAdapter(adapter);
         // Set layout manager to position the items
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
         rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         // Still don't know how to make adapter attached without creating one RecipeList
@@ -89,16 +90,77 @@ public class MainActivity extends AppCompatActivity {
 
         final SearchView sView = findViewById(R.id.searchView);
 
+        rvRecipes.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    //Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
+                    Log.d("System","Scrolling hits the bottom");
+                    loadCounter++;
+                    try
+                    {
+                        String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
+                        if (addedOutput.split("~~~").length > 0)
+                        {
+                            List<String[]> parsedOutput = new ArrayList<String[]>();
+                            String[] parse;
+                            String[] splitOutput = addedOutput.split("~~~");
+                            for (String s: splitOutput)
+                            {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+                            }
+
+                            testOutput = splitOutput;
+
+
+
+                            if (parsedOutput.get(0).length > 1)
+                            {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
+                                        addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+
+                                        for (Recipe r :addedRecipes) {
+                                            recipes.add(r);
+                                        }
+                                        int insertIndex = loadCounter * 10;
+                                        recipes.addAll(insertIndex, addedRecipes);
+                                        recyclerViewLen = recipes.size();
+                                        adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
+                                        RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
+                                        rvRecipes.setAdapter(adapter);
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                                        rvRecipes.setLayoutManager(linearLayoutManager);
+                                        rvRecipes.scrollToPosition(insertIndex+ 1);
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                    catch (Exception e){}
+                }
+            }
+        });
+
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             // parameter query here is the words what users just type in
             public boolean onQueryTextSubmit(String query) {
+                savedQuery = query;
                 String output;
                 //call query function
                 Log.d("Test", "Running DBQuery");
                 try{
-                    output = new DBQuery().execute(query).get();
+                    loadCounter = 0;
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + query).get();
                     Log.d("Query Output", output);
+
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
                     String[] splitOutput;
@@ -127,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
                             // Attach the adapter to the recyclerview to populate items
                             rvRecipes.setAdapter(adapter);
                             // Set layout manager to position the items
-                            rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                            rvRecipes.setLayoutManager(linearLayoutManager);
                         }
                     }
                     else
@@ -156,12 +219,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-
 }

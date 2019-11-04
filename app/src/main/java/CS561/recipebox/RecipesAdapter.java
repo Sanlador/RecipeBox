@@ -132,20 +132,4 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public int getItemCount() {
         return mRecipes.size();
     }
-
-
-/*  // Later on
-    public void onClick(final View v) {
-        // Give some time to the ripple to finish the effect
-        if (onItemClickListener != null) {
-            new Handler().p {
-
-                public void run() {
-                    onItemClickListener.onItemClick(v, (ViewModel) v.getTag());
-                }
-            }, 0);
-        }
-    }
- */
-
 }

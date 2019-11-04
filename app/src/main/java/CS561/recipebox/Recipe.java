@@ -35,6 +35,7 @@ public class Recipe {
     public static ArrayList<Recipe> createRecipesList(int numRecipes, List<String[]> parsedOutput) {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
+        // recipes is an array contains parsed category strings from query database
         // 0 : ID
         // 1 : Ingredient
         // 2 : Instruction
