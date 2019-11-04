@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public String testOutput[];
     String savedQuery;
     private int loadCounter = 0;
+    public int recyclerViewLen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                         int insertIndex = loadCounter * 10;
                                         recipes.addAll(insertIndex, addedRecipes);
-
+                                        recyclerViewLen = recipes.size();
                                         adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
                                         RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
                                         rvRecipes.setAdapter(adapter);
