@@ -1,8 +1,11 @@
 package CS561.recipebox;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    //ArrayList<Recipe> recipes;
-
+    // Initialization for the recyclerview
     public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
     public RecyclerView rvRecipes;
     public RecipesAdapter adapter;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
     //HIGHLY INSECURE
     public String testOutput[];
+
+    // For the purpose of refilling data when user scroll the recyclerview to the very bottom
     String savedQuery;
     private int loadCounter = 0;
 
@@ -42,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Declare wheel here and hide it :)
+        RelativeLayout wheel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        wheel.setVisibility(View.INVISIBLE);
+
         // Create a temporary "box" for attaching adapter
         String[] s = {"Test", "Test", "Test", "Test", "Test"};
-        // Create a temporary "box" for attaching adapter
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
-        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
 
         // Initialize recipes
+        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
         recipes = Recipe.createRecipesList(0, initializer);
         // Create adapter passing in the sample user data
         RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
@@ -63,15 +70,6 @@ public class MainActivity extends AppCompatActivity {
         recipes.clear();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //FloatingActionButton fab = findViewById(R.id.fab);
-
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         //NavigationView navigationView = findViewById(R.id.nav_view);
@@ -95,54 +93,56 @@ public class MainActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    //Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
-                    Log.d("System","Scrolling hits the bottom");
-                    loadCounter++;
-                    try
-                    {
-                        String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
-                        if (addedOutput.split("~~~").length > 0)
-                        {
-                            List<String[]> parsedOutput = new ArrayList<String[]>();
-                            String[] parse;
-                            String[] splitOutput = addedOutput.split("~~~");
-                            for (String s: splitOutput)
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showWheel();
+                        }
+                    });
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("System","Scrolling hits the bottom");
+                            loadCounter++;
+                            try
                             {
-                                parse = s.split("```");
-                                parsedOutput.add(parse);
-                            }
-
-                            testOutput = splitOutput;
-
-
-
-                            if (parsedOutput.get(0).length > 1)
-                            {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
+                                if (addedOutput.split("~~~").length > 0)
+                                {
+                                    List<String[]> parsedOutput = new ArrayList<String[]>();
+                                    String[] parse;
+                                    String[] splitOutput = addedOutput.split("~~~");
+                                    for (String s: splitOutput)
+                                    {
+                                        parse = s.split("```");
+                                        parsedOutput.add(parse);
+                                    }
+                                    testOutput = splitOutput;
+                                    if (parsedOutput.get(0).length > 1)
+                                    {
                                         ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
                                         addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
 
                                         for (Recipe r :addedRecipes) {
                                             recipes.add(r);
                                         }
+
                                         int insertIndex = loadCounter * 10;
                                         recipes.addAll(insertIndex, addedRecipes);
-
                                         adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
+                                        adapter.notifyDataSetChanged();
                                         RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
                                         rvRecipes.setAdapter(adapter);
                                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
                                         rvRecipes.setLayoutManager(linearLayoutManager);
                                         rvRecipes.scrollToPosition(insertIndex+ 1);
                                     }
-                                });
+                                }
                             }
-
+                            catch (Exception e){ }
                         }
-                    }
-                    catch (Exception e){}
+                    });
                 }
             }
         });
@@ -162,7 +162,9 @@ public class MainActivity extends AppCompatActivity {
 
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
+
                     String[] splitOutput;
+
                     //Parse output
                     if (output.split("~~~").length > 0)
                     {
@@ -200,10 +202,7 @@ public class MainActivity extends AppCompatActivity {
                         //Log.d("Parsed result", splitOutput[0]);
                     }
                 }
-                catch (Exception e) {
-
-                }
-                //queryDB(query);
+                catch (Exception e) { }
                 return false;
             }
 
@@ -218,6 +217,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // show wheel for the duration of couple seconds
+    public void showWheel() {
+        int wheelDurationInMilliSeconds = 10000;
+
+        RelativeLayout wheel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        wheel.setVisibility(View.INVISIBLE);
+
+        CountDownTimer wheelCountDown;
+        wheelCountDown = new CountDownTimer(wheelDurationInMilliSeconds, 1000) {
+            @Override
+            public void onTick(long l) {
+                wheel.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                wheel.setVisibility(View.INVISIBLE);
+            }
+        };
+        wheel.setVisibility(View.VISIBLE);
+        wheelCountDown.start();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
