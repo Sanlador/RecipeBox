@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     // For the purpose of refilling data when user scroll the recyclerview to the very bottom
     String savedQuery;
     private int loadCounter = 0;
+    public int recyclerViewLen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         int insertIndex = loadCounter * 10;
                                         recipes.addAll(insertIndex, addedRecipes);
+                                        recyclerViewLen = recipes.size();
                                         adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
                                         adapter.notifyDataSetChanged();
                                         RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
