@@ -149,7 +149,11 @@
 >* To do: 
 ><br/>Decide the fields/prototype of the Android database and load the scraped data into database
 
-
+>November.5.2019 
+>* Achieved: 
+><br/>Scraped data loaded successfully into database and loading wheel animation done
+>* To do: 
+><br/>Cardview for the seacrh view to be implemented
 
 <!--- Template
 >October..2019 
