@@ -113,6 +113,48 @@
 >* To do: 
 ><br/>Adding more UI elements in the next sprint
 
+>October.29.2019 
+>* Achieved: 
+><br/>Defined user stories and tasks associated with each user story
+>* To do: 
+><br/>Work on the database improvement and updating the recycler view
+
+>October.30.2019 
+>* Achieved: 
+><br/>Decided and studied the website and type and method to be used for web scraping
+>* To do: 
+><br/>Work on the method decided
+
+>October.31.2019 
+>* Achieved: 
+><br/>Prototype of the recycler tab view
+>* To do: 
+><br/>Work on scroll listener in Android Database Query
+
+>November.1.2019 
+>* Achieved: 
+><br/>Scraped out relevant data from the website in a temporary list
+>* To do: 
+><br/>Create a database with the contents of the list and scrape multiple pages
+
+>November.3.2019 
+>* Achieved: 
+><br/>Resolved the query related to scroll listener in Android and minor Integration
+>* To do: 
+><br/>Finish testing of the scroll listener and all the tasks related to improving database
+
+>November.4.2019 
+>* Achieved: 
+><br/>Ran some test casess on the web scraper and studied about some animations for UI improvement
+>* To do: 
+><br/>Decide the fields/prototype of the Android database and load the scraped data into database
+
+>November.5.2019 
+>* Achieved: 
+><br/>Scraped data loaded successfully into database and loading wheel animation done
+>* To do: 
+><br/>Cardview for the seacrh view to be implemented
+
 <!--- Template
 >October..2019 
 >* Achieved: 
