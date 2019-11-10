@@ -40,9 +40,15 @@ public class Recipe {
         // 1 : Ingredient
         // 2 : Instruction
         // 3 : Picture Link
-        // 4 : Titile
-        for (int i = 0; i <= numRecipes; i++) {
-            recipes.add(new Recipe(parsedOutput.get(i)[4] , parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
+        // 4 : Title
+        for (int i = 0; i <= numRecipes; i++)
+        {
+            if (i == numRecipes)
+            {
+                recipes.add(new Recipe(parsedOutput.get(i)[4].substring(0, parsedOutput.get(i)[4].length() - 2) , parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
+            }
+            else
+                recipes.add(new Recipe(parsedOutput.get(i)[4], parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
         }
 
         return recipes;
