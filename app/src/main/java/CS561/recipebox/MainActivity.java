@@ -23,6 +23,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String[] autocomplete = new String[] { "Steaks",
+                                                                "Fries",
+                                                                "Teriyaki Chicken",
+                                                                "Chicken wings"
+                                                                };
+
     private AppBarConfiguration mAppBarConfiguration;
 
     // Initialization for the recyclerview
