@@ -5,8 +5,12 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,11 +27,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String[] autocomplete = new String[] { "Steaks",
-                                                                "Fries",
-                                                                "Teriyaki Chicken",
-                                                                "Chicken wings"
-                                                                };
+    private String[] data = { "Steaks", "Fries", "Teriyaki Chicken", "Chicken wings", "Steak and Kale Soup", "Best Steak Marinade in Existence", "Rolled Flank Steak", "Autumn Spice Ham Steak", "Beer Cheese Philly Steak Casserole", "Sweet Grilled Steak Bites", "Soy Marinated Skirt Steak"};
+    private ListView mlistview;
+    private ArrayAdapter mAdapter;
+    private SearchView sview;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -92,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         //NavigationUI.setupWithNavController(navigationView, navController);
 
-        final SearchView sView = findViewById(R.id.searchView);
-
         rvRecipes.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -155,10 +156,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mlistview = (ListView) findViewById(R.id.listview);
+        mAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
+        mlistview.setAdapter(mAdapter);
+        mlistview.setTextFilterEnabled(true);
+        final SearchView sView = findViewById(R.id.searchView);
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            // parameter query here is the words what users just type in
             public boolean onQueryTextSubmit(String query) {
+                mlistview.setVisibility(View.GONE);
+                rvRecipes.setVisibility(View.VISIBLE);
                 savedQuery = query;
                 String output;
                 //call query function
@@ -211,23 +218,94 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 catch (Exception e) { }
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                rvRecipes.setVisibility(View.GONE);
+                mlistview.setVisibility(View.VISIBLE);
+
                 if (sView.getQuery().length() == 0) {
                     //renderList(true);
                     Log.d("Input", newText);
                 }
+                mAdapter.getFilter().filter(newText);
+
                 return false;
             }
         });
+
+        mlistview.setClickable(true);
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+                Object recipe_name = mlistview.getItemAtPosition(position);
+                String str=(String)recipe_name;//As you are using Default String Adapter
+                Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+
+                mlistview.setVisibility(View.GONE);
+                rvRecipes.setVisibility(View.VISIBLE);
+                Log.d("Test", "Running DBQuery");
+                try{
+                    loadCounter = 0;
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + recipe_name).get();
+                    Log.d("Query Output", output);
+
+                    // get the biggest category from the result of search, which is all info from database of each recipe
+                    List<String[]> parsedOutput = new ArrayList<String[]>();
+
+                    String[] splitOutput;
+
+                    //Parse output
+                    if (output.split("~~~").length > 0)
+                    {
+                        String[] parse;
+                        splitOutput = output.split("~~~");
+                        for (String s: splitOutput)
+                        {
+                            parse = s.split("```");
+                            parsedOutput.add(parse);
+                        }
+
+                        testOutput = splitOutput;
+
+                        // Update recyclerview
+                        recipes.clear();
+                        if (parsedOutput.get(0).length > 1)
+                        {
+                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+                            // Initialize recipes
+                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+                            // Create adapter passing in the sample user data
+                            RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
+                            // Attach the adapter to the recyclerview to populate items
+                            rvRecipes.setAdapter(adapter);
+                            // Set layout manager to position the items
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                            rvRecipes.setLayoutManager(linearLayoutManager);
+                        }
+                    }
+                    else
+                    {
+                        splitOutput = new String[] {output};
+                        testOutput = splitOutput;
+                        recipes.clear();
+                        //Log.d("Parsed result", splitOutput[0]);
+                    }
+                }
+                catch (Exception e) { }
+
+            }
+        });
+
     }
+
 
     // show wheel for the duration of couple seconds
     public void showWheel() {
-        int wheelDurationInMilliSeconds = 10000;
+        int wheelDurationInMilliSeconds = 2500;
 
         RelativeLayout wheel = (RelativeLayout) findViewById(R.id.loadingPanel);
         wheel.setVisibility(View.INVISIBLE);
