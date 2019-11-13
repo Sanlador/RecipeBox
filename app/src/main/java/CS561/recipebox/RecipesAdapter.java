@@ -87,25 +87,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         return viewHolder;
     }
 
-    // Later on
-    public void updateData(ArrayList<Recipe> recipes) {
-        mRecipes.clear();
-        mRecipes.addAll(recipes);
-        notifyDataSetChanged();
-    }
-
-    // Later on
-    public void addItem(int position, Recipe recipe) {
-        mRecipes.add(position, recipe);
-        notifyItemInserted(position);
-    }
-
-    // Later on
-    public void removeRecipe(int postion) {
-        mRecipes.remove(postion);
-        notifyDataSetChanged();
-    }
-
     @Override
     // Involves populating data into the item through holder
     public void onBindViewHolder(RecipesAdapter.ViewHolder viewHolder, int position) {
@@ -132,6 +113,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
                 intent.putExtra("Info", mRecipes.get(position).getInfo());
                 intent.putExtra("Name", mRecipes.get(position).getName());
                 intent.putExtra("ingredients", mRecipes.get(position).getIngredients());
+                intent.putExtra("Picture", mRecipes.get(position).getrPictureLink());
                 mContext.startActivity(intent);
 
             }
