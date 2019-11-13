@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         wheel.setVisibility(View.INVISIBLE);
 
         // Create a temporary "box" for attaching adapter
-        String[] s = {"Test", "Test", "Test", "Test", "Test"};
+        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
 
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             parse = s.split("```");
                             parsedOutput.add(parse);
-                            data.add(parse[4]);
+                            data.add(parse[3]);
                         }
 
                         testOutput = splitOutput;

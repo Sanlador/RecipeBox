@@ -49,10 +49,10 @@ public class Recipe {
         {
             if (i == numRecipes)
             {
-                recipes.add(new Recipe(parsedOutput.get(i)[4].substring(0, parsedOutput.get(i)[4].length() - 2) , parsedOutput.get(i)[1], parsedOutput.get(i)[2], parsedOutput.get(i)[3]));
+                recipes.add(new Recipe(parsedOutput.get(i)[3], parsedOutput.get(i)[4], parsedOutput.get(i)[5], parsedOutput.get(i)[0]));
             }
             else
-                recipes.add(new Recipe(parsedOutput.get(i)[4], parsedOutput.get(i)[1], parsedOutput.get(i)[2], parsedOutput.get(i)[3]));
+                recipes.add(new Recipe(parsedOutput.get(i)[3], parsedOutput.get(i)[4], parsedOutput.get(i)[5], parsedOutput.get(i)[0]));
 
         }
 
