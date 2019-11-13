@@ -49,6 +49,7 @@ public class Recipe {
             }
             else
                 recipes.add(new Recipe(parsedOutput.get(i)[4], parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
+
         }
 
         return recipes;

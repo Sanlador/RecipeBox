@@ -57,7 +57,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-            //infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
             //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
             parent = itemView.findViewById(R.id.parent);
         }
@@ -113,7 +113,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        //infoTextView.setText(recipe.getInfo());
+        infoTextView.setText(recipe.getInfo());
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
