@@ -22,6 +22,18 @@ public class recipe_ui  extends AppCompatActivity
             String ingredients = (String)extras.get("ingredients");
             String info = (String)extras.get("Info");
             String url = (String)extras.get("Picture");
+
+            String catagories = (String)extras.get("Catagories");
+            String serving = (String)extras.get("Serving");
+            String cooktime = (String)extras.get("Cooktime");
+            String calories = (String)extras.get("Calories");
+            String fat = (String)extras.get("Fat");
+            String carbs = (String)extras.get("Carbs");
+            String proteins = (String)extras.get("Proteins");
+            String cholesterol = (String)extras.get("Cholesterol");
+            String sodium = (String)extras.get("Sodium");
+
+
             //The key argument here must match that used in the other activity
             Log.d("Intent pass", name);
 
@@ -31,7 +43,7 @@ public class recipe_ui  extends AppCompatActivity
             //TextView ing = (TextView)findViewById(R.id.ingredients);
             //ing.setText(ingredients);
             TextView Info = (TextView)findViewById(R.id.instructions);
-            Info.setText("Ingredients:\n\n" + ingredients + "\n\n\nDirections:\n\n" + info);
+            Info.setText("Calories: "+ calories + "  " + "Serving: " + serving + "    " +  "Cook Time: " + cooktime + " (minutes)" + "\n\n" + "Ingredients:\n\n" + ingredients + "\n\n\nDirections:\n\n" + info);
             //setContentView(title);
 
             ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);

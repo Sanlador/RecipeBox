@@ -114,6 +114,16 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
                 intent.putExtra("Name", mRecipes.get(position).getName());
                 intent.putExtra("ingredients", mRecipes.get(position).getIngredients());
                 intent.putExtra("Picture", mRecipes.get(position).getrPictureLink());
+
+                intent.putExtra("Catagories", mRecipes.get(position).getCatagories());
+                intent.putExtra("Serving", mRecipes.get(position).getServing());
+                intent.putExtra("Cooktime", mRecipes.get(position).getCooktime());
+                intent.putExtra("Calories", mRecipes.get(position).getCalories());
+                intent.putExtra("Fat", mRecipes.get(position).getFat());
+                intent.putExtra("Carbs", mRecipes.get(position).getCarbs());
+                intent.putExtra("Proteins", mRecipes.get(position).getProteins());
+                intent.putExtra("Cholesterol", mRecipes.get(position).getCholesterol());
+                intent.putExtra("Sodium", mRecipes.get(position).getSodium());
                 mContext.startActivity(intent);
 
             }
