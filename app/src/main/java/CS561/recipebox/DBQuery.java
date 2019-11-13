@@ -23,6 +23,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
             Log.d("Function", "Launching Query");
             String output = "";
 
+
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
             String user = "recipeOSU";
@@ -42,8 +43,9 @@ public class DBQuery extends AsyncTask<String, String, String> {
 
                 String selectSql = "select *\n" +
                         "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By ID) as rn\n" +
-                        "\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
+                        //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        "\tfrom Webscrape WHERE Recipe LIKE '%" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);
@@ -54,7 +56,15 @@ public class DBQuery extends AsyncTask<String, String, String> {
                                 + resultSet.getString(2) + "```"
                                 + resultSet.getString(3) + "```"
                                 + resultSet.getString(4) + "```"
-                                + resultSet.getString(5))
+                                + resultSet.getString(5) + "```"
+                                + resultSet.getString(6) + "```"
+                                + resultSet.getString(7) + "```"
+                                + resultSet.getString(8) + "```"
+                                + resultSet.getString(9) + "```"
+                                + resultSet.getString(10) + "```"
+                                + resultSet.getString(11) + "```"
+                                + resultSet.getString(12) + "```"
+                                + resultSet.getString(13))
                                 + "~~~";
                     }
                     connection.close();

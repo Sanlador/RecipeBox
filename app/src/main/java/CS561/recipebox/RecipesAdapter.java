@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public TextView infoTextView;
+        public ImageView picImageView;
         public Button recipeButton;
         LinearLayout parent;
 
@@ -57,7 +61,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-            //infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
             //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
             parent = itemView.findViewById(R.id.parent);
         }
@@ -82,25 +87,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         return viewHolder;
     }
 
-    // Later on
-    public void updateData(ArrayList<Recipe> recipes) {
-        mRecipes.clear();
-        mRecipes.addAll(recipes);
-        notifyDataSetChanged();
-    }
-
-    // Later on
-    public void addItem(int position, Recipe recipe) {
-        mRecipes.add(position, recipe);
-        notifyItemInserted(position);
-    }
-
-    // Later on
-    public void removeRecipe(int postion) {
-        mRecipes.remove(postion);
-        notifyDataSetChanged();
-    }
-
     @Override
     // Involves populating data into the item through holder
     public void onBindViewHolder(RecipesAdapter.ViewHolder viewHolder, int position) {
@@ -113,17 +99,31 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        //infoTextView.setText(recipe.getInfo());
+        infoTextView.setText(recipe.getInfo());
+
+        ImageView picImageView = viewHolder.picImageView;
+        Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
+        //Picasso.get().load(recipe.getrPictureLink()).resize(120, 60).into(viewHolder.picImageView);
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, recipe_ui.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Info", mRecipes.get(position).getInfo());
                 intent.putExtra("Name", mRecipes.get(position).getName());
                 intent.putExtra("ingredients", mRecipes.get(position).getIngredients());
+                intent.putExtra("Picture", mRecipes.get(position).getrPictureLink());
+                intent.putExtra("Catagories", mRecipes.get(position).getCatagories());
+                intent.putExtra("Serving", mRecipes.get(position).getServing());
+                intent.putExtra("Cooktime", mRecipes.get(position).getCooktime());
+                intent.putExtra("Calories", mRecipes.get(position).getCalories());
+                intent.putExtra("Fat", mRecipes.get(position).getFat());
+                intent.putExtra("Carbs", mRecipes.get(position).getCarbs());
+                intent.putExtra("Proteins", mRecipes.get(position).getProteins());
+                intent.putExtra("Cholesterol", mRecipes.get(position).getCholesterol());
+                intent.putExtra("Sodium", mRecipes.get(position).getSodium());
                 mContext.startActivity(intent);
-
             }
         });
     }
