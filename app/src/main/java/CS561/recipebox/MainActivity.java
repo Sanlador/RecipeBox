@@ -27,7 +27,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] data = { "Steaks", "Fries", "Teriyaki Chicken", "Chicken wings", "Steak and Kale Soup", "Best Steak Marinade in Existence", "Rolled Flank Steak", "Autumn Spice Ham Steak", "Beer Cheese Philly Steak Casserole", "Sweet Grilled Steak Bites", "Soy Marinated Skirt Steak"};
+    // Dummy data for testing purpose
+    //private String[] data = { "Steaks", "Fries", "Teriyaki Chicken", "Chicken wings", "Steak and Kale Soup", "Best Steak Marinade in Existence", "Rolled Flank Steak", "Autumn Spice Ham Steak", "Beer Cheese Philly Steak Casserole", "Sweet Grilled Steak Bites", "Soy Marinated Skirt Steak"};
+
+    // Initialization
+    private String[] data = {};
+
     private ListView mlistview;
     private ArrayAdapter mAdapter;
     private SearchView sview;
@@ -156,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         mlistview = (ListView) findViewById(R.id.listview);
         mAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
         mlistview.setAdapter(mAdapter);
@@ -227,16 +234,72 @@ public class MainActivity extends AppCompatActivity {
                 rvRecipes.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
 
+                String [] add = {};
                 if (sView.getQuery().length() == 0) {
                     //renderList(true);
                     Log.d("Input", newText);
                 }
-                mAdapter.getFilter().filter(newText);
 
+                ArrayList<String> data = new ArrayList<>();
+                Log.d("Test", "Running DBQuery");
+                try{
+                    loadCounter = 0;
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + newText).get();
+                    Log.d("Query Output", output);
+
+                    // get the biggest category from the result of search, which is all info from database of each recipe
+                    List<String[]> parsedOutput = new ArrayList<String[]>();
+
+                    String[] splitOutput;
+
+
+                    //Parse output
+                    if (output.split("~~~").length > 0)
+                    {
+                        String[] parse;
+                        splitOutput = output.split("~~~");
+                        for (String s: splitOutput)
+                        {
+                            parse = s.split("```");
+                            parsedOutput.add(parse);
+                            data.add(parse[4]);
+                        }
+
+                        testOutput = splitOutput;
+
+                        // Update recyclerview
+                        recipes.clear();
+                        if (parsedOutput.get(0).length > 1)
+                        {
+                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
+                            // Initialize recipes
+                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+                            // Create adapter passing in the sample user data
+                            RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
+                            // Attach the adapter to the recyclerview to populate items
+                            rvRecipes.setAdapter(adapter);
+                            // Set layout manager to position the items
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+                            rvRecipes.setLayoutManager(linearLayoutManager);
+                        }
+                    }
+                    else
+                    {
+                        splitOutput = new String[] {output};
+                        testOutput = splitOutput;
+                        recipes.clear();
+                        //Log.d("Parsed result", splitOutput[0]);
+                    }
+                }
+                catch (Exception e) { }
+                mlistview = (ListView) findViewById(R.id.listview);
+                mAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
+                mlistview.setAdapter(mAdapter);
+                mlistview.setTextFilterEnabled(true);
+                mAdapter.getFilter().filter(newText);
                 return false;
             }
         });
-
         mlistview.setClickable(true);
         mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
