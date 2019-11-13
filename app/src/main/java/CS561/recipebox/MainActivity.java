@@ -164,8 +164,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         mlistview = (ListView) findViewById(R.id.listview);
         mAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, data);
         mlistview.setAdapter(mAdapter);
@@ -265,25 +263,10 @@ public class MainActivity extends AppCompatActivity {
                         {
                             parse = s.split("```");
                             parsedOutput.add(parse);
+
+                            // For autocomplete, 3 is title of recipes
+                            // use the array 'data' later for showing it on listView
                             data.add(parse[3]);
-                        }
-
-                        testOutput = splitOutput;
-
-                        // Update recyclerview
-                        recipes.clear();
-                        if (parsedOutput.get(0).length > 1)
-                        {
-                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-                            // Initialize recipes
-                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
-                            // Create adapter passing in the sample user data
-                            RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
-                            // Attach the adapter to the recyclerview to populate items
-                            rvRecipes.setAdapter(adapter);
-                            // Set layout manager to position the items
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-                            rvRecipes.setLayoutManager(linearLayoutManager);
                         }
                     }
                     else
@@ -365,12 +348,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 catch (Exception e) { }
-
             }
         });
-
     }
-
 
     // show wheel for the duration of couple seconds
     public void showWheel() {
