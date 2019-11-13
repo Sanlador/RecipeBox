@@ -9,7 +9,6 @@ public class Recipe {
     private String rInfo;
     private String rIngredients;
     private String rPictureLink;
-
     private String rCatagrories;
     private String rServing;
     private String rCooktime;
@@ -24,7 +23,6 @@ public class Recipe {
                   String ingredients,
                   String info,
                   String pictureLink,
-
                   String catagories,
                   String serving,
                   String cooktime,
@@ -33,15 +31,12 @@ public class Recipe {
                   String carbs,
                   String proteins,
                   String cholesterol,
-                  String sodium
-    )
-
+                  String sodium)
     {
         rName = name;
         rInfo = info;
         rIngredients = ingredients;
         rPictureLink = pictureLink;
-
         rCatagrories = catagories;
         rServing = serving;
         rCooktime = cooktime;
@@ -53,39 +48,19 @@ public class Recipe {
         rSodium = sodium;
     }
 
-    public String getName() {
-        return rName;
-    }
-
-    public String getInfo() {
-        return rInfo;
-    }
-
-    public String getIngredients()
-    {
-        return rIngredients;
-    }
-
+    public String getName() { return rName; }
+    public String getInfo() { return rInfo; }
+    public String getIngredients() { return rIngredients; }
     public String getrPictureLink() { return rPictureLink; }
-
     public String getCatagories() { return rCatagrories; }
-
     public String getServing() { return rServing; }
-
     public String getCooktime() { return rCooktime; }
-
     public String getCalories() { return rCalories; }
-
     public String getFat() { return rFat; }
-
     public String getCarbs() { return rCarbs; }
-
     public String getProteins() { return rProteins; }
-
     public String getCholesterol() { return rCholesterol; }
-
     public String getSodium() { return rSodium; }
-
 
     // not necessary
     private static int lastRecipeId = 0;
@@ -117,7 +92,6 @@ public class Recipe {
                                         parsedOutput.get(i)[4],     // 4 : Ingredients
                                         parsedOutput.get(i)[5],     // 5 : Instructions
                                         parsedOutput.get(i)[0],     // 0 : Picture Link
-
                                         parsedOutput.get(i)[1],     // 1 : Catagories
                                         parsedOutput.get(i)[2],     // 2 : Servings
                                         parsedOutput.get(i)[6],     // 6 : Cook Time
@@ -134,7 +108,6 @@ public class Recipe {
                         parsedOutput.get(i)[4],     // 4 : Ingredients
                         parsedOutput.get(i)[5],     // 5 : Instructions
                         parsedOutput.get(i)[0],     // 0 : Picture Link
-
                         parsedOutput.get(i)[1],     // 1 : Catagories
                         parsedOutput.get(i)[2],     // 2 : Servings
                         parsedOutput.get(i)[6],     // 6 : Cook Time
@@ -146,7 +119,6 @@ public class Recipe {
                         parsedOutput.get(i)[12]    // 12 : Sodium
                 ));
         }
-
         return recipes;
     }
 }
