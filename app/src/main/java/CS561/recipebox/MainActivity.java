@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 rvRecipes.setVisibility(View.VISIBLE);
 
                 savedQuery = recipe_name.toString();
-                sview.setQuery(savedQuery, false);
+
                 Log.d("Test", "Running DBQuery");
                 try{
                     loadCounter = 0;
