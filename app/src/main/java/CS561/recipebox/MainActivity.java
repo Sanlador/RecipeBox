@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         String[] s = {"Test", "Test", "Test", "Test", "Test"};
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
+
+        ImageView rpic = findViewById(R.id.recipe_pic);
 
         // Initialize recipes
         RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);

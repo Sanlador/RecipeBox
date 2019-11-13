@@ -8,11 +8,13 @@ public class Recipe {
     private String rName;
     private String rInfo;
     private String rIngredients;
+    private String rPictureLink;
 
-    public Recipe(String name, String ingredients, String info) {
+    public Recipe(String name, String ingredients, String info, String pictureLink) {
         rName = name;
         rInfo = info;
         rIngredients = ingredients;
+        rPictureLink = pictureLink;
     }
 
     public String getName() {
@@ -27,6 +29,8 @@ public class Recipe {
     {
         return rIngredients;
     }
+
+    public String getrPictureLink() { return rPictureLink; }
 
     // not necessary
     private static int lastRecipeId = 0;
@@ -45,10 +49,10 @@ public class Recipe {
         {
             if (i == numRecipes)
             {
-                recipes.add(new Recipe(parsedOutput.get(i)[4].substring(0, parsedOutput.get(i)[4].length() - 2) , parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
+                recipes.add(new Recipe(parsedOutput.get(i)[4].substring(0, parsedOutput.get(i)[4].length() - 2) , parsedOutput.get(i)[1], parsedOutput.get(i)[2], parsedOutput.get(i)[3]));
             }
             else
-                recipes.add(new Recipe(parsedOutput.get(i)[4], parsedOutput.get(i)[1], parsedOutput.get(i)[2]));
+                recipes.add(new Recipe(parsedOutput.get(i)[4], parsedOutput.get(i)[1], parsedOutput.get(i)[2], parsedOutput.get(i)[3]));
 
         }
 

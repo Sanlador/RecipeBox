@@ -23,6 +23,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
             Log.d("Function", "Launching Query");
             String output = "";
 
+
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
             String user = "recipeOSU";
@@ -44,6 +45,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
                         "from (\n" +
                         "\tselect *,ROW_NUMBER()Over(Order By ID) as rn\n" +
                         "\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        //"\tfrom Webscrape WHERE Recipe LIKE '%" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);

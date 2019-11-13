@@ -8,10 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public TextView infoTextView;
+        public ImageView picImageView;
         public Button recipeButton;
         LinearLayout parent;
 
@@ -58,6 +62,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
             infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
             //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
             parent = itemView.findViewById(R.id.parent);
         }
@@ -114,6 +119,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         TextView infoTextView = viewHolder.infoTextView;
         infoTextView.setText(recipe.getInfo());
+
+        ImageView picImageView = viewHolder.picImageView;
+        Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
+        //Picasso.get().load(recipe.getrPictureLink()).resize(120, 60).into(viewHolder.picImageView);
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
