@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public String testOutput[];
 
     // For the purpose of refilling data when user scroll the recyclerview to the very bottom
-    String savedQuery;
+    public String savedQuery;
     private int loadCounter = 0;
     public int recyclerViewLen;
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                                             recipes.add(r);
                                         }
 
-                                        int insertIndex = loadCounter * 10;
+                                        int insertIndex = (loadCounter * 10)-1;
                                         recipes.addAll(insertIndex, addedRecipes);
                                         recyclerViewLen = recipes.size();
                                         adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                                         rvRecipes.setAdapter(adapter);
                                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
                                         rvRecipes.setLayoutManager(linearLayoutManager);
-                                        rvRecipes.scrollToPosition(insertIndex+ 1);
+                                        rvRecipes.scrollToPosition(insertIndex+1);
                                     }
                                 }
                             }
@@ -247,6 +247,9 @@ public class MainActivity extends AppCompatActivity {
 
                 mlistview.setVisibility(View.GONE);
                 rvRecipes.setVisibility(View.VISIBLE);
+
+                savedQuery = recipe_name.toString();
+                sview.setQuery(savedQuery, false);
                 Log.d("Test", "Running DBQuery");
                 try{
                     loadCounter = 0;
