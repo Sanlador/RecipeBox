@@ -28,9 +28,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Dummy data for testing purpose
-    //private String[] data = { "Steaks", "Fries", "Teriyaki Chicken", "Chicken wings", "Steak and Kale Soup", "Best Steak Marinade in Existence", "Rolled Flank Steak", "Autumn Spice Ham Steak", "Beer Cheese Philly Steak Casserole", "Sweet Grilled Steak Bites", "Soy Marinated Skirt Steak"};
-
     // Initialization
     private String[] data = {};
 
