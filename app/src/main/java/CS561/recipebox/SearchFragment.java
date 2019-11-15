@@ -177,7 +177,7 @@ public class SearchFragment extends Fragment
                                 }
                                 catch (Exception e)
                                 {
-                                    
+
                                 }
                             }
                         });

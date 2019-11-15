@@ -59,7 +59,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+            nameTextView = (TextView) itemView.findViewById(R.id.inventory_name);
             infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
             picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
             //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
