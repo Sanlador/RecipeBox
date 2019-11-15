@@ -69,8 +69,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
                     }
                     connection.close();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
