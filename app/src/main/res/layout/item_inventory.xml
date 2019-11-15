@@ -40,9 +40,10 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="8sp"
+                android:text="Test Name Here"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textSize="14sp"
+                android:textSize="36sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:inputType="number"
+                android:text="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/subtractButton" />
 
@@ -62,8 +64,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:inputType="number"
+                android:text="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/addButton" />
+
+            <TextView
+                android:id="@+id/itemCount"
+                android:layout_width="91dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="0"
+                android:textSize="30sp"
+                app:layout_constraintStart_toEndOf="@+id/inventoryCountText"
+                app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
 
             <TextView
                 android:id="@+id/inventoryCountText"
@@ -76,20 +90,6 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
-
-            <EditText
-                android:id="@+id/itemCount"
-                android:layout_width="38dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginBottom="60dp"
-                android:ems="10"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/addNumber"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/inventoryCountText"
                 app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
 
             <TextView

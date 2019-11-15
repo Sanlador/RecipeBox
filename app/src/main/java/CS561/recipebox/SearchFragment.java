@@ -63,8 +63,7 @@ public class SearchFragment extends Fragment
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
@@ -81,7 +80,7 @@ public class SearchFragment extends Fragment
         initializer.add(s);
         ImageView rpic = root.findViewById(R.id.recipe_pic);
 
-        RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
+        rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
 
         // Initialize recipes
         recipes = Recipe.createRecipesList(0, initializer);

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +44,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         public TextView title;
         public TextInputEditText subtractNum;
         public TextInputEditText addNum;
-        public EditText itemCount;
+        public TextView itemCount;
         LinearLayout parent;
 
         public ViewHolder(View itemView)
@@ -56,7 +55,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             title = (TextView) itemView.findViewById(R.id.title);
             subtractNum = (TextInputEditText) itemView.findViewById(R.id.subtractNumber);
             addNum = (TextInputEditText) itemView.findViewById(R.id.addNumber);
-            itemCount = (EditText) itemView.findViewById(R.id.itemCount);
+            itemCount = (TextView) itemView.findViewById(R.id.itemCount);
             parent = itemView.findViewById(R.id.inventoryParent);
         }
 
@@ -90,7 +89,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         // Set item views based on your views and data model
         TextView title = viewHolder.title;
-        title.setText(item.getName());
+        //title.setText(item.getName());
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener()
         {

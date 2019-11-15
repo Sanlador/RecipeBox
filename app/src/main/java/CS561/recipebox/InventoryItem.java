@@ -30,13 +30,13 @@ public class InventoryItem
     public static ArrayList<InventoryItem> createInventoryList(Context context)
     {
         InventoryContractHelper contractHelper = new InventoryContractHelper(context);
+        contractHelper.writeToDatabase("Test",1);
         List<String[]> dbList = contractHelper.readFromDatabase();
-
         ArrayList<InventoryItem> list = new ArrayList<InventoryItem>();
 
-        for(String[] Item: dbList)
+        for(int i = 0; i < dbList.size(); i++)
         {
-            list.add(new InventoryItem(Integer.parseInt(Item[2]), Item[1]));
+            list.add(new InventoryItem(Integer.parseInt(dbList.get(i)[0]), dbList.get(i)[1]));
         }
 
         return list;
