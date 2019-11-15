@@ -7,6 +7,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -20,27 +34,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/mobile_navigation" />
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecipes"
-        android:layout_width="fill_parent"
-        android:layout_height="500dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
