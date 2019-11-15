@@ -23,11 +23,12 @@ public class DBQuery extends AsyncTask<String, String, String> {
             Log.d("Function", "Launching Query");
             String output = "";
 
+
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
             String user = "recipeOSU";
             String password = "recipe32!";
-            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;sendStringParametersAsUnicode=false";
             Connection connection = null;
 
             try {
@@ -42,8 +43,9 @@ public class DBQuery extends AsyncTask<String, String, String> {
 
                 String selectSql = "select *\n" +
                         "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By ID) as rn\n" +
-                        "\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
+                        //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
+                        "\tfrom Webscrape WHERE Recipe LIKE '" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);
@@ -54,13 +56,20 @@ public class DBQuery extends AsyncTask<String, String, String> {
                                 + resultSet.getString(2) + "```"
                                 + resultSet.getString(3) + "```"
                                 + resultSet.getString(4) + "```"
-                                + resultSet.getString(5))
+                                + resultSet.getString(5) + "```"
+                                + resultSet.getString(6) + "```"
+                                + resultSet.getString(7) + "```"
+                                + resultSet.getString(8) + "```"
+                                + resultSet.getString(9) + "```"
+                                + resultSet.getString(10) + "```"
+                                + resultSet.getString(11) + "```"
+                                + resultSet.getString(12) + "```"
+                                + resultSet.getString(13))
                                 + "~~~";
                     }
                     connection.close();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
