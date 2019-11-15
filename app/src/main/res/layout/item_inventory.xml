@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inventoryParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -69,7 +70,7 @@
                 android:layout_width="287dp"
                 android:layout_height="47dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="60dp"
                 android:text="Current amount in pantry:"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -78,11 +79,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/itemCount"
                 android:layout_width="38dp"
                 android:layout_height="39dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="60dp"
                 android:ems="10"
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -90,6 +91,26 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/inventoryCountText"
                 app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
+
+            <TextView
+                android:id="@+id/subtractText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Remove items"
+                app:layout_constraintBottom_toTopOf="@+id/subtractButton"
+                app:layout_constraintStart_toStartOf="@+id/subtractButton"
+                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
+
+            <TextView
+                android:id="@+id/addText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Add items"
+                app:layout_constraintBottom_toTopOf="@+id/addButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

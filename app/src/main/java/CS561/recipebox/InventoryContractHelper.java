@@ -10,25 +10,25 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class pantryContractHelper extends SQLiteOpenHelper
+public class InventoryContractHelper extends SQLiteOpenHelper
 {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "pantry.db";
 
-    private static final String TABLE = pantryContract.Inventory.TABLE_NAME;
+    private static final String TABLE = InventoryContract.Inventory.TABLE_NAME;
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + pantryContract.Inventory.TABLE_NAME + " (" +
-                    pantryContract.Inventory._ID + " INTEGER PRIMARY KEY," +
-                    pantryContract.Inventory.COLUMN_NAME_TITLE + " TEXT," +
-                    pantryContract.Inventory.COLUMN_NAME_COUNT + " TEXT)";
+            "CREATE TABLE " + InventoryContract.Inventory.TABLE_NAME + " (" +
+                    InventoryContract.Inventory._ID + " INTEGER PRIMARY KEY," +
+                    InventoryContract.Inventory.COLUMN_NAME_TITLE + " TEXT," +
+                    InventoryContract.Inventory.COLUMN_NAME_COUNT + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + pantryContract.Inventory.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + InventoryContract.Inventory.TABLE_NAME;
 
 
-    public pantryContractHelper(Context context)
+    public InventoryContractHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -63,12 +63,12 @@ public class pantryContractHelper extends SQLiteOpenHelper
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        //values.put(pantryContract.Inventory._ID, "0");
-        values.put(pantryContract.Inventory.COLUMN_NAME_TITLE, name);
-        values.put(pantryContract.Inventory.COLUMN_NAME_COUNT, count);
+        //values.put(InventoryContract.Inventory._ID, "0");
+        values.put(InventoryContract.Inventory.COLUMN_NAME_TITLE, name);
+        values.put(InventoryContract.Inventory.COLUMN_NAME_COUNT, count);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(pantryContract.Inventory.TABLE_NAME, null, values);
+        long newRowId = db.insert(InventoryContract.Inventory.TABLE_NAME, null, values);
 
         if (-1 == newRowId)
         {
@@ -101,7 +101,7 @@ public class pantryContractHelper extends SQLiteOpenHelper
     public List<String[]> readFromDatabase()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + pantryContract.Inventory.TABLE_NAME;
+        String query = "SELECT * FROM " + InventoryContract.Inventory.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         List<String[]> dbOutput = new ArrayList<String[]>();
 

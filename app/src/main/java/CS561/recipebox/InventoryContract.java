@@ -2,9 +2,9 @@ package CS561.recipebox;
 
 import android.provider.BaseColumns;
 
-public final class pantryContract
+public final class InventoryContract
 {
-    private pantryContract()
+    private InventoryContract()
     {
 
     }
