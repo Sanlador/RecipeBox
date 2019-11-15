@@ -99,7 +99,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        infoTextView.setText(recipe.getInfo());
+        infoTextView.setText(recipe.getCatagories());
 
         ImageView picImageView = viewHolder.picImageView;
         Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
