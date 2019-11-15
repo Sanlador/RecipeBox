@@ -28,7 +28,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
             String db = "RecipeDB";
             String user = "recipeOSU";
             String password = "recipe32!";
-            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;sendStringParametersAsUnicode=false";
             Connection connection = null;
 
             try {
@@ -45,7 +45,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
                         "from (\n" +
                         "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
                         //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE Recipe LIKE '%" + query + "%') t\n" +
+                        "\tfrom Webscrape WHERE Recipe LIKE '" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);
