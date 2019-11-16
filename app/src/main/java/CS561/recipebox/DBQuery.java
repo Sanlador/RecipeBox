@@ -11,6 +11,7 @@ import java.sql.Statement;
 public class DBQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
+    private String checkbox = "Recipe";
 
     @Override
     protected String doInBackground(String... params) {
@@ -39,13 +40,15 @@ public class DBQuery extends AsyncTask<String, String, String> {
 
                 int loadCounter = Integer.parseInt(Q[0]);
 
-                String query = Q[1];
+                String query = Q[2];
+
+                checkbox = Q[1];
 
                 String selectSql = "select *\n" +
                         "from (\n" +
                         "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
                         //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE Recipe LIKE '" + query + "%') t\n" +
+                        "\tfrom Webscrape WHERE " + checkbox + " LIKE '" + "%" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);
