@@ -3,48 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/inventoryParent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout"
             android:layout_width="fill_parent"
-            android:layout_height="174dp">
+            android:layout_height="match_parent">
 
-
-            <ImageButton
-                android:id="@+id/subtractButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="?attr/homeAsUpIndicator" />
 
             <ImageButton
                 android:id="@+id/addButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addText"
                 app:srcCompat="?attr/homeAsUpIndicator" />
 
             <TextView
                 android:id="@+id/inventory_name"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="8dp"
+                android:layout_width="151dp"
+                android:layout_height="78dp"
                 android:lineSpacingExtra="8sp"
                 android:text="Test Name Here"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textSize="36sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,45 +44,23 @@
                 android:id="@+id/subtractNumber"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
                 android:inputType="number"
                 android:text="1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/subtractButton" />
+                app:layout_constraintStart_toEndOf="@+id/subtractButton"
+                app:layout_constraintTop_toBottomOf="@+id/subtractText"
+                app:layout_constraintVertical_bias="0.125" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addNumber"
-                android:layout_width="38dp"
+            <ImageButton
+                android:id="@+id/subtractButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
-                android:inputType="number"
-                android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/addButton" />
-
-            <TextView
-                android:id="@+id/itemCount"
-                android:layout_width="91dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="0"
-                android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/inventoryCountText"
-                app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
-
-            <TextView
-                android:id="@+id/inventoryCountText"
-                android:layout_width="287dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="60dp"
-                android:text="Current amount in pantry:"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_marginStart="180dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
+                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText"
+                app:layout_constraintVertical_bias="0.607"
+                app:srcCompat="?attr/homeAsUpIndicator" />
 
             <TextView
                 android:id="@+id/subtractText"
@@ -100,17 +70,71 @@
                 android:text="Remove items"
                 app:layout_constraintBottom_toTopOf="@+id/subtractButton"
                 app:layout_constraintStart_toStartOf="@+id/subtractButton"
-                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
+                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText"
+                app:layout_constraintVertical_bias="0.733" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addNumber"
+                android:layout_width="38dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:inputType="number"
+                android:text="1"
+                app:layout_constraintEnd_toStartOf="@+id/addButton"
+                app:layout_constraintTop_toBottomOf="@+id/addText" />
+
+            <TextView
+                android:id="@+id/itemCount"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:text="0"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/inventoryCountText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/inventoryCountText"
+                android:layout_width="215dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="152dp"
+                android:layout_marginBottom="60dp"
+                android:text="Current amount in pantry:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/addText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:text="Add items"
-                app:layout_constraintBottom_toTopOf="@+id/addButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/deleteButton"
+                app:layout_constraintTop_toBottomOf="@+id/inventory_name"
+                app:srcCompat="@android:drawable/ic_delete" />
+
+            <TextView
+                android:id="@+id/deleteButton"
+                android:layout_width="41dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:text="Delete Item"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

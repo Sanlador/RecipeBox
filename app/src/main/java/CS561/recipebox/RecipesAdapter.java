@@ -35,7 +35,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     {
         this.mRecipes = recipes;
         this.mContext = context;
-        //mRecipes = recipes;
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener)
@@ -67,7 +66,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             nameTextView = (TextView) itemView.findViewById(R.id.inventory_name);
             infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
             picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
-            //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
             parent = itemView.findViewById(R.id.parent);
         }
 
@@ -109,9 +107,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         ImageView picImageView = viewHolder.picImageView;
         Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
-        //Picasso.get().load(recipe.getrPictureLink()).resize(120, 60).into(viewHolder.picImageView);
 
-        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
+        viewHolder.parent.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, recipe_ui.class);

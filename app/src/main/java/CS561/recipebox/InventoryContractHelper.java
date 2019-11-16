@@ -32,14 +32,20 @@ public class InventoryContractHelper extends SQLiteOpenHelper
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(SQL_DELETE_ENTRIES);
+        //db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
 
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        /*db.execSQL(SQL_CREATE_ENTRIES);
+        writeToDatabase("Pork", 3);
+        writeToDatabase("Pork", 3);
+        writeToDatabase("Pork", 3);
+        writeToDatabase("Pork", 3);
+        writeToDatabase("Pork", 3);
+        writeToDatabase("Pork", 3);*/
     }
 
 
@@ -87,8 +93,23 @@ public class InventoryContractHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
-
             return db.delete(TABLE, "title = ?", new String[] {name});
+        }
+        catch (Exception e)
+        {
+            Log.e("Database Exception:", e.toString());
+        }
+        return 0;
+    }
+
+    public int changeCountValue(String name, int newCount)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("count", newCount);
+        try
+        {
+            return db.update(TABLE, cv,"title = ?", new String[] {name});
         }
         catch (Exception e)
         {
@@ -108,7 +129,7 @@ public class InventoryContractHelper extends SQLiteOpenHelper
         List itemIds = new ArrayList<>();
         while(cursor.moveToNext())
         {
-            dbOutput.add(new String[]{cursor.getString(0), cursor.getString(1)});
+            dbOutput.add(new String[]{cursor.getString(1), cursor.getString(2)});
             Log.d("Output data", cursor.getString(0));
             Log.d("Output data", cursor.getString(1));
             Log.d("Output data", cursor.getString(2));

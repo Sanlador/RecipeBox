@@ -17,6 +17,11 @@ public class InventoryItem
         name = n;
     }
 
+    public void setCount(int c)
+    {
+        count = c;
+    }
+
     public String getName()
     {
         return name;
@@ -36,7 +41,7 @@ public class InventoryItem
 
         for(int i = 0; i < dbList.size(); i++)
         {
-            list.add(new InventoryItem(Integer.parseInt(dbList.get(i)[0]), dbList.get(i)[1]));
+            list.add(new InventoryItem(Integer.parseInt(dbList.get(i)[1]), dbList.get(i)[0]));
         }
 
         return list;

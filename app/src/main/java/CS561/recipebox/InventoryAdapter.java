@@ -24,12 +24,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private List<InventoryItem> itemList;
     private Context context;
     private AdapterView.OnItemClickListener onItemClickListener;
+    private InventoryContractHelper helper;
 
 
     public InventoryAdapter(List<InventoryItem> items, Context context)
     {
         itemList = items;
         context = context;
+        helper = new InventoryContractHelper(context);
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener)
@@ -52,7 +54,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             super(itemView);
             subtractButton = (ImageButton) itemView.findViewById(R.id.subtractButton);
             addButton = (ImageButton) itemView.findViewById(R.id.addButton);
-            title = (TextView) itemView.findViewById(R.id.title);
+            title = (TextView) itemView.findViewById(R.id.inventory_name);
             subtractNum = (TextInputEditText) itemView.findViewById(R.id.subtractNumber);
             addNum = (TextInputEditText) itemView.findViewById(R.id.addNumber);
             itemCount = (TextView) itemView.findViewById(R.id.itemCount);
@@ -86,10 +88,39 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         // Get the data model based on position
         InventoryItem item = itemList.get(position);
+        TextView name = viewHolder.title;
+        name.setText(item.getName());
+        TextView count = viewHolder.itemCount;
+        count.setText(String.valueOf(item.getCount()));
 
-        // Set item views based on your views and data model
-        TextView title = viewHolder.title;
-        //title.setText(item.getName());
+        ImageButton add = viewHolder.addButton;
+        ImageButton subtract = viewHolder.subtractButton;
+
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                int addition = item.getCount() + Integer.parseInt(viewHolder.addNum.getText().toString());
+                viewHolder.itemCount.setText(String.valueOf(addition));
+                item.setCount(addition);
+                helper.changeCountValue(item.getName(), addition);
+            }
+        });
+
+        subtract.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                int subtraction = item.getCount() - Integer.parseInt(viewHolder.subtractNum.getText().toString());
+                if (subtraction <= 0)
+                    subtraction = 0;
+                viewHolder.itemCount.setText(String.valueOf(subtraction));
+                item.setCount(subtraction);
+                helper.changeCountValue(item.getName(), subtraction);
+            }
+        });
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener()
         {

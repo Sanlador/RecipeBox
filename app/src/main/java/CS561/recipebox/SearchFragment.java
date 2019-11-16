@@ -150,7 +150,8 @@ public class SearchFragment extends Fragment
                                             ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
                                             addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
 
-                                            for (Recipe r :addedRecipes) {
+                                            for (Recipe r :addedRecipes)
+                                            {
                                                 recipes.add(r);
                                             }
 
