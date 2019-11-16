@@ -89,18 +89,18 @@ public class Recipe {
             if (i == numRecipes)
             {
                 recipes.add(new Recipe( parsedOutput.get(i)[3],     // 3 : Name
-                                        parsedOutput.get(i)[4],     // 4 : Ingredients
-                                        parsedOutput.get(i)[5],     // 5 : Instructions
-                                        parsedOutput.get(i)[0],     // 0 : Picture Link
-                                        parsedOutput.get(i)[1],     // 1 : Catagories
-                                        parsedOutput.get(i)[2],     // 2 : Servings
-                                        parsedOutput.get(i)[6],     // 6 : Cook Time
-                                        parsedOutput.get(i)[7],     // 7 : Calories
-                                        parsedOutput.get(i)[8],     // 8 : Fat
-                                        parsedOutput.get(i)[9],     // 9 : Carbs
-                                        parsedOutput.get(i)[10],    // 10 : Proteins
-                                        parsedOutput.get(i)[11],    // 11 : Cholesterol
-                                        parsedOutput.get(i)[12]    // 12 : Sodium
+                        parsedOutput.get(i)[4],     // 4 : Ingredients
+                        parsedOutput.get(i)[5],     // 5 : Instructions
+                        parsedOutput.get(i)[0],     // 0 : Picture Link
+                        parsedOutput.get(i)[1],     // 1 : Catagories
+                        parsedOutput.get(i)[2],     // 2 : Servings
+                        parsedOutput.get(i)[6],     // 6 : Cook Time
+                        parsedOutput.get(i)[7],     // 7 : Calories
+                        parsedOutput.get(i)[8],     // 8 : Fat
+                        parsedOutput.get(i)[9],     // 9 : Carbs
+                        parsedOutput.get(i)[10],    // 10 : Proteins
+                        parsedOutput.get(i)[11],    // 11 : Cholesterol
+                        parsedOutput.get(i)[12]    // 12 : Sodium
                 ));
             }
             else
