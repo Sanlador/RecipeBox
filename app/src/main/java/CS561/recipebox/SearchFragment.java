@@ -2,7 +2,6 @@ package CS561.recipebox;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,15 +35,6 @@ public class SearchFragment extends Fragment
     public RecipesAdapter adapter;
     public String output;
     public String[] parsedOutput;
-
-    private String[] data = {};
-    private ListView mlistview;
-    private ArrayAdapter mAdapter;
-    private pantryContractHelper pantryHelper;
-    private int loadCounter = 0;
-    private GalleryViewModel galleryViewModel;
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private View root;
 
     //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
     //HIGHLY INSECURE
@@ -78,7 +67,7 @@ public class SearchFragment extends Fragment
     {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
-        root = inflater.inflate(R.layout.fragment_search, container, false);
+        View root = inflater.inflate(R.layout.fragment_search, container, false);
 
         Context context = this.getContext();
 
@@ -170,12 +159,10 @@ public class SearchFragment extends Fragment
         //RECYCLER VIEW
 
         // Create a temporary "box" for attaching adapter
-        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+        String[] s = {"Test", "Test", "Test", "Test", "Test"};
         // Create a temporary "box" for attaching adapter
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
-        ImageView rpic = root.findViewById(R.id.recipe_pic);
-
         RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
 
         // Initialize recipes
@@ -203,31 +190,29 @@ public class SearchFragment extends Fragment
 
                 if (!recyclerView.canScrollVertically(1))
                 {
+                    Log.d("System","Scrolling hits the bottom");
+                    loadCounter++;
                     try
                     {
-                        runOnUiThread(new Runnable()
+                        String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
+                        if (addedOutput.split("~~~").length > 0)
                         {
-                            @Override
-                            public void run()
+                            List<String[]> parsedOutput = new ArrayList<String[]>();
+                            String[] parse;
+                            String[] splitOutput = addedOutput.split("~~~");
+                            for (String s: splitOutput)
                             {
-                                showWheel();
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
                             }
-                        });
-                    } catch (Throwable throwable)
-                    {
-                        throwable.printStackTrace();
-                    }
 
-                    try
-                    {
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
+                            testOutput = splitOutput;
+
+                            //USER QUERY
+
+                            if (parsedOutput.get(0).length > 1)
                             {
-                                Log.d("System","Scrolling hits the bottom");
-                                loadCounter++;
-                                try
+                                runOnUiThread(new Runnable()
                                 {
                                     String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + savedQuery).get();
                                     if (addedOutput.split("~~~").length > 0)
@@ -243,24 +228,18 @@ public class SearchFragment extends Fragment
                                         testOutput = splitOutput;
                                         if (parsedOutput.get(0).length > 1)
                                         {
-                                            ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
-                                            addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
-
-                                            for (Recipe r :addedRecipes) {
-                                                recipes.add(r);
-                                            }
-
-                                            int insertIndex = (loadCounter * 10)-1;
-                                            recipes.addAll(insertIndex, addedRecipes);
-                                            recyclerViewLen = recipes.size();
-                                            adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
-                                            adapter.notifyDataSetChanged();
-                                            RecipesAdapter adapter = new RecipesAdapter(recipes, context);
-                                            rvRecipes.setAdapter(adapter);
-                                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                                            rvRecipes.setLayoutManager(linearLayoutManager);
-                                            rvRecipes.scrollToPosition(insertIndex+1);
+                                            recipes.add(r);
                                         }
+
+                                        int insertIndex = loadCounter * 10;
+                                        recipes.addAll(insertIndex, addedRecipes);
+                                        recyclerViewLen = recipes.size();
+                                        adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
+                                        RecipesAdapter adapter = new RecipesAdapter(recipes, context);
+                                        rvRecipes.setAdapter(adapter);
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                                        rvRecipes.setLayoutManager(linearLayoutManager);
+                                        rvRecipes.scrollToPosition(insertIndex+ 1);
                                     }
                                 }
                                 catch (Exception e)
@@ -268,7 +247,12 @@ public class SearchFragment extends Fragment
 
                                 }
                             }
-                        });
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
                     }
                     catch (Throwable throwable)
                     {
@@ -278,26 +262,16 @@ public class SearchFragment extends Fragment
             }
         });
 
-        mlistview = (ListView) root.findViewById(R.id.listview);
-        mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
-        mlistview.setAdapter(mAdapter);
-        mlistview.setTextFilterEnabled(true);
-
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
             @Override
             // parameter query here is the words what users just type in
-            public boolean onQueryTextSubmit(String query)
-            {
-                mlistview.setVisibility(View.GONE);
-                rvRecipes.setVisibility(View.VISIBLE);
+            public boolean onQueryTextSubmit(String query) {
                 savedQuery = query;
                 String output;
-
                 //call query function
                 Log.d("Test", "Running DBQuery");
-                try
-                {
+                try{
                     loadCounter = 0;
                     output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + query).get();
                     Log.d("Query Output", output);
@@ -339,13 +313,14 @@ public class SearchFragment extends Fragment
                         splitOutput = new String[] {output};
                         testOutput = splitOutput;
                         recipes.clear();
+                        //Log.d("Parsed result", splitOutput[0]);
                     }
                 }
                 catch (Exception e)
                 {
 
                 }
-
+                //queryDB(query);
                 return false;
             }
 
@@ -482,29 +457,5 @@ public class SearchFragment extends Fragment
         });
 
         return root;
-    }
-
-    // show wheel for the duration of couple seconds
-    public void showWheel()
-    {
-        int wheelDurationInMilliSeconds = 2500;
-
-        RelativeLayout wheel = (RelativeLayout) root.findViewById(R.id.loadingPanel);
-        wheel.setVisibility(View.INVISIBLE);
-
-        CountDownTimer wheelCountDown;
-        wheelCountDown = new CountDownTimer(wheelDurationInMilliSeconds, 1000) {
-            @Override
-            public void onTick(long l) {
-                wheel.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFinish() {
-                wheel.setVisibility(View.INVISIBLE);
-            }
-        };
-        wheel.setVisibility(View.VISIBLE);
-        wheelCountDown.start();
     }
 }
