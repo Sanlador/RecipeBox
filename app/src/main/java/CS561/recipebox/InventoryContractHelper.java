@@ -39,13 +39,10 @@ public class InventoryContractHelper extends SQLiteOpenHelper
 
     public void onCreate(SQLiteDatabase db)
     {
-        /*db.execSQL(SQL_CREATE_ENTRIES);
+        //db.execSQL(SQL_CREATE_ENTRIES);
         writeToDatabase("Pork", 3);
-        writeToDatabase("Pork", 3);
-        writeToDatabase("Pork", 3);
-        writeToDatabase("Pork", 3);
-        writeToDatabase("Pork", 3);
-        writeToDatabase("Pork", 3);*/
+        writeToDatabase("s", 3);
+        writeToDatabase("d", 3);
     }
 
 

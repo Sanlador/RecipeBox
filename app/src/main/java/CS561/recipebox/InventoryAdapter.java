@@ -43,6 +43,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     {
         public ImageButton subtractButton;
         public ImageButton addButton;
+        public ImageButton deleteButton;
         public TextView title;
         public TextInputEditText subtractNum;
         public TextInputEditText addNum;
@@ -59,6 +60,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             addNum = (TextInputEditText) itemView.findViewById(R.id.addNumber);
             itemCount = (TextView) itemView.findViewById(R.id.itemCount);
             parent = itemView.findViewById(R.id.inventoryParent);
+            deleteButton = (ImageButton) itemView.findViewById(R.id.deleteButton);
         }
 
         @Override
@@ -95,6 +97,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
         ImageButton add = viewHolder.addButton;
         ImageButton subtract = viewHolder.subtractButton;
+        ImageButton delete = viewHolder.deleteButton;
 
         add.setOnClickListener(new View.OnClickListener()
         {
@@ -119,6 +122,18 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 viewHolder.itemCount.setText(String.valueOf(subtraction));
                 item.setCount(subtraction);
                 helper.changeCountValue(item.getName(), subtraction);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                helper.removeFromDatabase(item.getName());
+                itemList.remove(position);
+                notifyItemRemoved(position);
+                Log.d("Deleting", "Position " + position);
             }
         });
 
