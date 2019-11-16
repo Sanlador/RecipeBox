@@ -131,9 +131,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             public void onClick(View view)
             {
                 helper.removeFromDatabase(item.getName());
-                itemList.remove(position);
-                notifyItemRemoved(position);
-                Log.d("Deleting", "Position " + position);
+                itemList.remove(viewHolder.getAdapterPosition());
+                notifyItemRemoved(viewHolder.getAdapterPosition());
+                Log.d("Deleting", "Position " + viewHolder.getAdapterPosition());
             }
         });
 
