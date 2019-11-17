@@ -4,13 +4,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Tap;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
@@ -23,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -90,13 +86,13 @@ public class scrollTest {
 
         for (int i = 0; i < testInput.size(); i++)
         {
-
+/*
             Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
             Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
             test = activity.recyclerViewLen;
             Espresso.onView(withId(R.id.rvRecipes)).perform(RecyclerViewActions.scrollToPosition(activity.recyclerViewLen - 1));
             Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,1000,20));
-            assert(test < activity.recyclerViewLen);
+            assert(test < activity.recyclerViewLen);*/
             /*
             Log.d("Unit Test input", testInput.get(i));
             if (i < 4)

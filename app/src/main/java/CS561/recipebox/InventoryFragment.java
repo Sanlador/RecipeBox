@@ -78,7 +78,7 @@ public class InventoryFragment extends Fragment
                         AlertDialog.Builder builderCount = new AlertDialog.Builder(context);
                         builderCount.setTitle("Enter Number of the item");
                         final EditText inputCount = new EditText(context);
-                        inputCount.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        inputCount.setInputType(InputType.TYPE_CLASS_TEXT);
                         builderCount.setView(inputCount);
 
                         // Set up the buttons

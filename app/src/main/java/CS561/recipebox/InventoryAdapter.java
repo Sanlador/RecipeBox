@@ -211,8 +211,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     intent.putExtra("Cholesterol", recipes.get(index).getCholesterol());
                     intent.putExtra("Sodium", recipes.get(index).getSodium());
                     activity.getActivity().startActivity(intent);
-
-
                 }
             }
             else
