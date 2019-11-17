@@ -429,7 +429,7 @@ public class SearchFragment extends Fragment
                 Log.d("Test", "Running DBQuery");
                 try{
                     loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + recipe_name).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
                     Log.d("Query Output", output);
 
                     // get the biggest category from the result of search, which is all info from database of each recipe

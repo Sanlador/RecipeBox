@@ -52,6 +52,12 @@
 
         </SearchView>
 
+        <CS561.recipebox.MultiSpinner
+            android:id="@+id/multiSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
