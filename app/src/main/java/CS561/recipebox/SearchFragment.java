@@ -17,11 +17,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import CS561.recipebox.ui.gallery.GalleryViewModel;
 
 import static androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 
@@ -36,7 +39,9 @@ public class SearchFragment extends Fragment
     private String[] data = {};
     private ListView mlistview;
     private ArrayAdapter mAdapter;
+    private pantryContractHelper pantryHelper;
     private int loadCounter = 0;
+    private GalleryViewModel galleryViewModel;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
 
@@ -63,8 +68,11 @@ public class SearchFragment extends Fragment
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState)
     {
+        galleryViewModel =
+                ViewModelProviders.of(this).get(GalleryViewModel.class);
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
         Context context = this.getContext();
@@ -80,7 +88,7 @@ public class SearchFragment extends Fragment
         initializer.add(s);
         ImageView rpic = root.findViewById(R.id.recipe_pic);
 
-        rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
+        RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
 
         // Initialize recipes
         recipes = Recipe.createRecipesList(0, initializer);
@@ -150,8 +158,7 @@ public class SearchFragment extends Fragment
                                             ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
                                             addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
 
-                                            for (Recipe r :addedRecipes)
-                                            {
+                                            for (Recipe r :addedRecipes) {
                                                 recipes.add(r);
                                             }
 
@@ -170,7 +177,7 @@ public class SearchFragment extends Fragment
                                 }
                                 catch (Exception e)
                                 {
-
+                                    
                                 }
                             }
                         });
