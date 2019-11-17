@@ -155,6 +155,57 @@
 >* To do: 
 ><br/>Cardview for the seacrh view to be implemented
 
+>November.6.2019 
+>* Achieved: Prototype of the card view and elements to be displayed
+><br/>
+>* To do: Run some tests on the scraped data and then load more data
+><br/>
+
+
+>November.7.2019 
+>* Achieved: Testing on the scraped data done successfully 
+><br/>
+>* To do: Create new Pantry UI along with its functionality
+><br/>
+
+
+>November.8.2019 
+>* Achieved: Card view displayed correctly 
+><br/>
+>* To do: Link card view to the recycler view 
+><br/>
+
+
+>November.12.2019 
+>* Achieved: Card view linked to recycler view and created Pantry database 
+><br/>
+>* To do: Implement auto-complete functionality in search, Tab view for Pantry and Search and also reduce search time for recipes
+><br/>
+
+
+>November.13.2019 
+>* Achieved: Implemented auto-complete functionality and tab view for pantry and search along with code refactoring
+><br/>
+>* To do: Suggest recipes based on ingredients in pantry, add "ingredient" filter to search bar
+><br/>
+
+
+>November.14.2019 
+>* Achieved: Reduced search time by modifying database queries and added "ingredient" filter to search bar along with their unit tests
+><br/>
+>* To do: Suggest recipes based on ingredients in pantry 
+><br/>
+
+
+>November.15.2019 
+>* Achieved: Added the functionality of adding "ingredient" filter along with unit testing and integration testing on the units merged
+><br/>
+>* To do: ***End of sprint 2!!!Sprint retrospective now!***
+
+><br/>
+
+
+
 <!--- Template
 >October..2019 
 >* Achieved: 
