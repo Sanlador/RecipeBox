@@ -10,7 +10,6 @@ import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Tap;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
@@ -93,10 +92,10 @@ public class loadingWheelTest {
 
             Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
             Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
-            test = activity.recyclerViewLen;
-            Espresso.onView(withId(R.id.rvRecipes)).perform(RecyclerViewActions.scrollToPosition(activity.recyclerViewLen));
-            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,1000,20));
-            assert(test < activity.recyclerViewLen);
+            //test = activity.recyclerViewLen;
+            //Espresso.onView(withId(R.id.rvRecipes)).perform(RecyclerViewActions.scrollToPosition(activity.recyclerViewLen));
+            //Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,1000,20));
+            //assert(test < activity.recyclerViewLen);
         }
     }
 

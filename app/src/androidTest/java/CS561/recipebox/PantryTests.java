@@ -109,10 +109,6 @@ public class PantryTests
 
             Espresso.onView(withId(R.id.inventoryList)).perform(RecyclerViewActions.actionOnItemAtPosition(verify.size() - 1,
                     MyViewAction.clickChildViewWithId(R.id.deleteButton)));
-
-            Espresso.onView(withId(R.id.inventoryList)).perform(RecyclerViewActions.actionOnItemAtPosition(verify.size() - 1,
-                    MyViewAction.clickChildViewWithId(R.id.deleteButton)));
-
             verify = helper.readFromDatabase();
             assert(verify.get(verify.size() - 1)[0] != testInput.get((i)));
         }

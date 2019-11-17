@@ -55,11 +55,11 @@
                 android:id="@+id/subtractButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
+                android:layout_marginStart="196dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inventoryCountText"
-                app:layout_constraintVertical_bias="0.607"
+                app:layout_constraintVertical_bias="0.391"
                 app:srcCompat="?attr/homeAsUpIndicator" />
 
             <TextView
@@ -91,7 +91,7 @@
 
             <TextView
                 android:id="@+id/inventoryCountText"
-                android:layout_width="215dp"
+                android:layout_width="227dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="152dp"
                 android:layout_marginBottom="60dp"
@@ -116,16 +116,17 @@
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="67dp"
+                android:layout_marginEnd="56dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/subtractButton"
                 app:layout_constraintTop_toBottomOf="@+id/reccomend"
+                app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@android:drawable/ic_delete" />
 
             <TextView
                 android:id="@+id/deleteText"
-                android:layout_width="41dp"
-                android:layout_height="40dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Delete Item"
@@ -136,7 +137,7 @@
             <Button
                 android:id="@+id/reccomend"
                 android:layout_width="154dp"
-                android:layout_height="38dp"
+                android:layout_height="53dp"
                 android:text="Reccomend me a recipe"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
