@@ -19,7 +19,7 @@ public class InventoryContractHelper extends SQLiteOpenHelper
     private static final String TABLE = InventoryContract.Inventory.TABLE_NAME;
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + InventoryContract.Inventory.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + InventoryContract.Inventory.TABLE_NAME + " (" +
                     InventoryContract.Inventory._ID + " INTEGER PRIMARY KEY," +
                     InventoryContract.Inventory.COLUMN_NAME_TITLE + " TEXT," +
                     InventoryContract.Inventory.COLUMN_NAME_COUNT + " TEXT)";
@@ -32,17 +32,13 @@ public class InventoryContractHelper extends SQLiteOpenHelper
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
 
     public void onCreate(SQLiteDatabase db)
     {
-        //db.execSQL(SQL_CREATE_ENTRIES);
-        writeToDatabase("Pork", 3);
-        writeToDatabase("s", 3);
-        writeToDatabase("d", 3);
+        db.execSQL(SQL_CREATE_ENTRIES);
     }
 
 

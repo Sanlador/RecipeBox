@@ -1,11 +1,13 @@
 package CS561.recipebox;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -25,13 +29,15 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private Context context;
     private AdapterView.OnItemClickListener onItemClickListener;
     private InventoryContractHelper helper;
+    private InventoryFragment activity;
 
 
-    public InventoryAdapter(List<InventoryItem> items, Context context)
+    public InventoryAdapter(List<InventoryItem> items, Context context, InventoryFragment fragment)
     {
         itemList = items;
         context = context;
         helper = new InventoryContractHelper(context);
+        activity = fragment;
     }
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener)
@@ -48,6 +54,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         public TextInputEditText subtractNum;
         public TextInputEditText addNum;
         public TextView itemCount;
+        public Button recommend;
         LinearLayout parent;
 
         public ViewHolder(View itemView)
@@ -61,6 +68,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             itemCount = (TextView) itemView.findViewById(R.id.itemCount);
             parent = itemView.findViewById(R.id.inventoryParent);
             deleteButton = (ImageButton) itemView.findViewById(R.id.deleteButton);
+            recommend = (Button) itemView.findViewById(R.id.reccomend);
         }
 
         @Override
@@ -98,6 +106,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         ImageButton add = viewHolder.addButton;
         ImageButton subtract = viewHolder.subtractButton;
         ImageButton delete = viewHolder.deleteButton;
+        Button recommend = viewHolder.recommend;
 
         add.setOnClickListener(new View.OnClickListener()
         {
@@ -137,6 +146,15 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             }
         });
 
+        recommend.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                recommendQuery(view, item.getName());
+            }
+        });
+
         viewHolder.parent.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -145,6 +163,78 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
             }
         });
+    }
+
+    private void recommendQuery(View v, String name)
+    {
+        String output;
+
+        //call query function
+        Log.d("Test", "Running DBQuery");
+        try
+        {
+            output = new QueryForPantry().execute(name).get();
+
+            // get the biggest category from the result of search, which is all info from database of each recipe
+            List<String[]> parsedOutput = new ArrayList<String[]>();
+            String[] splitOutput;
+            //Parse output
+            if (output.split("~~~").length > 0)
+            {
+                String[] parse;
+                splitOutput = output.split("~~~");
+                for (String s: splitOutput)
+                {
+                    parse = s.split("```");
+                    parsedOutput.add(parse);
+                }
+                if (parsedOutput.get(0).length > 1)
+                {
+                    List<Recipe> recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+                    Log.d("Output", recipes.get(0).getName());
+                    Random random = new Random();
+                    int index = random.nextInt(recipes.size());
+                    index = 0;
+
+                    try
+                    {
+                        Intent intent = new Intent(activity.getActivity(), recipe_ui.class);
+                        context.startActivity(intent);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.d("Exception", e.toString());
+                    }
+                    /*
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Info", recipes.get(index).getInfo());
+                    intent.putExtra("Name", recipes.get(index).getName());
+                    intent.putExtra("ingredients", recipes.get(index).getIngredients());
+                    intent.putExtra("Picture", recipes.get(index).getrPictureLink());
+                    intent.putExtra("Catagories", recipes.get(index).getCatagories());
+                    intent.putExtra("Serving", recipes.get(index).getServing());
+                    intent.putExtra("Cooktime", recipes.get(index).getCooktime());
+                    intent.putExtra("Calories", recipes.get(index).getCalories());
+                    intent.putExtra("Fat", recipes.get(index).getFat());
+                    intent.putExtra("Carbs", recipes.get(index).getCarbs());
+                    intent.putExtra("Proteins", recipes.get(index).getProteins());
+                    intent.putExtra("Cholesterol", recipes.get(index).getCholesterol());
+                    intent.putExtra("Sodium", recipes.get(index).getSodium());
+                    context.startActivity(intent);
+
+                     */
+                }
+            }
+            else
+            {
+                Log.d("Recommendation", "Failed to make recommendation; No output");
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 
     @Override

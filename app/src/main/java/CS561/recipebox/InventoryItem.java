@@ -35,7 +35,6 @@ public class InventoryItem
     public static ArrayList<InventoryItem> createInventoryList(Context context)
     {
         InventoryContractHelper contractHelper = new InventoryContractHelper(context);
-        contractHelper.writeToDatabase("Test",1);
         List<String[]> dbList = contractHelper.readFromDatabase();
         ArrayList<InventoryItem> list = new ArrayList<InventoryItem>();
 

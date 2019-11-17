@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBQuery extends AsyncTask<String, String, String>
+public class QueryForPantry extends AsyncTask<String, String, String>
 {
 
     private int pageNumber = 10;
@@ -37,18 +37,9 @@ public class DBQuery extends AsyncTask<String, String, String>
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String[] Q = params[0].split("#");
+                String query = params[0];
 
-                int loadCounter = Integer.parseInt(Q[0]);
-
-                String query = Q[1];
-
-                String selectSql = "select *\n" +
-                        "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
-                        //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE Recipe LIKE '" + query + "%') t\n" +
-                        "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
+                String selectSql = "select * from Webscrape WHERE Ingredients LIKE '%" + query + "%'";
 
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();

@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,13 +30,14 @@
 
             <TextView
                 android:id="@+id/inventory_name"
-                android:layout_width="151dp"
-                android:layout_height="78dp"
+                android:layout_width="149dp"
+                android:layout_height="40dp"
                 android:lineSpacingExtra="8sp"
                 android:text="Test Name Here"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,12 +45,11 @@
                 android:id="@+id/subtractNumber"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:inputType="number"
                 android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/subtractButton"
-                app:layout_constraintTop_toBottomOf="@+id/subtractText"
-                app:layout_constraintVertical_bias="0.125" />
+                app:layout_constraintTop_toBottomOf="@+id/subtractText" />
 
             <ImageButton
                 android:id="@+id/subtractButton"
@@ -66,12 +66,9 @@
                 android:id="@+id/subtractText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="Remove items"
-                app:layout_constraintBottom_toTopOf="@+id/subtractButton"
-                app:layout_constraintStart_toStartOf="@+id/subtractButton"
-                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText"
-                app:layout_constraintVertical_bias="0.733" />
+                app:layout_constraintEnd_toEndOf="@+id/subtractNumber"
+                app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addNumber"
@@ -110,21 +107,19 @@
                 android:id="@+id/addText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
                 android:text="Add items"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/subtractText"
+                app:layout_constraintStart_toStartOf="@+id/addNumber"
                 app:layout_constraintTop_toBottomOf="@+id/inventoryCountText" />
 
             <ImageButton
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="67dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/deleteText"
-                app:layout_constraintTop_toBottomOf="@+id/inventory_name"
-                app:layout_constraintVertical_bias="1.0"
+                app:layout_constraintEnd_toStartOf="@+id/subtractButton"
+                app:layout_constraintTop_toBottomOf="@+id/reccomend"
                 app:srcCompat="@android:drawable/ic_delete" />
 
             <TextView
@@ -132,11 +127,28 @@
                 android:layout_width="41dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Delete Item"
+                app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reccomend" />
+
+            <Button
+                android:id="@+id/reccomend"
+                android:layout_width="154dp"
+                android:layout_height="38dp"
+                android:text="Reccomend me a recipe"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="401dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="1dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
