@@ -194,18 +194,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     Log.d("Output", recipes.get(0).getName());
                     Random random = new Random();
                     int index = random.nextInt(recipes.size());
-                    index = 0;
 
-                    try
-                    {
-                        Intent intent = new Intent(activity.getActivity(), recipe_ui.class);
-                        context.startActivity(intent);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.d("Exception", e.toString());
-                    }
-                    /*
+                    Intent intent = new Intent(activity.getActivity(), recipe_ui.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Info", recipes.get(index).getInfo());
                     intent.putExtra("Name", recipes.get(index).getName());
@@ -220,9 +210,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     intent.putExtra("Proteins", recipes.get(index).getProteins());
                     intent.putExtra("Cholesterol", recipes.get(index).getCholesterol());
                     intent.putExtra("Sodium", recipes.get(index).getSodium());
-                    context.startActivity(intent);
+                    activity.getActivity().startActivity(intent);
 
-                     */
+
                 }
             }
             else
