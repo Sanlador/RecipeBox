@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -49,7 +51,10 @@ public class SearchFragment extends Fragment
     //HIGHLY INSECURE
     public String testOutput[];
     public String savedQuery;
+    public String last;
     public int recyclerViewLen;
+
+    public String checkbox = "Recipe";
 
 
     public static SearchFragment newInstance(int index)
@@ -79,6 +84,89 @@ public class SearchFragment extends Fragment
 
         RelativeLayout wheel = (RelativeLayout) root.findViewById(R.id.loadingPanel);
         wheel.setVisibility(View.INVISIBLE);
+
+        RadioGroup radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
+        RadioButton radio_title = (RadioButton) root.findViewById(R.id.radio_title);
+        RadioButton radio_ingredient = (RadioButton) root.findViewById(R.id.radio_ingredient);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (radio_title.isChecked()) {
+                    Log.d("Radio", "Title");
+                    checkbox = "Recipe";
+                } else if (radio_ingredient.isChecked()) {
+                    Log.d("Radio", "Ingredient");
+                    checkbox = "Ingredients";
+                }
+
+                ArrayList<String> data = new ArrayList<>();
+                Log.d("Test", "Running DBQuery");
+                try
+                {
+                    loadCounter = 0;
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + last).get();
+                    Log.d("Query Output", output);
+
+                    // get the biggest category from the result of search, which is all info from database of each recipe
+                    List<String[]> parsedOutput = new ArrayList<String[]>();
+
+                    String[] splitOutput;
+
+
+                    //Parse output
+                    if (output.split("~~~").length > 0)
+                    {
+                        String[] parse;
+                        splitOutput = output.split("~~~");
+                        for (String s: splitOutput)
+                        {
+                            parse = s.split("```");
+                            parsedOutput.add(parse);
+
+                            // For autocomplete, 3 is title of recipes
+                            // use the array 'data' later for showing it on listView
+                            data.add(parse[3]);
+                        }
+                    }
+                    else
+                    {
+                        splitOutput = new String[] {output};
+                        testOutput = splitOutput;
+                        recipes.clear();
+                        //Log.d("Parsed result", splitOutput[0]);
+                    }
+                }
+                catch (Exception e)
+                {
+
+                }
+
+                mlistview = (ListView) root.findViewById(R.id.listview);
+                mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
+                mlistview.setAdapter(mAdapter);
+                mlistview.setTextFilterEnabled(true);
+                //mAdapter.getFilter().filter(newText);
+
+            }
+
+            /*
+            Image
+            Categories
+            Servings
+            Recipe
+            Ingredients
+            Instructions
+            CookTime
+            Calories
+            Fat
+            Carbs
+            Protein
+            Cholesterol
+            Sodium
+             */
+        });
+
+
         //RECYCLER VIEW
 
         // Create a temporary "box" for attaching adapter
@@ -141,7 +229,7 @@ public class SearchFragment extends Fragment
                                 loadCounter++;
                                 try
                                 {
-                                    String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
+                                    String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + savedQuery).get();
                                     if (addedOutput.split("~~~").length > 0)
                                     {
                                         List<String[]> parsedOutput = new ArrayList<String[]>();
@@ -177,7 +265,7 @@ public class SearchFragment extends Fragment
                                 }
                                 catch (Exception e)
                                 {
-                                    
+
                                 }
                             }
                         });
@@ -211,7 +299,7 @@ public class SearchFragment extends Fragment
                 try
                 {
                     loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + query).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + query).get();
                     Log.d("Query Output", output);
 
                     // get the biggest category from the result of search, which is all info from database of each recipe
@@ -266,8 +354,8 @@ public class SearchFragment extends Fragment
             {
                 rvRecipes.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
-                String [] add = {};
 
+                last = newText;
                 if (sView.getQuery().length() == 0) {
                     //renderList(true);
                     Log.d("Input", newText);
@@ -278,7 +366,7 @@ public class SearchFragment extends Fragment
                 try
                 {
                     loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + newText).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + newText).get();
                     Log.d("Query Output", output);
 
                     // get the biggest category from the result of search, which is all info from database of each recipe
@@ -319,7 +407,7 @@ public class SearchFragment extends Fragment
                 mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
                 mlistview.setAdapter(mAdapter);
                 mlistview.setTextFilterEnabled(true);
-                mAdapter.getFilter().filter(newText);
+                //mAdapter.getFilter().filter(newText);
 
                 return false;
             }
@@ -341,7 +429,7 @@ public class SearchFragment extends Fragment
                 Log.d("Test", "Running DBQuery");
                 try{
                     loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + recipe_name).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
                     Log.d("Query Output", output);
 
                     // get the biggest category from the result of search, which is all info from database of each recipe
