@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
+public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder>
+{
 
     // Store a member variable for the recipes
     private List<Recipe> mRecipes;
@@ -31,19 +31,21 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private AdapterView.OnItemClickListener onItemClickListener;
 
     // Pass in the recipe array into the constructor
-    public RecipesAdapter(List<Recipe> recipes, Context context) {
+    public RecipesAdapter(List<Recipe> recipes, Context context)
+    {
         this.mRecipes = recipes;
         this.mContext = context;
-        //mRecipes = recipes;
     }
 
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener)
+    {
         this.onItemClickListener = onItemClickListener;
     }
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
@@ -55,15 +57,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView)
+        {
 
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+            nameTextView = (TextView) itemView.findViewById(R.id.inventory_name);
             infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
             picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
-            //recipeButton = (Button) itemView.findViewById(R.id.recipe_button);
             parent = itemView.findViewById(R.id.parent);
         }
 
@@ -75,7 +77,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     @Override
     // Usually involves inflating a layout from XML and returning the holder
-    public RecipesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -89,7 +92,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     @Override
     // Involves populating data into the item through holder
-    public void onBindViewHolder(RecipesAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecipesAdapter.ViewHolder viewHolder, int position)
+    {
 
         // Get the data model based on position
         Recipe recipe = mRecipes.get(position);
@@ -103,11 +107,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         ImageView picImageView = viewHolder.picImageView;
         Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
-        //Picasso.get().load(recipe.getrPictureLink()).resize(120, 60).into(viewHolder.picImageView);
 
-        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
+        viewHolder.parent.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent intent = new Intent(mContext, recipe_ui.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Info", mRecipes.get(position).getInfo());

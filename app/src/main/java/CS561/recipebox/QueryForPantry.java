@@ -8,13 +8,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBQuery extends AsyncTask<String, String, String> {
+public class QueryForPantry extends AsyncTask<String, String, String>
+{
 
     private int pageNumber = 10;
-    private String checkbox = "Recipe";
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(String... params)
+    {
         {
             if (params[0].length() < 1) {
                 return null;
@@ -36,25 +37,16 @@ public class DBQuery extends AsyncTask<String, String, String> {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String[] Q = params[0].split("#");
+                String query = params[0];
 
-                int loadCounter = Integer.parseInt(Q[0]);
-
-                String query = Q[2];
-
-                checkbox = Q[1];
-
-                String selectSql = "select *\n" +
-                        "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
-                        //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE " + checkbox + " LIKE '" + "%" + query + "%') t\n" +
-                        "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
+                String selectSql = "select * from Webscrape WHERE Ingredients LIKE '%" + query + "%'";
 
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
-                     ResultSet resultSet = statement.executeQuery(selectSql)) {
-                    while (resultSet.next()) {
+                     ResultSet resultSet = statement.executeQuery(selectSql))
+                {
+                    while (resultSet.next())
+                    {
                         output += (resultSet.getString(1) + "```"
                                 + resultSet.getString(2) + "```"
                                 + resultSet.getString(3) + "```"
@@ -72,8 +64,7 @@ public class DBQuery extends AsyncTask<String, String, String> {
                     }
                     connection.close();
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
@@ -91,7 +82,8 @@ public class DBQuery extends AsyncTask<String, String, String> {
      * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
      */
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String result)
+    {
         // TODO Auto-generated method stub
         super.onPostExecute(result);
     }
@@ -100,7 +92,8 @@ public class DBQuery extends AsyncTask<String, String, String> {
      * @see android.os.AsyncTask#onPreExecute()
      */
     @Override
-    protected void onPreExecute() {
+    protected void onPreExecute()
+    {
         // TODO Auto-generated method stub
         super.onPreExecute();
     }

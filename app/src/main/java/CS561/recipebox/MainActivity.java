@@ -1,295 +1,54 @@
 package CS561.recipebox;
 
-import android.app.Activity;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.util.Log;
 import android.view.Menu;
-import android.widget.SearchView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import CS561.recipebox.ui.PagerAdapter;
+
+public class MainActivity extends AppCompatActivity
+{
 
     private AppBarConfiguration mAppBarConfiguration;
-
-    //ArrayList<Recipe> recipes;
-
-    public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
-    public RecyclerView rvRecipes;
-    public RecipesAdapter adapter;
-    public String output;
-    public String[] parsedOutput;
-
-    //value used in unit testing to verify the output of using the search bar; COMMENT OUT FOR RELEASE BUILDS!
-    //HIGHLY INSECURE
-    public String testOutput[];
-    public String savedQuery;
-    public int recyclerViewLen;
-
-    private pantryContractHelper PCH;
-    private int loadCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        PCH = new pantryContractHelper(getApplicationContext());
-        testWrite();
-        testRead();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create a temporary "box" for attaching adapter
-        String[] s = {"Test", "Test", "Test", "Test", "Test"};
-        // Create a temporary "box" for attaching adapter
-        List<String[]> initializer = new ArrayList<String[]>();
-        initializer.add(s);
-        RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-
-        // Initialize recipes
-        recipes = Recipe.createRecipesList(0, initializer);
-        // Create adapter passing in the sample user data
-        RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
-        // Attach the adapter to the recyclerview to populate items
-        rvRecipes.setAdapter(adapter);
-        // Set layout manager to position the items
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-        rvRecipes.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
-        // Still don't know how to make adapter attached without creating one RecipeList
-        recipes.clear();
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //FloatingActionButton fab = findViewById(R.id.fab);
-
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        //NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);
-
-        final SearchView sView = findViewById(R.id.searchView);
-
-        rvRecipes.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (!recyclerView.canScrollVertically(1)) {
-                    //Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
-                    Log.d("System","Scrolling hits the bottom");
-                    loadCounter++;
-                    try
-                    {
-                        String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + savedQuery).get();
-                        if (addedOutput.split("~~~").length > 0)
-                        {
-                            List<String[]> parsedOutput = new ArrayList<String[]>();
-                            String[] parse;
-                            String[] splitOutput = addedOutput.split("~~~");
-                            for (String s: splitOutput)
-                            {
-                                parse = s.split("```");
-                                parsedOutput.add(parse);
-                            }
-
-                            testOutput = splitOutput;
 
 
 
-                            if (parsedOutput.get(0).length > 1)
-                            {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
-                                        addedRecipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
+        //TAB VIEW
 
-                                        for (Recipe r :addedRecipes) {
-                                            recipes.add(r);
-                                        }
-                                        int insertIndex = loadCounter * 10;
-                                        recipes.addAll(insertIndex, addedRecipes);
-                                        recyclerViewLen = recipes.size();
-                                        adapter.notifyItemRangeInserted(insertIndex, addedRecipes.size());
-                                        RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
-                                        rvRecipes.setAdapter(adapter);
-                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-                                        rvRecipes.setLayoutManager(linearLayoutManager);
-                                        rvRecipes.scrollToPosition(insertIndex+ 1);
-                                    }
-                                });
-                            }
+        PagerAdapter pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(pagerAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
 
-                        }
-                    }
-                    catch (Exception e){}
-                }
-            }
-        });
 
-        sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            // parameter query here is the words what users just type in
-            public boolean onQueryTextSubmit(String query) {
-                savedQuery = query;
-                String output;
-                //call query function
-                Log.d("Test", "Running DBQuery");
-                try{
-                    loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + query).get();
-                    Log.d("Query Output", output);
-
-                    // get the biggest category from the result of search, which is all info from database of each recipe
-                    List<String[]> parsedOutput = new ArrayList<String[]>();
-                    String[] splitOutput;
-                    //Parse output
-                    if (output.split("~~~").length > 0)
-                    {
-                        String[] parse;
-                        splitOutput = output.split("~~~");
-                        for (String s: splitOutput)
-                        {
-                            parse = s.split("```");
-                            parsedOutput.add(parse);
-                        }
-
-                        testOutput = splitOutput;
-
-                        // Update recyclerview
-                        recipes.clear();
-                        if (parsedOutput.get(0).length > 1)
-                        {
-                            RecyclerView rvRecipes = (RecyclerView) findViewById(R.id.rvRecipes);
-                            // Initialize recipes
-                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
-                            // Create adapter passing in the sample user data
-                            RecipesAdapter adapter = new RecipesAdapter(recipes, getApplicationContext());
-                            // Attach the adapter to the recyclerview to populate items
-                            rvRecipes.setAdapter(adapter);
-                            // Set layout manager to position the items
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-                            rvRecipes.setLayoutManager(linearLayoutManager);
-                        }
-                    }
-                    else
-                    {
-                        splitOutput = new String[] {output};
-                        testOutput = splitOutput;
-                        recipes.clear();
-                        //Log.d("Parsed result", splitOutput[0]);
-                    }
-                }
-                catch (Exception e) {
-
-                }
-                //queryDB(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (sView.getQuery().length() == 0) {
-                    //renderList(true);
-                    Log.d("Input", newText);
-                }
-                return false;
-            }
-        });
     }
 
+    public void OnItemsSelected(boolean[] selected){
+
+    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-
-
-    public void testWrite()
-    {
-        // Gets the data repository in write mode
-        SQLiteDatabase db = PCH.getWritableDatabase();
-
-        // Create a new map of values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(pantryContract.Inventory.COLUMN_NAME_TITLE, "Test");
-        values.put(pantryContract.Inventory.COLUMN_NAME_COUNT, "Test");
-
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(pantryContract.Inventory.TABLE_NAME, null, values);
-    }
-
-    public void testRead()
-    {
-        SQLiteDatabase db = PCH.getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                BaseColumns._ID,
-                pantryContract.Inventory.COLUMN_NAME_TITLE,
-                pantryContract.Inventory.COLUMN_NAME_COUNT
-        };
-
-        // Filter results WHERE "title" = 'My Title'
-        String selection = pantryContract.Inventory.COLUMN_NAME_TITLE + " = ?";
-        String[] selectionArgs = { "My Title" };
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                pantryContract.Inventory.COLUMN_NAME_COUNT + " DESC";
-
-        Cursor cursor = db.query(
-                pantryContract.Inventory.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
-        );
-
-        List itemIds = new ArrayList<>();
-        while(cursor.moveToNext()) {
-            long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(pantryContract.Inventory.TABLE_NAME));
-            itemIds.add(itemId);
-        }
-        cursor.close();
     }
 }

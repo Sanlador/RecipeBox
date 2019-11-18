@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import CS561.recipebox.PantryFragment;
+import CS561.recipebox.InventoryFragment;
 import CS561.recipebox.R;
 import CS561.recipebox.SearchFragment;
 
@@ -33,7 +33,7 @@ public class PagerAdapter extends FragmentPagerAdapter
         if (position == 0)
             return SearchFragment.newInstance(position + 1);
         else
-            return PantryFragment.newInstance(position + 1);
+            return InventoryFragment.newInstance(position + 1);
     }
 
     @Nullable

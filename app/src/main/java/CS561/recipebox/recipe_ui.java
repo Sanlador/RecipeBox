@@ -42,15 +42,15 @@ public class recipe_ui  extends AppCompatActivity
             //ing.setText(ingredients);
             TextView Info = (TextView)findViewById(R.id.instructions);
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
-                            "\n\n" + "Ingredients:\n\n\t" + ingredients +
-                            "\n\n\nDirections:\n\n\t" + info +
-                            "\n\nCatagories:\n\n\t" + catagories + "\n" +
-                            "\nNutrition:\n\n" +
-                            "\tFat: " + fat + " grams\n" +
-                            "\tCarbs: " + carbs + " grams\n" +
-                            "\tProteins: " + proteins + " grams\n" +
-                            "\tCholesterol: " + cholesterol + " grams\n" +
-                            "\tSodium: " + sodium + " grams\n"
+                    "\n\n" + "Ingredients:\n\n\t" + ingredients +
+                    "\n\n\nDirections:\n\n\t" + info +
+                    "\n\nCatagories:\n\n\t" + catagories + "\n" +
+                    "\nNutrition:\n\n" +
+                    "\tFat: " + fat + " grams\n" +
+                    "\tCarbs: " + carbs + " grams\n" +
+                    "\tProteins: " + proteins + " grams\n" +
+                    "\tCholesterol: " + cholesterol + " grams\n" +
+                    "\tSodium: " + sodium + " grams\n"
             );
             //setContentView(title);
 

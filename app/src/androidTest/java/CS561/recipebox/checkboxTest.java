@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -28,13 +31,14 @@ import static org.junit.Assert.assertThat;
 //Uses testClass as a template to run tests to confirm that query system is correctly implemented
 @MediumTest
 @RunWith(AndroidJUnit4.class)
-public class scrollTest {
+public class checkboxTest
+{
 
     int main()
     {
         Log.d("Test", "Test");
         try {
-            testRecyclerScroll();
+            testSearchBar();
         }
         catch (Exception e)
         {
@@ -47,7 +51,7 @@ public class scrollTest {
     public ActivityTestRule<MainActivity> rule  = new  ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void testRecyclerScroll() throws Exception {
+    public void testSearchBar() throws Exception {
         Log.d("Test", "Test executed.");
         MainActivity activity = rule.getActivity();
         View searchView = activity.findViewById(R.id.searchView);
@@ -56,18 +60,18 @@ public class scrollTest {
         Random rand = new Random();
 
         List<String> testInput = new ArrayList<String>();
-        testInput.add("Fries");
-        testInput.add("fries");
-        testInput.add("fRies");
-        testInput.add("FRIES");
+        testInput.add("Fri");
+        testInput.add("frie");
+        testInput.add("fR");
+        testInput.add("FR");
         testInput.add("");
-        testInput.add("sTEAK");
-        testInput.add("STEAK");
+        testInput.add("sTE");
+        testInput.add("ST");
         testInput.add("Ste");
-        testInput.add("Steak");
-        testInput.add("sliders");
-        testInput.add("sliders.");
-        testInput.add("Sliders");
+        testInput.add("S");
+        testInput.add("slide");
+        testInput.add("slider");
+        testInput.add("Sli");
         testInput.add("s");
 
 
@@ -82,20 +86,25 @@ public class scrollTest {
             }
             testInput.add(randInput);
         }
-        int test = 0;
+
 
         for (int i = 0; i < testInput.size(); i++)
         {
-/*
+
             Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
+
+            if (rand.nextBoolean())
+                Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,600,150));
+            else
+                Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,300,150));
+
+
+
             Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
-            test = activity.recyclerViewLen;
-            Espresso.onView(withId(R.id.rvRecipes)).perform(RecyclerViewActions.scrollToPosition(activity.recyclerViewLen - 1));
+            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,500,40));
             Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,1000,20));
-            assert(test < activity.recyclerViewLen);*/
-            /*
             Log.d("Unit Test input", testInput.get(i));
-            if (i < 4)
+            /*if (i < 4)
                 assert(activity.recipes.get(0).getName() == "Chef John's French Fries 1 russet potato, cut into evenly sized strips;1 russet potato, cut into evenly sized strips");   //incorrect value in DB, will fix later
             else if (i == 4)
                 assert(activity.testOutput.length == 0);
@@ -112,7 +121,7 @@ public class scrollTest {
             else if (i > 12)
                 assert(activity.recipes.size() == 0);
 
-             */
+            */
         }
     }
 

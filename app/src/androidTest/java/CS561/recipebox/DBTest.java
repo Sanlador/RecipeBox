@@ -65,9 +65,9 @@ public class DBTest
         testInput.add("Pie");
         testInput.add("Key Lime");
         testInput.add("x");
-        pantryContractHelper pantryHelper;
+        InventoryContractHelper pantryHelper;
 
-        pantryHelper = new pantryContractHelper(activity);
+        pantryHelper = new InventoryContractHelper(activity);
 
         String randInput;
         for (int i = 0; i < 10; i++)

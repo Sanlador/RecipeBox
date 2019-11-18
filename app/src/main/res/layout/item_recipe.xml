@@ -32,7 +32,7 @@
 
 
             <TextView
-                android:id="@+id/recipe_name"
+                android:id="@+id/inventory_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -61,7 +61,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/recipe_pic"
-                app:layout_constraintTop_toBottomOf="@+id/recipe_name" />
+                app:layout_constraintTop_toBottomOf="@+id/inventory_name" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
