@@ -113,7 +113,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(mContext, recipe_ui.class);
+                Intent intent = new Intent(mContext, RecipeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Info", mRecipes.get(position).getInfo());
                 intent.putExtra("Name", mRecipes.get(position).getName());

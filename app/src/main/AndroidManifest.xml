@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".recipe_ui"
+            android:name=".RecipeActivity"
             android:label="recipe"
             />
     </application>

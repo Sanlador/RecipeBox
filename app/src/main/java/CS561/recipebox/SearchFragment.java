@@ -26,8 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import CS561.recipebox.ui.gallery.GalleryViewModel;
-
 import static androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 
 public class SearchFragment extends Fragment
@@ -43,7 +41,6 @@ public class SearchFragment extends Fragment
     private ArrayAdapter mAdapter;
     private pantryContractHelper pantryHelper;
     private int loadCounter = 0;
-    private GalleryViewModel galleryViewModel;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
 
@@ -76,8 +73,6 @@ public class SearchFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
         root = inflater.inflate(R.layout.fragment_search, container, false);
 
         Context context = this.getContext();

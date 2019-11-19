@@ -6,18 +6,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
-public class recipe_ui  extends AppCompatActivity
+import CS561.recipebox.ui.HomePagerAdapter;
+import CS561.recipebox.ui.RecipePagerAdapter;
+
+public class RecipeActivity extends AppCompatActivity
 {
     String testName;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.recipe_main);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+
+        RecipePagerAdapter pagerAdapter = new RecipePagerAdapter(this, getSupportFragmentManager(), extras);
+        ViewPager viewPager = findViewById(R.id.recipePager);
+        viewPager.setAdapter(pagerAdapter);
+        TabLayout tabs = findViewById(R.id.recipeTabs);
+        tabs.setupWithViewPager(viewPager);
+
+        /*
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
             String name = testName = (String)extras.get("Name");
             String ingredients = (String)extras.get("ingredients");
             String info = (String)extras.get("Info");
@@ -35,7 +51,9 @@ public class recipe_ui  extends AppCompatActivity
             //The key argument here must match that used in the other activity
             Log.d("Intent pass", name);
 
-            setContentView(R.layout.recipe_ui);
+            setContentView(R.layout.RecipeActivity);
+
+
             TextView title = (TextView)findViewById(R.id.title);
             title.setText(name);
             //TextView ing = (TextView)findViewById(R.id.ingredients);
@@ -56,7 +74,9 @@ public class recipe_ui  extends AppCompatActivity
 
             ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
-        }
+
+
+        }*/
     }
 
     public String getName()
