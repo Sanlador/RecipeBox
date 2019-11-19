@@ -52,10 +52,12 @@
 
         </SearchView>
 
-        <CS561.recipebox.MultiSelectionSpinner
-            android:id="@+id/prefer_selection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+            android:id="@+id/searchMultiSpinnerUnlimited"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:hintText="Multi Selection With Filter Without Limit" />
 
         <RadioGroup
             android:id="@+id/radioGroup"

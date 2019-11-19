@@ -23,7 +23,18 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.androidbuts.multispinnerfilter.KeyPairBoolData;
+import com.androidbuts.multispinnerfilter.MultiSpinnerSearch;
+import com.androidbuts.multispinnerfilter.SingleSpinner;
+import com.androidbuts.multispinnerfilter.SingleSpinnerSearch;
+import com.androidbuts.multispinnerfilter.SpinnerListener;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import CS561.recipebox.ui.gallery.GalleryViewModel;
@@ -70,10 +81,6 @@ public class SearchFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-
-
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -85,12 +92,70 @@ public class SearchFragment extends Fragment
 
         Context context = this.getContext();
 
+        /*
         // Multiple checkboxes event
         MultiSelectionSpinner spinner;
         ArrayList<String> tags = new ArrayList<>();
         tags.add("Test");
         spinner = (MultiSelectionSpinner) root.findViewById(R.id.prefer_selection);
         spinner.setItems(tags);
+         */
+
+        String tags_output;
+        String[] splitOutput;
+
+        try
+        {
+
+            tags_output = new QueryForPreferedTags().execute().get();
+            Log.d("Query Output", tags_output);
+
+            splitOutput = tags_output.split("~~~");
+            List<String> list = new ArrayList<>();
+            for (String s : splitOutput)
+            {
+                list.add(s);
+            }
+            final List<KeyPairBoolData> listArray0 = new ArrayList<>();
+
+            for (int i = 0; i < list.size(); i++) {
+                KeyPairBoolData h = new KeyPairBoolData();
+                h.setId(i + 1);
+                h.setName(list.get(i));
+                h.setSelected(false);
+                listArray0.add(h);
+            }
+
+
+            MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
+
+            searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!");
+            searchMultiSpinnerUnlimited.setSearchHint("Find Data");
+
+            searchMultiSpinnerUnlimited.setItems(listArray0, -1, new SpinnerListener() {
+
+                @Override
+                public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                    for (int i = 0; i < items.size(); i++) {
+                        if (items.get(i).isSelected()) {
+                            Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                        }
+                    }
+                }
+            });
+
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        //List<String> list = Arrays.asList(splitOutput);
+
+
+
+
 
         // Wheel animation
         RelativeLayout wheel = (RelativeLayout) root.findViewById(R.id.loadingPanel);
