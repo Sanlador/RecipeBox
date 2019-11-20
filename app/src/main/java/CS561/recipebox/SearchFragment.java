@@ -23,18 +23,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
 import com.androidbuts.multispinnerfilter.MultiSpinnerSearch;
-import com.androidbuts.multispinnerfilter.SingleSpinner;
-import com.androidbuts.multispinnerfilter.SingleSpinnerSearch;
 import com.androidbuts.multispinnerfilter.SpinnerListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import CS561.recipebox.ui.gallery.GalleryViewModel;
@@ -64,9 +57,11 @@ public class SearchFragment extends Fragment
     public String savedQuery;
     public String last;
     public int recyclerViewLen;
-
     public String checkbox = "Recipe";
-
+    public String[] selected;
+    public List<KeyPairBoolData> listArray = new ArrayList<>();
+    public List<String> list = new ArrayList<>();
+    public List<String> filter_prefered_tags  = new ArrayList<>();
 
     public static SearchFragment newInstance(int index)
     {
@@ -92,70 +87,50 @@ public class SearchFragment extends Fragment
 
         Context context = this.getContext();
 
-        /*
-        // Multiple checkboxes event
-        MultiSelectionSpinner spinner;
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("Test");
-        spinner = (MultiSelectionSpinner) root.findViewById(R.id.prefer_selection);
-        spinner.setItems(tags);
-         */
-
+        MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
         String tags_output;
-        String[] splitOutput;
-
+        String[] split_output;
         try
         {
-
-            tags_output = new QueryForPreferedTags().execute().get();
+            tags_output = new QueryForTags().execute().get();
             Log.d("Query Output", tags_output);
-
-            splitOutput = tags_output.split("~~~");
-            List<String> list = new ArrayList<>();
-            for (String s : splitOutput)
+            split_output = tags_output.split("~~~");
+            selected = tags_output.split("~~~");
+            for (String s : split_output)
             {
                 list.add(s);
             }
-            final List<KeyPairBoolData> listArray0 = new ArrayList<>();
 
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++)
+            {
                 KeyPairBoolData h = new KeyPairBoolData();
                 h.setId(i + 1);
                 h.setName(list.get(i));
                 h.setSelected(false);
-                listArray0.add(h);
+                listArray.add(h);
             }
-
-
-            MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
-
             searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!");
             searchMultiSpinnerUnlimited.setSearchHint("Find Data");
-
-            searchMultiSpinnerUnlimited.setItems(listArray0, -1, new SpinnerListener() {
-
+            searchMultiSpinnerUnlimited.setItems(listArray, -1, new SpinnerListener()
+            {
                 @Override
-                public void onItemsSelected(List<KeyPairBoolData> items) {
-
+                public void onItemsSelected(List<KeyPairBoolData> items)
+                {
+                    filter_prefered_tags.clear();
                     for (int i = 0; i < items.size(); i++) {
-                        if (items.get(i).isSelected()) {
-                            Log.i("TAG", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                        if (items.get(i).isSelected())
+                        {
+                            Log.i("TAG Selected", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                            filter_prefered_tags.add(items.get(i).getName());
                         }
                     }
                 }
             });
-
         }
         catch (Exception e)
         {
 
         }
-
-        //List<String> list = Arrays.asList(splitOutput);
-
-
-
-
 
         // Wheel animation
         RelativeLayout wheel = (RelativeLayout) root.findViewById(R.id.loadingPanel);
@@ -182,7 +157,7 @@ public class SearchFragment extends Fragment
                 {
                     loadCounter = 0;
                     output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + last).get();
-                    Log.d("Query Output", output);
+                    //Log.d("Query Output", output);
 
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
@@ -431,53 +406,106 @@ public class SearchFragment extends Fragment
             {
                 rvRecipes.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
+                ArrayList<String> data = new ArrayList<>();
 
                 last = newText;
+
                 if (sView.getQuery().length() == 0) {
                     //renderList(true);
                     Log.d("Input", newText);
                 }
 
-                ArrayList<String> data = new ArrayList<>();
-                Log.d("Test", "Running DBQuery");
-                try
+                String concat = "";
+                for (String s : filter_prefered_tags)
                 {
-                    loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + newText).get();
-                    Log.d("Query Output", output);
+                    concat += s + "```";
+                }
+                //Log.d("Concat", concat);
+                String[] play = concat.split("```");
+                for (String s : play)
+                {
+                    //Log.d("Deconcat", s);
+                }
 
-                    // get the biggest category from the result of search, which is all info from database of each recipe
-                    List<String[]> parsedOutput = new ArrayList<String[]>();
-
-                    String[] splitOutput;
-
-
-                    //Parse output
-                    if (output.split("~~~").length > 0)
+                if (concat != "")
+                {
+                    //Log.d("Tag", "Empty");
+                    Log.d("Test", "Running DBQuery");
+                    try
                     {
-                        String[] parse;
-                        splitOutput = output.split("~~~");
-                        for (String s: splitOutput)
-                        {
-                            parse = s.split("```");
-                            parsedOutput.add(parse);
+                        loadCounter = 0;
+                        output = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + newText).get();
+                        Log.d("Query Output", output);
 
-                            // For autocomplete, 3 is title of recipes
-                            // use the array 'data' later for showing it on listView
-                            data.add(parse[3]);
+                        // get the biggest category from the result of search, which is all info from database of each recipe
+                        List<String[]> parsedOutput = new ArrayList<String[]>();
+
+                        String[] splitOutput;
+
+
+                        //Parse output
+                        if (output.split("~~~").length > 0)
+                        {
+                            String[] parse;
+                            splitOutput = output.split("~~~");
+                            for (String s : splitOutput)
+                            {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+
+                                // For autocomplete, 3 is title of recipes
+                                // use the array 'data' later for showing it on listView
+                                data.add(parse[3]);
+                            }
+                        }
+                        else
+                            {
+                            splitOutput = new String[]{output};
+                            testOutput = splitOutput;
+                            recipes.clear();
+                            //Log.d("Parsed result", splitOutput[0]);
                         }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        splitOutput = new String[] {output};
-                        testOutput = splitOutput;
-                        recipes.clear();
-                        //Log.d("Parsed result", splitOutput[0]);
+
                     }
                 }
-                catch (Exception e)
-                {
 
+                else {
+                    Log.d("Test", "Running DBQuery");
+                    try {
+                        loadCounter = 0;
+                        output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + newText).get();
+                        Log.d("Query Output", output);
+
+                        // get the biggest category from the result of search, which is all info from database of each recipe
+                        List<String[]> parsedOutput = new ArrayList<String[]>();
+
+                        String[] splitOutput;
+
+
+                        //Parse output
+                        if (output.split("~~~").length > 0) {
+                            String[] parse;
+                            splitOutput = output.split("~~~");
+                            for (String s : splitOutput) {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+
+                                // For autocomplete, 3 is title of recipes
+                                // use the array 'data' later for showing it on listView
+                                data.add(parse[3]);
+                            }
+                        } else {
+                            splitOutput = new String[]{output};
+                            testOutput = splitOutput;
+                            recipes.clear();
+                            //Log.d("Parsed result", splitOutput[0]);
+                        }
+                    } catch (Exception e) {
+
+                    }
                 }
 
                 mlistview = (ListView) root.findViewById(R.id.listview);

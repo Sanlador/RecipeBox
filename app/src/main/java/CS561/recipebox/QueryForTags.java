@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class QueryForPreferedTags extends AsyncTask<String, String, String>
+public class QueryForTags extends AsyncTask<String, String, String>
 {
 
     private int pageNumber = 10;
@@ -40,6 +40,7 @@ public class QueryForPreferedTags extends AsyncTask<String, String, String>
                 connection = DriverManager.getConnection(url);
 
                 String selectSql = "select * from recipe_categories";
+                //String selectSql = "select * from recipe_categories";
 
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(selectSql);
@@ -58,7 +59,7 @@ public class QueryForPreferedTags extends AsyncTask<String, String, String>
             //temporary output. Will change once DB connection is implemented.
 
             if (output.length() > 0)
-                output = output.substring(0, output.length() - 1);
+                output = output.substring(0, output.length() - 3);
             //return params[0];
             Log.d("Test", "Exiting DBQuery");
 
