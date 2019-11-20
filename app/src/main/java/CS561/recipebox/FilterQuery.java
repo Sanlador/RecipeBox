@@ -17,10 +17,12 @@ public class FilterQuery extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         {
-
+            /*
             if (params[0].length() < 1) {
                 return null;
             }
+
+             */
 
 
             Log.d("Function", "Launching Query");
@@ -57,16 +59,16 @@ public class FilterQuery extends AsyncTask<String, String, String> {
                     //Log.d("Tag", s);
                     concat += "Categories like " + "'%" + s + "%' " + "and ";
                 }
-
-                concat +=  "Recipe like '%" + query + "%'";
-
-                //selectSql = selectSql.substring(0, selectSql.length() - 4);
-
-
-
-                selectSql = "select * from Webscrape where " + concat;
-
-
+                if (params[0].length() < 1)
+                {
+                    selectSql = "select * from Webscrape where " + concat;
+                    selectSql = selectSql.substring(0, selectSql.length() - 4);
+                }
+                else
+                {
+                    concat += "Recipe like '%" + query + "%'";
+                    selectSql = "select * from Webscrape where " + concat;
+                }
 
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
