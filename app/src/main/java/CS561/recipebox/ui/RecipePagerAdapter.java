@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import CS561.recipebox.InstructionsFragment;
 import CS561.recipebox.R;
 import CS561.recipebox.RecipeFragment;
 
@@ -16,7 +17,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter
 {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.search_text, R.string.pantry_text};
+    private static final int[] TAB_TITLES = new int[]{ R.string.recipe_text, R.string.instructions_text};
     private final Context mContext;
     Bundle extras;
 
@@ -32,10 +33,10 @@ public class RecipePagerAdapter extends FragmentPagerAdapter
     {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        //if (position == 0)
+        if (position == 0)
             return RecipeFragment.newInstance(position + 1, extras);
-        //else
-            //return InventoryFragment.newInstance(position + 1);
+        else
+            return InstructionsFragment.newInstance(position + 1, extras);
     }
 
     @Nullable

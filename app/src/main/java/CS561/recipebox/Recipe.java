@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Struct of Recipe
-public class Recipe {
+public class Recipe
+{
     private String rName;
     private String rInfo;
     private String rIngredients;
