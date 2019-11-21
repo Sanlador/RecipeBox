@@ -70,7 +70,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View view)
+        {
             Log.d(TAG, "onClick " + getPosition());
         }
     }
@@ -134,7 +135,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return mRecipes.size();
     }
 }

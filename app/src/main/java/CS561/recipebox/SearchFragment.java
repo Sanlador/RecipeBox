@@ -175,7 +175,6 @@ public class SearchFragment extends Fragment
 
                     String[] splitOutput;
 
-
                     //Parse output
                     if (output.split("~~~").length > 0)
                     {
@@ -212,7 +211,6 @@ public class SearchFragment extends Fragment
 
             }
         });
-
 
         //RECYCLER VIEW
 

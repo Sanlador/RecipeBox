@@ -5,7 +5,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
@@ -13,11 +15,14 @@ public class recipe_ui  extends AppCompatActivity
 {
     String testName;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
+
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
+        {
             String name = testName = (String)extras.get("Name");
             String ingredients = (String)extras.get("ingredients");
             String info = (String)extras.get("Info");
@@ -56,6 +61,9 @@ public class recipe_ui  extends AppCompatActivity
 
             ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
+
+            // Adding a backbotton on the toolbar that has shown in main_activity
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
