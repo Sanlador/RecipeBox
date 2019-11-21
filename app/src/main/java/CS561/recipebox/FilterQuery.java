@@ -47,7 +47,6 @@ public class FilterQuery extends AsyncTask<String, String, String> {
                 String query = Q[3];
                 prefer_tag = Q[2];
                 checkbox = Q[1];
-                //Log.d("Q2", Q[2]);
                 String[] indi_tag = Q[2].split("```");
 
                 String concat = "";

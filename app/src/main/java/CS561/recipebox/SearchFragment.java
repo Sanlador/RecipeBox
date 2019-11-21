@@ -82,15 +82,14 @@ public class SearchFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+        galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
         root = inflater.inflate(R.layout.fragment_search, container, false);
-
         Context context = this.getContext();
-
-        MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
         String tags_output;
         String[] split_output;
+        MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
+
+        // Building up spinner that based on the input that is given from 'QueryForTags'
         try
         {
             tags_output = new QueryForTags().execute().get();
@@ -119,7 +118,8 @@ public class SearchFragment extends Fragment
                 {
                     filter_prefered_tags.clear();
                     concat = "";
-                    for (int i = 0; i < items.size(); i++) {
+                    for (int i = 0; i < items.size(); i++)
+                    {
                         if (items.get(i).isSelected())
                         {
                             Log.i("TAG Selected", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
@@ -128,8 +128,6 @@ public class SearchFragment extends Fragment
                     }
                 }
             });
-
-
         }
         catch (Exception e)
         {
@@ -144,13 +142,21 @@ public class SearchFragment extends Fragment
         RadioGroup radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
         RadioButton radio_title = (RadioButton) root.findViewById(R.id.radio_title);
         RadioButton radio_ingredient = (RadioButton) root.findViewById(R.id.radio_ingredient);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+
+            // A mmethon does the reponse whenever there is event that happened when radiogroup is
+            // updataed
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (radio_title.isChecked()) {
+            public void onCheckedChanged(RadioGroup radioGroup, int i)
+            {
+                if (radio_title.isChecked())
+                {
                     Log.d("Radio", "Title");
                     checkbox = "Recipe";
-                } else if (radio_ingredient.isChecked()) {
+                }
+                else if (radio_ingredient.isChecked())
+                {
                     Log.d("Radio", "Ingredient");
                     checkbox = "Ingredients";
                 }
@@ -240,6 +246,8 @@ public class SearchFragment extends Fragment
             {
                 super.onScrollStateChanged(recyclerView, newState);
 
+                // When users scroll down and hit the bottom on recyclerview then this event is
+                // triggered
                 if (!recyclerView.canScrollVertically(1))
                 {
                     try
@@ -252,7 +260,8 @@ public class SearchFragment extends Fragment
                                 showWheel();
                             }
                         });
-                    } catch (Throwable throwable)
+                    }
+                    catch (Throwable throwable)
                     {
                         throwable.printStackTrace();
                     }
@@ -266,23 +275,29 @@ public class SearchFragment extends Fragment
                             {
                                 Log.d("System","Scrolling hits the bottom");
                                 loadCounter++;
-                                if (concat == "") {
-                                    try {
+                                if (concat == "")
+                                {
+                                    try
+                                    {
                                         String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + savedQuery).get();
-                                        if (addedOutput.split("~~~").length > 0) {
+                                        if (addedOutput.split("~~~").length > 0)
+                                        {
                                             List<String[]> parsedOutput = new ArrayList<String[]>();
                                             String[] parse;
                                             String[] splitOutput = addedOutput.split("~~~");
-                                            for (String s : splitOutput) {
+                                            for (String s : splitOutput)
+                                            {
                                                 parse = s.split("```");
                                                 parsedOutput.add(parse);
                                             }
                                             testOutput = splitOutput;
-                                            if (parsedOutput.get(0).length > 1) {
+                                            if (parsedOutput.get(0).length > 1)
+                                            {
                                                 ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
                                                 addedRecipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
 
-                                                for (Recipe r : addedRecipes) {
+                                                for (Recipe r : addedRecipes)
+                                                {
                                                     recipes.add(r);
                                                 }
 
@@ -309,20 +324,24 @@ public class SearchFragment extends Fragment
                                     try
                                     {
                                         String addedOutput = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + savedQuery).get();
-                                        if (addedOutput.split("~~~").length > 0) {
+                                        if (addedOutput.split("~~~").length > 0)
+                                        {
                                             List<String[]> parsedOutput = new ArrayList<String[]>();
                                             String[] parse;
                                             String[] splitOutput = addedOutput.split("~~~");
-                                            for (String s : splitOutput) {
+                                            for (String s : splitOutput)
+                                            {
                                                 parse = s.split("```");
                                                 parsedOutput.add(parse);
                                             }
                                             testOutput = splitOutput;
-                                            if (parsedOutput.get(0).length > 1) {
+                                            if (parsedOutput.get(0).length > 1)
+                                            {
                                                 ArrayList<Recipe> addedRecipes = new ArrayList<Recipe>();
                                                 addedRecipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
 
-                                                for (Recipe r : addedRecipes) {
+                                                for (Recipe r : addedRecipes)
+                                                {
                                                     recipes.add(r);
                                                 }
 
@@ -356,11 +375,14 @@ public class SearchFragment extends Fragment
             }
         });
 
+        // Update the autocomplete on the listview
         mlistview = (ListView) root.findViewById(R.id.listview);
         mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
         mlistview.setAdapter(mAdapter);
         mlistview.setTextFilterEnabled(true);
 
+        // A method that listens to whenever there is an event happening on search bar and does the
+        // response to it
         sView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
             @Override
@@ -371,17 +393,17 @@ public class SearchFragment extends Fragment
                 rvRecipes.setVisibility(View.VISIBLE);
                 savedQuery = query;
                 String output;
-
                 for (String s : filter_prefered_tags)
                 {
                     concat += s + "```";
                 }
-
                 Log.d("Submit", concat);
-                if (concat == "") {
+                if (concat == "")
+                {
                     //call query function
                     Log.d("Test", "Running DBQuery sumbit without concat");
-                    try {
+                    try
+                    {
                         loadCounter = 0;
                         output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + query).get();
                         Log.d("Query Output", output);
@@ -390,10 +412,12 @@ public class SearchFragment extends Fragment
                         List<String[]> parsedOutput = new ArrayList<String[]>();
                         String[] splitOutput;
                         //Parse output
-                        if (output.split("~~~").length > 0) {
+                        if (output.split("~~~").length > 0)
+                        {
                             String[] parse;
                             splitOutput = output.split("~~~");
-                            for (String s : splitOutput) {
+                            for (String s : splitOutput)
+                            {
                                 parse = s.split("```");
                                 parsedOutput.add(parse);
                             }
@@ -402,7 +426,8 @@ public class SearchFragment extends Fragment
 
                             // Update recyclerview
                             recipes.clear();
-                            if (parsedOutput.get(0).length > 1) {
+                            if (parsedOutput.get(0).length > 1)
+                            {
                                 RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
                                 // Initialize recipes
                                 recipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
@@ -414,12 +439,16 @@ public class SearchFragment extends Fragment
                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                                 rvRecipes.setLayoutManager(linearLayoutManager);
                             }
-                        } else {
+                        }
+                        else
+                        {
                             splitOutput = new String[]{output};
                             testOutput = splitOutput;
                             recipes.clear();
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
 
                     }
                 }
@@ -452,7 +481,8 @@ public class SearchFragment extends Fragment
 
                             // Update recyclerview
                             recipes.clear();
-                            if (parsedOutput.get(0).length > 1) {
+                            if (parsedOutput.get(0).length > 1)
+                            {
                                 RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
                                 // Initialize recipes
                                 recipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
@@ -478,31 +508,32 @@ public class SearchFragment extends Fragment
 
                     }
                 }
-
                 return false;
             }
 
+            // A method that listens to texts are being changed and does the response to it
             @Override
             public boolean onQueryTextChange(String newText)
             {
+
+                // Disable the recyclerview and enable listview's visibility
                 rvRecipes.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
+
                 ArrayList<String> data = new ArrayList<>();
-
                 last = newText;
-
-                if (sView.getQuery().length() == 0) {
+                if (sView.getQuery().length() == 0)
+                {
                     //renderList(true);
                     Log.d("Input", newText);
                 }
-
                 String concat = "";
                 for (String s : filter_prefered_tags)
                 {
                     concat += s + "```";
                 }
-                //Log.d("Concat", concat);
 
+                // If there are tags preferences then do the filter search
                 if (concat != "")
                 {
                     //Log.d("Tag", "Empty");
@@ -512,13 +543,9 @@ public class SearchFragment extends Fragment
                         loadCounter = 0;
                         output = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + newText).get();
                         Log.d("Query Output", output);
-
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();
-
                         String[] splitOutput;
-
-
                         //Parse output
                         if (output.split("~~~").length > 0)
                         {
@@ -535,7 +562,7 @@ public class SearchFragment extends Fragment
                             }
                         }
                         else
-                            {
+                        {
                             splitOutput = new String[]{output};
                             testOutput = splitOutput;
                             recipes.clear();
@@ -548,76 +575,78 @@ public class SearchFragment extends Fragment
                     }
                 }
 
-                else {
+                // If there is no tags preferences then go straight to searching
+                else
+                {
                     Log.d("Test", "Running DBQuery");
-                    try {
+                    try
+                    {
                         loadCounter = 0;
                         output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + newText).get();
                         Log.d("Query Output", output);
-
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();
-
                         String[] splitOutput;
-
-
                         //Parse output
-                        if (output.split("~~~").length > 0) {
+                        if (output.split("~~~").length > 0)
+                        {
                             String[] parse;
                             splitOutput = output.split("~~~");
-                            for (String s : splitOutput) {
+                            for (String s : splitOutput)
+                            {
                                 parse = s.split("```");
                                 parsedOutput.add(parse);
-
                                 // For autocomplete, 3 is title of recipes
                                 // use the array 'data' later for showing it on listView
                                 data.add(parse[3]);
                             }
-                        } else {
+                        }
+                        else
+                        {
                             splitOutput = new String[]{output};
                             testOutput = splitOutput;
                             recipes.clear();
                             //Log.d("Parsed result", splitOutput[0]);
                         }
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
 
                     }
                 }
 
+                // Fill up the listview by the variable 'data'
                 mlistview = (ListView) root.findViewById(R.id.listview);
                 mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
                 mlistview.setAdapter(mAdapter);
                 mlistview.setTextFilterEnabled(true);
                 //mAdapter.getFilter().filter(newText);
-
                 return false;
             }
         });
 
+        // Enable listview to be clickable and do the search after users click on it
         mlistview.setClickable(true);
-        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mlistview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3)
+            {
                 Object recipe_name = mlistview.getItemAtPosition(position);
                 String str=(String)recipe_name;//As you are using Default String Adapter
                 Toast.makeText(context,str,Toast.LENGTH_SHORT).show();
-
                 mlistview.setVisibility(View.GONE);
                 rvRecipes.setVisibility(View.VISIBLE);
-
                 savedQuery = recipe_name.toString();
-
                 Log.d("Test", "Running DBQuery");
-                try{
+                try
+                {
                     loadCounter = 0;
                     output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
                     Log.d("Query Output", output);
-
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();
-
                     String[] splitOutput;
-
                     //Parse output
                     if (output.split("~~~").length > 0)
                     {
@@ -628,9 +657,7 @@ public class SearchFragment extends Fragment
                             parse = s.split("```");
                             parsedOutput.add(parse);
                         }
-
                         testOutput = splitOutput;
-
                         // Update recyclerview
                         recipes.clear();
                         if (parsedOutput.get(0).length > 1)
@@ -661,27 +688,27 @@ public class SearchFragment extends Fragment
                 }
             }
         });
-
         return root;
     }
 
-    // show wheel for the duration of couple seconds
+    // The method that shows wheel animation for the duration of time
     public void showWheel()
     {
         int wheelDurationInMilliSeconds = 2500;
-
         RelativeLayout wheel = (RelativeLayout) root.findViewById(R.id.loadingPanel);
         wheel.setVisibility(View.INVISIBLE);
-
         CountDownTimer wheelCountDown;
-        wheelCountDown = new CountDownTimer(wheelDurationInMilliSeconds, 1000) {
+        wheelCountDown = new CountDownTimer(wheelDurationInMilliSeconds, 1000)
+        {
             @Override
-            public void onTick(long l) {
+            public void onTick(long l)
+            {
                 wheel.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish()
+            {
                 wheel.setVisibility(View.INVISIBLE);
             }
         };

@@ -40,7 +40,6 @@ public class QueryForTags extends AsyncTask<String, String, String>
                 connection = DriverManager.getConnection(url);
 
                 String selectSql = "select * from recipe_categories";
-                //String selectSql = "select * from recipe_categories";
 
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(selectSql);
