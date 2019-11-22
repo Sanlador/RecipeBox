@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class QueryForTags extends AsyncTask<String, String, String>
+public class QueryForCategory extends AsyncTask<String, String, String>
 {
 
     private int pageNumber = 10;

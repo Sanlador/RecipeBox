@@ -32,8 +32,6 @@ import java.util.List;
 
 import CS561.recipebox.ui.gallery.GalleryViewModel;
 
-import static androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
-
 public class SearchFragment extends Fragment
 {
     public ArrayList<Recipe> recipes = new ArrayList<Recipe>(); //public for unit testing purposes
@@ -58,11 +56,15 @@ public class SearchFragment extends Fragment
     public String last;
     public int recyclerViewLen;
     public String checkbox = "Recipe";
-    public String[] selected;
-    public List<KeyPairBoolData> listArray = new ArrayList<>();
-    public List<String> list = new ArrayList<>();
-    public List<String> filter_prefered_tags  = new ArrayList<>();
-    public String concat = "";
+
+    // Variables for spinners
+    public List<KeyPairBoolData> listArray_ingredient = new ArrayList<>();
+    public List<KeyPairBoolData> listArray_category = new ArrayList<>();
+    public List<String> list_ingredient = new ArrayList<>();
+    public List<String> list_category = new ArrayList<>();
+    public List<String> filter_prefered_category = new ArrayList<>();
+    public List<String> filter_prefered_ingedient = new ArrayList<>();
+    public String concat_category = "";
 
     public static SearchFragment newInstance(int index)
     {
@@ -85,45 +87,111 @@ public class SearchFragment extends Fragment
         galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
         root = inflater.inflate(R.layout.fragment_search, container, false);
         Context context = this.getContext();
-        String tags_output;
-        String[] split_output;
-        MultiSpinnerSearch searchMultiSpinnerUnlimited = (MultiSpinnerSearch) root.findViewById(R.id.searchMultiSpinnerUnlimited);
 
-        // Building up spinner that based on the input that is given from 'QueryForTags'
+        // A container that holds strings that concatenated with delineators
+        String[] selected;
+
+        // Initialize a spinner for category
+        String category_output;
+        MultiSpinnerSearch MultiSpinnerCategory = (MultiSpinnerSearch) root.findViewById(R.id.MultiSpinnerCategory);
+
+        // Building up spinner of preferred category that based on the input that is given from 'QueryForCategory'
         try
         {
-            tags_output = new QueryForTags().execute().get();
-            Log.d("Query Output", tags_output);
-            split_output = tags_output.split("~~~");
-            selected = tags_output.split("~~~");
-            for (String s : split_output)
+            list_category.clear();
+            listArray_category.clear();
+
+            // A concatenated string that returned back from query
+            category_output = new QueryForCategory().execute().get();
+
+            Log.d("Category_Output", category_output);
+            selected = category_output.split("~~~");
+
+            for (String s : selected)
             {
-                list.add(s);
+                list_category.add(s);
             }
 
-            for (int i = 0; i < list.size(); i++)
+            for (int i = 0; i < list_category.size(); i++)
             {
                 KeyPairBoolData h = new KeyPairBoolData();
                 h.setId(i + 1);
-                h.setName(list.get(i));
+                h.setName(list_category.get(i));
                 h.setSelected(false);
-                listArray.add(h);
+                listArray_category.add(h);
             }
-            searchMultiSpinnerUnlimited.setEmptyTitle("Not Data Found!");
-            searchMultiSpinnerUnlimited.setSearchHint("Find Data");
-            searchMultiSpinnerUnlimited.setItems(listArray, -1, new SpinnerListener()
+
+            MultiSpinnerCategory.setEmptyTitle("No Data Found!");
+            MultiSpinnerCategory.setSearchHint("Found Data");
+            MultiSpinnerCategory.setItems(listArray_category, -1, new SpinnerListener()
             {
                 @Override
                 public void onItemsSelected(List<KeyPairBoolData> items)
                 {
-                    filter_prefered_tags.clear();
-                    concat = "";
+                    filter_prefered_category.clear();
+                    concat_category = "";
                     for (int i = 0; i < items.size(); i++)
                     {
                         if (items.get(i).isSelected())
                         {
-                            Log.i("TAG Selected", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                            filter_prefered_tags.add(items.get(i).getName());
+                            Log.i("Selected_Category", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                            filter_prefered_category.add(items.get(i).getName());
+                        }
+                    }
+                }
+            });
+        }
+        catch (Exception e)
+        {
+
+        }
+
+
+        // Initialize a spinner for ingredient
+        String ingredient_output;
+        MultiSpinnerSearch MultiSpinnerIngredient = (MultiSpinnerSearch) root.findViewById(R.id.MultiSpinnerIngredient);
+
+        // Building up spinner of preferred ingredient that based on the input that is given from 'QueryForIngredient'
+        try
+        {
+            list_ingredient.clear();
+            listArray_ingredient.clear();
+
+            // Dummy data for testing
+            ingredient_output = "peeled apple~~~";
+
+            Log.d("Ingredient_Output", ingredient_output);
+            selected = ingredient_output.split("~~~");
+
+            for (String s : selected)
+            {
+                list_ingredient.add(s);
+            }
+
+            for (int i = 0; i < list_ingredient.size(); i++)
+            {
+                KeyPairBoolData k = new KeyPairBoolData();
+                k.setId(i+1);
+                k.setName(list_ingredient.get(i));
+                k.setSelected(false);
+                listArray_ingredient.add(k);
+            }
+
+            MultiSpinnerIngredient.setEmptyTitle("No Data Found!");
+            MultiSpinnerIngredient.setSearchHint("Found Data");
+            MultiSpinnerIngredient.setItems(listArray_ingredient, -1, new SpinnerListener()
+            {
+                @Override
+                public void onItemsSelected(List<KeyPairBoolData> items)
+                {
+                    filter_prefered_ingedient.clear();
+                    concat_category = "";
+                    for (int i = 0; i < items.size(); i++)
+                    {
+                        if (items.get(i).isSelected())
+                        {
+                            Log.i("Selected_Ingredient", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                            filter_prefered_ingedient.add(items.get(i).getName());
                         }
                     }
                 }
@@ -251,7 +319,7 @@ public class SearchFragment extends Fragment
 
                     Log.d("System", "Scrolling hits the bottom");
                     loadCounter++;
-                    if (concat == "")
+                    if (concat_category == "")
                     {
                         try {
                             String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + savedQuery).get();
@@ -299,11 +367,11 @@ public class SearchFragment extends Fragment
 
                         }
                     }
-                    else if (concat != "")
+                    else if (concat_category != "")
                     {
                         try
                         {
-                            String addedOutput = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + savedQuery).get();
+                            String addedOutput = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + savedQuery).get();
                             if (addedOutput.split("~~~").length > 0)
                             {
                                 List<String[]> parsedOutput = new ArrayList<String[]>();
@@ -370,12 +438,12 @@ public class SearchFragment extends Fragment
                 rvRecipes.setVisibility(View.VISIBLE);
                 savedQuery = query;
                 String output;
-                for (String s : filter_prefered_tags)
+                for (String s : filter_prefered_category)
                 {
-                    concat += s + "```";
+                    concat_category += s + "```";
                 }
-                Log.d("Submit", concat);
-                if (concat == "")
+                Log.d("Submit", concat_category);
+                if (concat_category == "")
                 {
                     //call query function
                     Log.d("Test", "Running DBQuery sumbit without concat");
@@ -429,13 +497,13 @@ public class SearchFragment extends Fragment
 
                     }
                 }
-                else if (concat != "")
+                else if (concat_category != "")
                 {
                     Log.d("Test", "Running DBQuery sumbit with concat");
                     try
                     {
                         loadCounter = 0;
-                        output = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + query).get();
+                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + query).get();
                         Log.d("Query Output", output);
 
                         // get the biggest category from the result of search, which is all info from database of each recipe
@@ -504,21 +572,21 @@ public class SearchFragment extends Fragment
                     //renderList(true);
                     Log.d("Input", newText);
                 }
-                String concat = "";
-                for (String s : filter_prefered_tags)
+                String concat_category = "";
+                for (String s : filter_prefered_category)
                 {
-                    concat += s + "```";
+                    concat_category += s + "```";
                 }
 
                 // If there are tags preferences then do the filter search
-                if (concat != "")
+                if (concat_category != "")
                 {
                     //Log.d("Tag", "Empty");
                     Log.d("Test", "Running DBQuery");
                     try
                     {
                         loadCounter = 0;
-                        output = new FilterQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat + "#" + newText).get();
+                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + newText).get();
                         Log.d("Query Output", output);
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();

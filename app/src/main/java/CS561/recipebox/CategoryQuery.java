@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class FilterQuery extends AsyncTask<String, String, String> {
+public class CategoryQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
     private String checkbox = "Recipe";

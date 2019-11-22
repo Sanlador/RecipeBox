@@ -54,11 +54,18 @@
         </SearchView>
 
         <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-            android:id="@+id/searchMultiSpinnerUnlimited"
+            android:id="@+id/MultiSpinnerCategory"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:hintText="Multi Selection With Filter Without Limit" />
+            app:hintText="Category : none" />
+
+        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+            android:id="@+id/MultiSpinnerIngredient"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:hintText="Ingredient : none" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
