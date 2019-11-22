@@ -572,10 +572,23 @@ public class SearchFragment extends Fragment
                     //renderList(true);
                     Log.d("Input", newText);
                 }
+
+                //Get selected categories and ingredients from spinners and append
+                // each of it with delineator "```"
+                //
+                // Using concatenated strings above and querying from the database
+                // to get all recipes that have qualified the constraints that users
+                // have selected
                 String concat_category = "";
                 for (String s : filter_prefered_category)
                 {
                     concat_category += s + "```";
+                }
+
+                String concat_ingredient = "";
+                for (String s : filter_prefered_ingedient)
+                {
+                    concat_ingredient += s + "```";
                 }
 
                 // If there are tags preferences then do the filter search
