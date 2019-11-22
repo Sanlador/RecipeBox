@@ -58,6 +58,7 @@ public class SearchFragment extends Fragment
     public String checkbox = "Recipe";
 
     // Variables for spinners
+
     public List<KeyPairBoolData> listArray_ingredient = new ArrayList<>();
     public List<KeyPairBoolData> listArray_category = new ArrayList<>();
     public List<String> list_ingredient = new ArrayList<>();
@@ -65,6 +66,7 @@ public class SearchFragment extends Fragment
     public List<String> filter_prefered_category = new ArrayList<>();
     public List<String> filter_prefered_ingedient = new ArrayList<>();
     public String concat_category = "";
+    public String concat_ingredient = "";
 
     public static SearchFragment newInstance(int index)
     {
@@ -599,7 +601,7 @@ public class SearchFragment extends Fragment
                     try
                     {
                         loadCounter = 0;
-                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + newText).get();
+                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + newText).get();
                         Log.d("Query Output", output);
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();

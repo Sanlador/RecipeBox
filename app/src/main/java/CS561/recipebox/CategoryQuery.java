@@ -12,7 +12,8 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
     private String checkbox = "Recipe";
-    private String prefer_tag = "";
+    private String prefer_category = "";
+    private String prefer_ingridient = "";
 
     @Override
     protected String doInBackground(String... params) {
@@ -43,30 +44,41 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
                 String[] Q = params[0].split("#");
 
                 int loadCounter = Integer.parseInt(Q[0]);
-
-                String query = Q[3];
-                prefer_tag = Q[2];
                 checkbox = Q[1];
-                String[] indi_tag = Q[2].split("```");
+                prefer_category = Q[2];
+                prefer_ingridient = Q[3];
+                String query = Q[4];
 
-                String concat = "";
 
 
+                String[] tok_category = prefer_category.split("```");
+                String[] tok_ingedient = prefer_ingridient.split("```");
 
-                for (String s : indi_tag)
+                String concat_category = "";
+                String concat_ingredient = "";
+
+
+                for (String s : tok_category)
                 {
                     //Log.d("Tag", s);
-                    concat += "Categories like " + "'%" + s + "%' " + "and ";
+                    concat_category += "Categories like " + "'%" + s + "%' " + "and ";
                 }
+
+                for (String s : tok_ingedient)
+                {
+                    concat_ingredient += "Ingredient like " + "'%" + s + "%'" + "and ";
+                }
+
                 if (params[0].length() < 1)
                 {
-                    selectSql = "select * from Webscrape where " + concat;
+                    selectSql = "select * from Webscrape where " + concat_category;
                     selectSql = selectSql.substring(0, selectSql.length() - 4);
                 }
+
                 else
                 {
-                    concat += "Recipe like '%" + query + "%'";
-                    selectSql = "select * from Webscrape where " + concat;
+                    concat_category += "Recipe like '%" + query + "%'";
+                    selectSql = "select * from Webscrape where " + concat_category;
                 }
 
                 Log.d("Query", selectSql);
