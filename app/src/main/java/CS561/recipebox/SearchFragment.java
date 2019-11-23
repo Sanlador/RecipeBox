@@ -373,7 +373,7 @@ public class SearchFragment extends Fragment
                     {
                         try
                         {
-                            String addedOutput = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + savedQuery).get();
+                            String addedOutput = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + savedQuery).get();
                             if (addedOutput.split("~~~").length > 0)
                             {
                                 List<String[]> parsedOutput = new ArrayList<String[]>();
@@ -505,7 +505,7 @@ public class SearchFragment extends Fragment
                     try
                     {
                         loadCounter = 0;
-                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + query).get();
+                        output = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + query).get();
                         Log.d("Query Output", output);
 
                         // get the biggest category from the result of search, which is all info from database of each recipe
@@ -594,14 +594,14 @@ public class SearchFragment extends Fragment
                 }
 
                 // If there are tags preferences then do the filter search
-                if (concat_category != "")
+                if (concat_category != "" || concat_ingredient != "")
                 {
                     //Log.d("Tag", "Empty");
                     Log.d("Test", "Running DBQuery");
                     try
                     {
                         loadCounter = 0;
-                        output = new CategoryQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + newText).get();
+                        output = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + newText).get();
                         Log.d("Query Output", output);
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();

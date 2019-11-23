@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class CategoryQuery extends AsyncTask<String, String, String> {
+public class SpinnerQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
     private String checkbox = "Recipe";
@@ -28,7 +28,7 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
 
             Log.d("Function", "Launching Query");
             String output = "";
-            String selectSql;
+            String selectSql = "";
 
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
@@ -49,14 +49,18 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
                 prefer_ingridient = Q[3];
                 String query = Q[4];
 
+                Log.d("query", query);
 
 
                 String[] tok_category = prefer_category.split("```");
                 String[] tok_ingedient = prefer_ingridient.split("```");
 
+
+                String empty = "";
                 String concat_category = "";
                 String concat_ingredient = "";
-
+                String concat_query = concat_category + " Recipe like '%" + query + "%'";
+                String concat_search_all = "select * from Webscrape where ";
 
                 for (String s : tok_category)
                 {
@@ -66,19 +70,58 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
 
                 for (String s : tok_ingedient)
                 {
-                    concat_ingredient += "Ingredient like " + "'%" + s + "%'" + "and ";
+                    concat_ingredient += "Ingredients like " + "'%" + s + "%'" + "and ";
                 }
 
                 if (params[0].length() < 1)
                 {
-                    selectSql = "select * from Webscrape where " + concat_category;
-                    selectSql = selectSql.substring(0, selectSql.length() - 4);
+                    return null;
                 }
 
+                if (concat_query == empty)
+                {
+                    if (concat_category != empty && concat_ingredient == "")
+                    {
+                        selectSql = concat_search_all + concat_category;
+                    }
+                    else if (concat_category == empty && concat_ingredient != "")
+                    {
+                        selectSql = concat_search_all + concat_ingredient;
+                    }
+                    else if (concat_category != empty && concat_ingredient != "")
+                    {
+                        selectSql = concat_search_all + concat_category + concat_ingredient;
+                    }
+                    // Exception
+                    else
+                    {
+                        return null;
+                    }
+                    selectSql = selectSql.substring(0, selectSql.length() - 4);
+                }
+                else if (concat_query != empty)
+                {
+                    if (concat_category != empty && concat_ingredient == "")
+                    {
+                        selectSql = concat_search_all + concat_category + concat_query;
+                    }
+                    else if (concat_category == empty && concat_ingredient != "")
+                    {
+                        selectSql = concat_search_all + concat_ingredient + concat_query;
+                    }
+                    else if (concat_category != empty && concat_ingredient != "")
+                    {
+                        selectSql = concat_search_all + concat_category + concat_ingredient + concat_query;
+                    }
+                    else
+                    {
+                        selectSql = concat_search_all + concat_query;
+                    }
+                }
+                // Exception
                 else
                 {
-                    concat_category += "Recipe like '%" + query + "%'";
-                    selectSql = "select * from Webscrape where " + concat_category;
+                    return null;
                 }
 
                 Log.d("Query", selectSql);
@@ -103,7 +146,8 @@ public class CategoryQuery extends AsyncTask<String, String, String> {
                     connection.close();
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
