@@ -58,7 +58,6 @@ public class SearchFragment extends Fragment
     public String checkbox = "Recipe";
 
     // Variables for spinners
-
     public List<KeyPairBoolData> listArray_ingredient = new ArrayList<>();
     public List<KeyPairBoolData> listArray_category = new ArrayList<>();
     public List<String> list_ingredient = new ArrayList<>();
@@ -321,7 +320,7 @@ public class SearchFragment extends Fragment
 
                     Log.d("System", "Scrolling hits the bottom");
                     loadCounter++;
-                    if (concat_category == "")
+                    if (concat_category == "" && concat_ingredient == "")
                     {
                         try {
                             String addedOutput = new DBQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + savedQuery).get();
@@ -369,11 +368,11 @@ public class SearchFragment extends Fragment
 
                         }
                     }
-                    else if (concat_category != "")
+                    else
                     {
                         try
                         {
-                            String addedOutput = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + savedQuery).get();
+                            String addedOutput = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + savedQuery).get();
                             if (addedOutput.split("~~~").length > 0)
                             {
                                 List<String[]> parsedOutput = new ArrayList<String[]>();
@@ -440,12 +439,20 @@ public class SearchFragment extends Fragment
                 rvRecipes.setVisibility(View.VISIBLE);
                 savedQuery = query;
                 String output;
+
+                concat_category = "";
                 for (String s : filter_prefered_category)
                 {
                     concat_category += s + "```";
                 }
-                Log.d("Submit", concat_category);
-                if (concat_category == "")
+
+                concat_ingredient = "";
+                for (String s : filter_prefered_ingedient)
+                {
+                    concat_ingredient += s + "```";
+                }
+
+                if (concat_category == "" && concat_ingredient == "")
                 {
                     //call query function
                     Log.d("Test", "Running DBQuery sumbit without concat");
@@ -499,20 +506,18 @@ public class SearchFragment extends Fragment
 
                     }
                 }
-                else if (concat_category != "")
+                else
                 {
-                    Log.d("Test", "Running DBQuery sumbit with concat");
+                    Log.d("Test", "Running DBQuery sumbit with concat constraint");
                     try
                     {
                         loadCounter = 0;
-                        output = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + query).get();
+                        output = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + query).get();
                         Log.d("Query Output", output);
 
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();
-
                         String[] splitOutput;
-
 
                         //Parse output
                         if (output.split("~~~").length > 0)
@@ -567,27 +572,30 @@ public class SearchFragment extends Fragment
                 rvRecipes.setVisibility(View.GONE);
                 mlistview.setVisibility(View.VISIBLE);
 
-                ArrayList<String> data = new ArrayList<>();
+                ArrayList<String> string_autocomplete = new ArrayList<>();
+
+                // 'last' is a variable for scroll listener
                 last = newText;
+
                 if (sView.getQuery().length() == 0)
                 {
                     //renderList(true);
                     Log.d("Input", newText);
                 }
 
-                //Get selected categories and ingredients from spinners and append
+                // Get selected categories and ingredients from spinners and append
                 // each of it with delineator "```"
                 //
                 // Using concatenated strings above and querying from the database
                 // to get all recipes that have qualified the constraints that users
                 // have selected
-                String concat_category = "";
+                concat_category = "";
                 for (String s : filter_prefered_category)
                 {
                     concat_category += s + "```";
                 }
 
-                String concat_ingredient = "";
+                concat_ingredient = "";
                 for (String s : filter_prefered_ingedient)
                 {
                     concat_ingredient += s + "```";
@@ -617,8 +625,8 @@ public class SearchFragment extends Fragment
                                 parsedOutput.add(parse);
 
                                 // For autocomplete, 3 is title of recipes
-                                // use the array 'data' later for showing it on listView
-                                data.add(parse[3]);
+                                // use the array 'string_autocomplete' later for showing it on listView
+                                string_autocomplete.add(parse[3]);
                             }
                         }
                         else
@@ -635,7 +643,7 @@ public class SearchFragment extends Fragment
                     }
                 }
 
-                // If there is no tags preferences then go straight to searching
+                // If there is no tags preferences then go straight to searching normally(DBQuery
                 else
                 {
                     Log.d("Test", "Running DBQuery");
@@ -658,7 +666,7 @@ public class SearchFragment extends Fragment
                                 parsedOutput.add(parse);
                                 // For autocomplete, 3 is title of recipes
                                 // use the array 'data' later for showing it on listView
-                                data.add(parse[3]);
+                                string_autocomplete.add(parse[3]);
                             }
                         }
                         else
@@ -675,11 +683,12 @@ public class SearchFragment extends Fragment
                     }
                 }
 
-                // Fill up the listview by the variable 'data'
+                // Fill up the listview by the variable 'string_autocomplete'
                 mlistview = (ListView) root.findViewById(R.id.listview);
-                mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, data);
+                mAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, string_autocomplete);
                 mlistview.setAdapter(mAdapter);
                 mlistview.setTextFilterEnabled(true);
+
                 //mAdapter.getFilter().filter(newText);
                 return false;
             }
