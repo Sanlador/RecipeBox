@@ -1,13 +1,8 @@
 package CS561.recipebox;
 
-import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import androidx.appcompat.widget.Toolbar;
-import java.util.ArrayList;
 
-import CS561.recipebox.ui.PagerAdapter;
+import CS561.recipebox.ui.HomePagerAdapter;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -36,7 +29,7 @@ public class MainActivity extends AppCompatActivity
 
         //TAB VIEW
 
-        PagerAdapter pagerAdapter = new PagerAdapter(this, getSupportFragmentManager());
+        HomePagerAdapter pagerAdapter = new HomePagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);

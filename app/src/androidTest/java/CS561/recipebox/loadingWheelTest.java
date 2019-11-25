@@ -1,4 +1,4 @@
-/*
+
 package CS561.recipebox;
 
 import android.util.Log;
@@ -29,7 +29,8 @@ import static org.junit.Assert.assertThat;
 //Uses testClass as a template to run tests to confirm that query system is correctly implemented
 @MediumTest
 @RunWith(AndroidJUnit4.class)
-public class loadingWheelTest {
+public class loadingWheelTest
+{
 
     int main()
     {
@@ -119,4 +120,3 @@ public class loadingWheelTest {
     }
 }
 
-*/
