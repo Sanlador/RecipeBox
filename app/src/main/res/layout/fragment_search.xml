@@ -26,7 +26,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="120dp"
             android:layout_marginBottom="20dp"
-            android:indeterminate="true" />
+            android:indeterminate="true"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -52,6 +53,19 @@
 
         </SearchView>
 
+        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+            android:id="@+id/MultiSpinnerCategory"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:hintText="Category : none" />
+
+        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+            android:id="@+id/MultiSpinnerIngredient"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:hintText="Ingredient : none" />
 
         <RadioGroup
             android:id="@+id/radioGroup"

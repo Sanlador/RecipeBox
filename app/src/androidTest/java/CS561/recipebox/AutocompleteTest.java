@@ -111,7 +111,9 @@ public class AutocompleteTest
                 assert(activity.recipes.get(0).getName() == "Chef John's French Fries 1 russet potato, cut into evenly sized strips;1 russet potato, cut into evenly sized strips");
             }
             else if (i > 12)
-                assert(activity.recipes.size() == 0);*/
+                assert(activity.recipes.size() == 0);
+
+            */
         }
     }
 

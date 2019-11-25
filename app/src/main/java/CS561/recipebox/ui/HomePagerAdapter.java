@@ -12,14 +12,14 @@ import CS561.recipebox.InventoryFragment;
 import CS561.recipebox.R;
 import CS561.recipebox.SearchFragment;
 
-public class PagerAdapter extends FragmentPagerAdapter
+public class HomePagerAdapter extends FragmentPagerAdapter
 {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{ R.string.search_text, R.string.pantry_text};
     private final Context mContext;
 
-    public PagerAdapter(Context context, FragmentManager fm)
+    public HomePagerAdapter(Context context, FragmentManager fm)
     {
         super(fm);
         mContext = context;

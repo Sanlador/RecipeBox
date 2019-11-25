@@ -195,7 +195,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     Random random = new Random();
                     int index = random.nextInt(recipes.size());
 
-                    Intent intent = new Intent(activity.getActivity(), recipe_ui.class);
+                    Intent intent = new Intent(activity.getActivity(), RecipeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Info", recipes.get(index).getInfo());
                     intent.putExtra("Name", recipes.get(index).getName());

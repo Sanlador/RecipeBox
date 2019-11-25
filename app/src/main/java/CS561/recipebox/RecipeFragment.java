@@ -1,26 +1,34 @@
 package CS561.recipebox;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
-public class Checkbox  extends AppCompatActivity
+public class RecipeFragment extends Fragment
 {
     String testName;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+
+    private static final String ARG_SECTION_NUMBER = "section_number";
+    private View root;
+    Bundle extras;
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState)
     {
+        root = inflater.inflate(R.layout.fragment_recipe, container, false);
+        Context context = this.getContext();
 
-        super.onCreate(savedInstanceState);
 
-        Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
             String name = testName = (String)extras.get("Name");
@@ -40,12 +48,14 @@ public class Checkbox  extends AppCompatActivity
             //The key argument here must match that used in the other activity
             Log.d("Intent pass", name);
 
-            setContentView(R.layout.fragment_recipe);
-            TextView title = (TextView)findViewById(R.id.title);
+            //setContentView(R.layout.RecipeActivity);
+
+
+            TextView title = (TextView) root.findViewById(R.id.title);
             title.setText(name);
             //TextView ing = (TextView)findViewById(R.id.ingredients);
             //ing.setText(ingredients);
-            TextView Info = (TextView)findViewById(R.id.instructions);
+            TextView Info = (TextView) root.findViewById(R.id.instructions);
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
                     "\n\n" + "Ingredients:\n\n\t" + ingredients +
                     "\n\n\nDirections:\n\n\t" + info +
@@ -59,12 +69,33 @@ public class Checkbox  extends AppCompatActivity
             );
             //setContentView(title);
 
-            ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);
+            ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
-            // Adding a backbotton on the toolbar that has shown in main_activity
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
+
+        return root;
+    }
+
+    public RecipeFragment(Bundle e)
+    {
+        extras = e;
+    }
+
+    public static RecipeFragment newInstance(int index, Bundle e)
+    {
+        RecipeFragment fragment = new RecipeFragment(e);
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_SECTION_NUMBER, index);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
     }
 
     public String getName()
