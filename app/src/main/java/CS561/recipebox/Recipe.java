@@ -49,25 +49,76 @@ public class Recipe
         rSodium = sodium;
     }
 
-    public String getName() { return rName; }
-    public String getInfo() { return rInfo; }
-    public String getIngredients() { return rIngredients; }
-    public String getrPictureLink() { return rPictureLink; }
-    public String getCatagories() { return rCatagrories; }
-    public String getServing() { return rServing; }
-    public String getCooktime() { return rCooktime; }
-    public String getCalories() { return rCalories; }
-    public String getFat() { return rFat; }
-    public String getCarbs() { return rCarbs; }
-    public String getProteins() { return rProteins; }
-    public String getCholesterol() { return rCholesterol; }
-    public String getSodium() { return rSodium; }
+    public String getName()
+    {
+        return rName;
+    }
+
+    public String getInfo()
+    {
+        return rInfo;
+    }
+
+    public String getIngredients()
+    {
+        return rIngredients;
+    }
+
+    public String getrPictureLink()
+    {
+        return rPictureLink;
+    }
+
+    public String getCatagories()
+    {
+        return rCatagrories;
+    }
+
+    public String getServing()
+    {
+        return rServing;
+    }
+
+    public String getCooktime()
+    {
+        return rCooktime;
+    }
+
+    public String getCalories()
+    {
+        return rCalories;
+    }
+
+    public String getFat()
+    {
+        return rFat;
+    }
+
+    public String getCarbs()
+    {
+        return rCarbs;
+    }
+
+    public String getProteins()
+    {
+        return rProteins;
+    }
+    public String getCholesterol()
+    {
+        return rCholesterol;
+    }
+
+    public String getSodium()
+    {
+        return rSodium;
+    }
 
     // not necessary
     private static int lastRecipeId = 0;
 
     // Use class Recipe to create an list of information
-    public static ArrayList<Recipe> createRecipesList(int numRecipes, List<String[]> parsedOutput) {
+    public static ArrayList<Recipe> createRecipesList(int numRecipes, List<String[]> parsedOutput)
+    {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
         // recipes is an array contains parsed category strings from query database
