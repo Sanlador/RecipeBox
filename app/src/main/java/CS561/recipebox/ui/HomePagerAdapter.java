@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import CS561.recipebox.Diet.DietFragment;
 import CS561.recipebox.Inventory.InventoryFragment;
 import CS561.recipebox.R;
 import CS561.recipebox.Search.SearchFragment;
@@ -35,7 +36,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter
         else if (1 == position)
             return InventoryFragment.newInstance(position + 1);
         else
-            return SearchFragment.newInstance(position + 1);
+            return DietFragment.newInstance(position + 1);
     }
 
     @Nullable
