@@ -19,7 +19,7 @@ public class DietItem
         return plan;
     }
 
-    public static ArrayList<DietItem> createdietPlan(List<Recipe[]> dietList)
+    public static ArrayList<DietItem> createDietPlan(List<Recipe[]> dietList)
     {
         ArrayList<DietItem> list = new ArrayList<DietItem>();
 
@@ -33,5 +33,20 @@ public class DietItem
             list.add(new DietItem(l));
         }
         return list;
+    }
+
+    public Recipe getBreakfast()
+    {
+        return plan.get(0);
+    }
+
+    public Recipe getLunch()
+    {
+        return plan.get(1);
+    }
+
+    public Recipe getDinner()
+    {
+        return plan.get(2);
     }
 }
