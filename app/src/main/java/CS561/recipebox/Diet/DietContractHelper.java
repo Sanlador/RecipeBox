@@ -90,14 +90,16 @@ public class DietContractHelper extends SQLiteOpenHelper
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean writeToDatabase(List<Recipe> recipes)
+    public boolean writeToDatabase(List<Recipe> recipes, int id)
     {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        //values.put(InventoryContract.Inventory._ID, "0");
+
+        values.put(DietContract.Diet._ID, id);
+
         values.put(DietContract.Diet.COLUMN_NAME_RECIPE_BREAKFAST, recipes.get(0).getName());
         values.put(DietContract.Diet.COLUMN_NAME_INFO_BREAKFAST, recipes.get(0).getInfo());
         values.put(DietContract.Diet.COLUMN_NAME_INGREDIENTS_BREAKFAST, recipes.get(0).getIngredients());
@@ -157,12 +159,12 @@ public class DietContractHelper extends SQLiteOpenHelper
         }
     }
 
-    public int removeFromDatabase(String name)
+    public int removeFromDatabase(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
-            return db.delete(TABLE, "recipe = ?", new String[] {name});
+            return db.delete(TABLE, "id = ?", new String[] {Integer.toString(id)});
         }
         catch (Exception e)
         {

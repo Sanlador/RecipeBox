@@ -62,7 +62,7 @@ public class InventoryContractHelper extends SQLiteOpenHelper
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        //values.put(InventoryContract.Inventory._ID, "0");
+        
         values.put(InventoryContract.Inventory.COLUMN_NAME_TITLE, name);
         values.put(InventoryContract.Inventory.COLUMN_NAME_COUNT, count);
 
