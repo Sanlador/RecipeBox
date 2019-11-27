@@ -57,8 +57,8 @@ public class DietFragment extends Fragment {
                 //Play loading animation?
 
                 //Acquire diet plan (Will eventually use DP algorithm)
-                dietList.add(dummyOutput());
-                dietList.add(dummyOutput());
+                dietList.add(dummyOutput("app"));
+                dietList.add(dummyOutput("pork"));
                 adapter.notifyDataSetChanged();
             }
         });
@@ -66,7 +66,7 @@ public class DietFragment extends Fragment {
         return root;
     }
 
-    private DietItem dummyOutput()
+    private DietItem dummyOutput(String input)
     {
         String output;
 
@@ -74,7 +74,7 @@ public class DietFragment extends Fragment {
         Log.d("Test", "Running DBQuery");
         try
         {
-            output = new QueryForPantry().execute("a").get();
+            output = new QueryForPantry().execute(input).get();
 
             // get the biggest category from the result of search, which is all info from database of each recipe
             List<String[]> parsedOutput = new ArrayList<String[]>();
