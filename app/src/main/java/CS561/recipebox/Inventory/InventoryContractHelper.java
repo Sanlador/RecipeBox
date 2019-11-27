@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Inventory;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Inventory;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+
+import CS561.recipebox.R;
 
 public class InventoryFragment extends Fragment
 {

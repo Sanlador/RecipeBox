@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Inventory;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import CS561.recipebox.Query.QueryForPantry;
+import CS561.recipebox.R;
+import CS561.recipebox.Recipe.Recipe;
+import CS561.recipebox.Recipe.RecipeActivity;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 

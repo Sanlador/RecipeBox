@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Instruction;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import CS561.recipebox.R;
 
 public class InstructionsFragment extends Fragment
 {

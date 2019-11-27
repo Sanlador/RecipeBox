@@ -8,15 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import CS561.recipebox.InventoryFragment;
+import CS561.recipebox.Inventory.InventoryFragment;
 import CS561.recipebox.R;
-import CS561.recipebox.SearchFragment;
+import CS561.recipebox.Search.SearchFragment;
 
 public class HomePagerAdapter extends FragmentPagerAdapter
 {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.search_text, R.string.pantry_text};
+    private static final int[] TAB_TITLES = new int[]{ R.string.search_text, R.string.pantry_text, R.string.diet_text};
     private final Context mContext;
 
     public HomePagerAdapter(Context context, FragmentManager fm)
@@ -30,10 +30,12 @@ public class HomePagerAdapter extends FragmentPagerAdapter
     {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        if (position == 0)
+        if (0 == position)
             return SearchFragment.newInstance(position + 1);
-        else
+        else if (1 == position)
             return InventoryFragment.newInstance(position + 1);
+        else
+            return SearchFragment.newInstance(position + 1);
     }
 
     @Nullable
@@ -46,6 +48,6 @@ public class HomePagerAdapter extends FragmentPagerAdapter
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 3;
     }
 }

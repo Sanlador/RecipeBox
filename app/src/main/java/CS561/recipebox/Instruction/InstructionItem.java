@@ -1,9 +1,6 @@
-package CS561.recipebox;
-
-import android.util.Log;
+package CS561.recipebox.Instruction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InstructionItem
 {

@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,31 +6,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
-import CS561.recipebox.ui.HomePagerAdapter;
-import CS561.recipebox.ui.RecipePagerAdapter;
+import CS561.recipebox.R;
 
-public class RecipeActivity extends AppCompatActivity
+public class Checkbox  extends AppCompatActivity
 {
     String testName;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipe_main);
-        Bundle extras = getIntent().getExtras();
 
-        RecipePagerAdapter pagerAdapter = new RecipePagerAdapter(this, getSupportFragmentManager(), extras);
-        ViewPager viewPager = findViewById(R.id.recipePager);
-        viewPager.setAdapter(pagerAdapter);
-        TabLayout tabs = findViewById(R.id.recipeTabs);
-        tabs.setupWithViewPager(viewPager);
-
-        /*
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
@@ -51,9 +40,7 @@ public class RecipeActivity extends AppCompatActivity
             //The key argument here must match that used in the other activity
             Log.d("Intent pass", name);
 
-            setContentView(R.layout.RecipeActivity);
-
-
+            setContentView(R.layout.fragment_recipe);
             TextView title = (TextView)findViewById(R.id.title);
             title.setText(name);
             //TextView ing = (TextView)findViewById(R.id.ingredients);
@@ -75,8 +62,9 @@ public class RecipeActivity extends AppCompatActivity
             ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
-
-        }*/
+            // Adding a backbotton on the toolbar that has shown in main_activity
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public String getName()

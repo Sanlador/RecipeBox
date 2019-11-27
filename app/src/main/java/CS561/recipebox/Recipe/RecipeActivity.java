@@ -1,34 +1,38 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
-public class RecipeFragment extends Fragment
+import CS561.recipebox.R;
+import CS561.recipebox.ui.HomePagerAdapter;
+import CS561.recipebox.ui.RecipePagerAdapter;
+
+public class RecipeActivity extends AppCompatActivity
 {
     String testName;
-
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    private View root;
-    Bundle extras;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState)
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
     {
-        root = inflater.inflate(R.layout.fragment_recipe, container, false);
-        Context context = this.getContext();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.recipe_main);
+        Bundle extras = getIntent().getExtras();
 
+        RecipePagerAdapter pagerAdapter = new RecipePagerAdapter(this, getSupportFragmentManager(), extras);
+        ViewPager viewPager = findViewById(R.id.recipePager);
+        viewPager.setAdapter(pagerAdapter);
+        TabLayout tabs = findViewById(R.id.recipeTabs);
+        tabs.setupWithViewPager(viewPager);
 
+        /*
+        Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
             String name = testName = (String)extras.get("Name");
@@ -48,14 +52,14 @@ public class RecipeFragment extends Fragment
             //The key argument here must match that used in the other activity
             Log.d("Intent pass", name);
 
-            //setContentView(R.layout.RecipeActivity);
+            setContentView(R.layout.RecipeActivity);
 
 
-            TextView title = (TextView) root.findViewById(R.id.title);
+            TextView title = (TextView)findViewById(R.id.title);
             title.setText(name);
             //TextView ing = (TextView)findViewById(R.id.ingredients);
             //ing.setText(ingredients);
-            TextView Info = (TextView) root.findViewById(R.id.instructions);
+            TextView Info = (TextView)findViewById(R.id.instructions);
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
                     "\n\n" + "Ingredients:\n\n\t" + ingredients +
                     "\n\n\nDirections:\n\n\t" + info +
@@ -69,33 +73,11 @@ public class RecipeFragment extends Fragment
             );
             //setContentView(title);
 
-            ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
+            ImageView pictureLink = (ImageView)findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
 
-        }
-
-        return root;
-    }
-
-    public RecipeFragment(Bundle e)
-    {
-        extras = e;
-    }
-
-    public static RecipeFragment newInstance(int index, Bundle e)
-    {
-        RecipeFragment fragment = new RecipeFragment(e);
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, index);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+        }*/
     }
 
     public String getName()

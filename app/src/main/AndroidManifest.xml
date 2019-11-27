@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name=".RecipeActivity"
+            android:name=".Recipe.RecipeActivity"
             android:label="recipe"
             android:parentActivityName="CS561.recipebox.MainActivity"
             />

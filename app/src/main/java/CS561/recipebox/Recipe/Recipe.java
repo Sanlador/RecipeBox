@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

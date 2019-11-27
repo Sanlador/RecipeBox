@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Query;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,22 +8,26 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBQuery extends AsyncTask<String, String, String> {
+public class IngredientQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
     private String checkbox = "Recipe";
+    private String prefer_tag = "";
 
     @Override
     protected String doInBackground(String... params) {
         {
+            /*
             if (params[0].length() < 1) {
                 return null;
             }
 
+             */
+
 
             Log.d("Function", "Launching Query");
             String output = "";
-
+            String selectSql;
 
             String host = "recipebox01.database.windows.net";
             String db = "RecipeDB";
@@ -40,16 +44,30 @@ public class DBQuery extends AsyncTask<String, String, String> {
 
                 int loadCounter = Integer.parseInt(Q[0]);
 
-                String query = Q[2];
-
+                String query = Q[3];
+                prefer_tag = Q[2];
                 checkbox = Q[1];
+                String[] indi_tag = Q[2].split("```");
 
-                String selectSql = "select *\n" +
-                        "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
-                        //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE " + checkbox + " LIKE '" + "%" + query + "%') t\n" +
-                        "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
+                String concat = "";
+
+
+
+                for (String s : indi_tag)
+                {
+                    //Log.d("Tag", s);
+                    concat += "Categories like " + "'%" + s + "%' " + "and ";
+                }
+                if (params[0].length() < 1)
+                {
+                    selectSql = "select * from Webscrape where " + concat;
+                    selectSql = selectSql.substring(0, selectSql.length() - 4);
+                }
+                else
+                {
+                    concat += "Recipe like '%" + query + "%'";
+                    selectSql = "select * from Webscrape where " + concat;
+                }
 
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();

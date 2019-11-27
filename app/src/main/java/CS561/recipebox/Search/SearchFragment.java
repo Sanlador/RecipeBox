@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,6 +30,13 @@ import com.androidbuts.multispinnerfilter.SpinnerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import CS561.recipebox.Pantry.PantryContractHelper;
+import CS561.recipebox.Query.DBQuery;
+import CS561.recipebox.Query.QueryForCategory;
+import CS561.recipebox.Query.SpinnerQuery;
+import CS561.recipebox.R;
+import CS561.recipebox.Recipe.Recipe;
+import CS561.recipebox.Recipe.RecipesAdapter;
 import CS561.recipebox.ui.gallery.GalleryViewModel;
 
 public class SearchFragment extends Fragment
@@ -43,7 +50,7 @@ public class SearchFragment extends Fragment
     private String[] data = {};
     private ListView mlistview;
     private ArrayAdapter mAdapter;
-    private pantryContractHelper pantryHelper;
+    private PantryContractHelper pantryHelper;
     private int loadCounter = 0;
     private GalleryViewModel galleryViewModel;
     private static final String ARG_SECTION_NUMBER = "section_number";
