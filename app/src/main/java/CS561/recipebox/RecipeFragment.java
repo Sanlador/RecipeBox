@@ -1,18 +1,24 @@
 package CS561.recipebox;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
+
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 public class RecipeFragment extends Fragment
 {
@@ -27,6 +33,7 @@ public class RecipeFragment extends Fragment
     {
         root = inflater.inflate(R.layout.fragment_recipe, container, false);
         Context context = this.getContext();
+
 
 
         if (extras != null)
@@ -73,7 +80,12 @@ public class RecipeFragment extends Fragment
             Picasso.get().load(url).into(pictureLink);
 
 
+
+
+
         }
+
+
 
         return root;
     }
@@ -102,4 +114,6 @@ public class RecipeFragment extends Fragment
     {
         return testName;
     }
+
+
 }

@@ -219,7 +219,7 @@ public class SpinnerTest {
 
        // Espresso.onView(withId(R.id.searchView)).perform(click()).perform(typeText(testInput.get(0)));
 
-       
+
     }
 
     public static ViewAction clickXY(final int x, final int y){
