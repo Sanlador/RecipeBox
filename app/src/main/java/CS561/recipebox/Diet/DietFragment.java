@@ -26,10 +26,12 @@ public class DietFragment extends Fragment {
     private Button button;
     private ArrayList<DietItem> dietList;
     private DietAdapter adapter;
+    private DietContractHelper contractHelper;
 
     public RecyclerView recyclerView;
 
-    public static DietFragment newInstance(int index) {
+    public static DietFragment newInstance(int index)
+    {
         DietFragment fragment = new DietFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
@@ -37,10 +39,12 @@ public class DietFragment extends Fragment {
         return fragment;
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         root = inflater.inflate(R.layout.fragment_diet, container, false);
         Context context = this.getContext();
-        dietList = new ArrayList<DietItem>();
+        contractHelper = new DietContractHelper(context);
+        dietList = contractHelper.readFromDatabase();
         adapter = new DietAdapter(dietList, context, this);
         recyclerView = (RecyclerView) root.findViewById(R.id.dietList);
         recyclerView.setAdapter(adapter);
@@ -56,10 +60,6 @@ public class DietFragment extends Fragment {
                 button.setVisibility(View.INVISIBLE);
                 //Play loading animation?
 
-                //Acquire diet plan (Will eventually use DP algorithm)
-                dietList.add(dummyOutput("app"));
-                dietList.add(dummyOutput("pork"));
-                adapter.notifyDataSetChanged();
             }
         });
 

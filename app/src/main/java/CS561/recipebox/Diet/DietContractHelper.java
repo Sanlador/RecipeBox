@@ -2,10 +2,12 @@ package CS561.recipebox.Diet;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import CS561.recipebox.Recipe.Recipe;
@@ -72,9 +74,15 @@ public class DietContractHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public void onCreate(SQLiteDatabase db)
-    {
-        db.execSQL(SQL_CREATE_ENTRIES);
+    public void onCreate(SQLiteDatabase db) {
+        try
+        {
+            db.execSQL(SQL_CREATE_ENTRIES);
+        }
+        catch (Exception e)
+        {
+            Log.d("Exception", e.toString());
+        }
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
@@ -164,12 +172,48 @@ public class DietContractHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
-            return db.delete(TABLE, "id = ?", new String[] {Integer.toString(id)});
+            return db.delete(TABLE, "_id = ?", new String[] {Integer.toString(id)});
         }
         catch (Exception e)
         {
             Log.e("Database Exception:", e.toString());
         }
         return 0;
+    }
+
+    public ArrayList<DietItem> readFromDatabase()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + DietContract.Diet.TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<DietItem> dbOutput = new ArrayList<DietItem>();
+
+        List itemIds = new ArrayList<>();
+        while(cursor.moveToNext())
+        {
+            //dbOutput.add(new String[]{cursor.getString(1), cursor.getString(2)});
+            Recipe breakfast, lunch, dinner;
+            List<Recipe> recipeList = new ArrayList<Recipe>();
+            breakfast = new Recipe(cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),
+                    cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                    cursor.getString(11), cursor.getString(12), cursor.getString(13));
+            lunch = new Recipe( cursor.getString(14), cursor.getString(15),
+                cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19),
+                cursor.getString(20), cursor.getString(21), cursor.getString(22), cursor.getString(23),
+                cursor.getString(24), cursor.getString(25), cursor.getString(26));
+            dinner = new Recipe( cursor.getString(27), cursor.getString(28),
+                    cursor.getString(29), cursor.getString(30), cursor.getString(31), cursor.getString(32),
+                    cursor.getString(33), cursor.getString(34), cursor.getString(35), cursor.getString(36),
+                    cursor.getString(37), cursor.getString(38), cursor.getString(39));
+            recipeList.add(breakfast);
+            recipeList.add(lunch);
+            recipeList.add(dinner);
+
+            dbOutput.add(new DietItem(recipeList));
+        }
+        cursor.close();
+
+        return dbOutput;
     }
 }

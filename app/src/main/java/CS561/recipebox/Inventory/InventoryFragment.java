@@ -96,7 +96,6 @@ public class InventoryFragment extends Fragment
                                     pantryHelper.writeToDatabase(InputText, InputCount);
                                     inventoryList.add(new InventoryItem(InputCount, InputText));
                                     adapter.notifyItemInserted(inventoryList.size() - 1);
-
                                 }
                                 catch (Exception e)
                                 {
