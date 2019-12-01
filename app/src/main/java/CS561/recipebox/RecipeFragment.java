@@ -15,8 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
@@ -27,6 +32,17 @@ public class RecipeFragment extends Fragment
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
     Bundle extras;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private ArrayList<Contact> contacts;
+
+    private ArrayList<Category> category;
+    private List<String> data = new ArrayList<String>();
+    private String[] split_string;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -82,6 +98,43 @@ public class RecipeFragment extends Fragment
 
 
 
+            // Template for contacts
+
+            RecyclerView rvContacts = (RecyclerView) root.findViewById(R.id.rvContacts);
+            contacts = Contact.createContactsList(20);
+            ContactsAdapter adapter = new ContactsAdapter(contacts);
+            rvContacts.setAdapter(adapter);
+            rvContacts.setLayoutManager(new LinearLayoutManager(context));
+            LinearLayoutManager layoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+            rvContacts.setLayoutManager(layoutManager);
+
+
+            split_string = catagories.split(",");
+
+            for (String s : split_string)
+            {
+                data.add(s);
+                //Log.d("Splitting", s);
+            }
+
+            String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+
+
+            List<String> initializer = new ArrayList<String>();
+
+            int counter = 0;
+            for (String q : s) {
+                initializer.add(q);
+                counter++;
+            }
+
+            RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
+            category = Category.createCategoryList(counter, s);
+            CategoryAdapter madapter = new CategoryAdapter(category, context);
+            rvCategory.setAdapter(madapter);
+            rvCategory.setLayoutManager(new LinearLayoutManager(context));
+            LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+            rvCategory.setLayoutManager(mlayoutManager);
 
         }
 
