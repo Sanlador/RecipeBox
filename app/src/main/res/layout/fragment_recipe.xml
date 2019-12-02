@@ -24,14 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvContacts"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/instructions"
-                    tools:layout_editor_absoluteX="16dp" />
-
                 <TextView
                     android:id="@+id/instructions"
                     android:layout_width="380dp"
@@ -60,8 +52,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/rvContacts"
+                    app:layout_constraintTop_toBottomOf="@+id/instructions"
                     tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/instructions_rest"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rvCategory" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

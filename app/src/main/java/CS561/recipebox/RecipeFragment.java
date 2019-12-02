@@ -81,32 +81,21 @@ public class RecipeFragment extends Fragment
             TextView Info = (TextView) root.findViewById(R.id.instructions);
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
                     "\n\n" + "Ingredients:\n\n\t" + ingredients +
-                    "\n\n\nDirections:\n\n\t" + info +
-                    "\n\nCatagories:\n\n\t" + catagories + "\n" +
-                    "\nNutrition:\n\n" +
+                    "\n\n\nDirections:\n\n\t" + info
+            );
+            TextView info_rest = (TextView) root.findViewById(R.id.instructions_rest);
+            info_rest.setText("\nNutrition:\n\n" +
                     "\tFat: " + fat + " grams\n" +
                     "\tCarbs: " + carbs + " grams\n" +
                     "\tProteins: " + proteins + " grams\n" +
                     "\tCholesterol: " + cholesterol + " grams\n" +
-                    "\tSodium: " + sodium + " grams\n"
-            );
+                    "\tSodium: " + sodium + " grams\n");
+
             //setContentView(title);
 
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
-
-
-
-            // Template for contacts
-
-            RecyclerView rvContacts = (RecyclerView) root.findViewById(R.id.rvContacts);
-            contacts = Contact.createContactsList(20);
-            ContactsAdapter adapter = new ContactsAdapter(contacts);
-            rvContacts.setAdapter(adapter);
-            rvContacts.setLayoutManager(new LinearLayoutManager(context));
-            LinearLayoutManager layoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
-            rvContacts.setLayoutManager(layoutManager);
 
 
             split_string = catagories.split(",");
@@ -117,19 +106,20 @@ public class RecipeFragment extends Fragment
                 //Log.d("Splitting", s);
             }
 
-            String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+            String s = "Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test";
 
+            ArrayList<String> arr = new ArrayList<String>();
 
-            List<String> initializer = new ArrayList<String>();
+            String[] split_string = s.split(",");
 
             int counter = 0;
-            for (String q : s) {
-                initializer.add(q);
+            for (String q : split_string) {
+                arr.add(q);
                 counter++;
             }
 
             RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
-            category = Category.createCategoryList(counter, s);
+            category = Category.createCategoryList(counter, catagories);
             CategoryAdapter madapter = new CategoryAdapter(category, context);
             rvCategory.setAdapter(madapter);
             rvCategory.setLayoutManager(new LinearLayoutManager(context));
