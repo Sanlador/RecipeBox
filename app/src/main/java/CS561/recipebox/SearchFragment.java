@@ -159,7 +159,7 @@ public class SearchFragment extends Fragment
             listArray_ingredient.clear();
 
             // Dummy data for testing
-            ingredient_output = "peeled apple~~~";
+            ingredient_output = new QueryForIngredient().execute().get();
 
             Log.d("Ingredient_Output", ingredient_output);
             selected = ingredient_output.split("~~~");
@@ -708,52 +708,113 @@ public class SearchFragment extends Fragment
                 rvRecipes.setVisibility(View.VISIBLE);
                 savedQuery = recipe_name.toString();
                 Log.d("Test", "Running DBQuery");
-                try
+
+                concat_category = "";
+                for (String s : filter_prefered_category)
                 {
-                    loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
-                    Log.d("Query Output", output);
-                    // get the biggest category from the result of search, which is all info from database of each recipe
-                    List<String[]> parsedOutput = new ArrayList<String[]>();
-                    String[] splitOutput;
-                    //Parse output
-                    if (output.split("~~~").length > 0)
-                    {
-                        String[] parse;
-                        splitOutput = output.split("~~~");
-                        for (String s: splitOutput)
-                        {
-                            parse = s.split("```");
-                            parsedOutput.add(parse);
+                    concat_category += s + "```";
+                }
+
+                concat_ingredient = "";
+                for (String s : filter_prefered_ingedient)
+                {
+                    concat_ingredient += s + "```";
+                }
+                if (concat_category == "" && concat_ingredient == "")
+                {
+                    try {
+                        loadCounter = 0;
+                        output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
+                        Log.d("Query Output", output);
+                        // get the biggest category from the result of search, which is all info from database of each recipe
+                        List<String[]> parsedOutput = new ArrayList<String[]>();
+                        String[] splitOutput;
+                        //Parse output
+                        if (output.split("~~~").length > 0) {
+                            String[] parse;
+                            splitOutput = output.split("~~~");
+                            for (String s : splitOutput) {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+                            }
+                            testOutput = splitOutput;
+                            // Update recyclerview
+                            recipes.clear();
+                            if (parsedOutput.get(0).length > 1) {
+                                RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
+                                // Initialize recipes
+                                recipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
+                                // Create adapter passing in the sample user data
+                                RecipesAdapter adapter = new RecipesAdapter(recipes, context);
+                                // Attach the adapter to the recyclerview to populate items
+                                rvRecipes.setAdapter(adapter);
+                                // Set layout manager to position the items
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                                rvRecipes.setLayoutManager(linearLayoutManager);
+                            }
+                        } else {
+                            splitOutput = new String[]{output};
+                            testOutput = splitOutput;
+                            recipes.clear();
+                            //Log.d("Parsed result", splitOutput[0]);
                         }
-                        testOutput = splitOutput;
-                        // Update recyclerview
-                        recipes.clear();
-                        if (parsedOutput.get(0).length > 1)
-                        {
-                            RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
-                            // Initialize recipes
-                            recipes = Recipe.createRecipesList(parsedOutput.size()-1, parsedOutput);
-                            // Create adapter passing in the sample user data
-                            RecipesAdapter adapter = new RecipesAdapter(recipes, context);
-                            // Attach the adapter to the recyclerview to populate items
-                            rvRecipes.setAdapter(adapter);
-                            // Set layout manager to position the items
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                            rvRecipes.setLayoutManager(linearLayoutManager);
-                        }
-                    }
-                    else
-                    {
-                        splitOutput = new String[] {output};
-                        testOutput = splitOutput;
-                        recipes.clear();
-                        //Log.d("Parsed result", splitOutput[0]);
+                    } catch (Exception e) {
+
                     }
                 }
-                catch (Exception e)
+                else
                 {
+                    Log.d("Test", "Running DBQuery sumbit with concat constraint");
+                    try
+                    {
+                        loadCounter = 0;
+                        output = new SpinnerQuery().execute(Integer.toString(loadCounter) + "#" + checkbox + "#" + concat_category + "#" + concat_ingredient + "#" + recipe_name).get();
+                        Log.d("Query Output", output);
 
+                        // get the biggest category from the result of search, which is all info from database of each recipe
+                        List<String[]> parsedOutput = new ArrayList<String[]>();
+                        String[] splitOutput;
+
+                        //Parse output
+                        if (output.split("~~~").length > 0)
+                        {
+                            String[] parse;
+                            splitOutput = output.split("~~~");
+                            for (String s : splitOutput)
+                            {
+                                parse = s.split("```");
+                                parsedOutput.add(parse);
+                            }
+                            testOutput = splitOutput;
+
+                            // Update recyclerview
+                            recipes.clear();
+                            if (parsedOutput.get(0).length > 1)
+                            {
+                                RecyclerView rvRecipes = (RecyclerView) root.findViewById(R.id.rvRecipes);
+                                // Initialize recipes
+                                recipes = Recipe.createRecipesList(parsedOutput.size() - 1, parsedOutput);
+                                // Create adapter passing in the sample user data
+                                RecipesAdapter adapter = new RecipesAdapter(recipes, context);
+                                // Attach the adapter to the recyclerview to populate items
+                                rvRecipes.setAdapter(adapter);
+                                // Set layout manager to position the items
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+                                rvRecipes.setLayoutManager(linearLayoutManager);
+                            }
+                        }
+                        else
+                        {
+                            splitOutput = new String[]{output};
+                            testOutput = splitOutput;
+                            recipes.clear();
+                            //Log.d("Parsed result", splitOutput[0]);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
                 }
             }
         });
