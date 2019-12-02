@@ -33,25 +33,15 @@ public class RecipeFragment extends Fragment
     private View root;
     Bundle extras;
 
-    private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private ArrayList<Contact> contacts;
-
+    private RecyclerView.LayoutManager mlayoutManager;
     private ArrayList<Category> category;
-    private List<String> data = new ArrayList<String>();
-    private String[] split_string;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         root = inflater.inflate(R.layout.fragment_recipe, container, false);
         Context context = this.getContext();
-
-
-
         if (extras != null)
         {
             String name = testName = (String)extras.get("Name");
@@ -96,40 +86,29 @@ public class RecipeFragment extends Fragment
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
-
-
-            split_string = catagories.split(",");
-
-            for (String s : split_string)
-            {
-                data.add(s);
-                //Log.d("Splitting", s);
-            }
-
             String s = "Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test";
 
-            ArrayList<String> arr = new ArrayList<String>();
 
-            String[] split_string = s.split(",");
-
-            int counter = 0;
-            for (String q : split_string) {
-                arr.add(q);
-                counter++;
-            }
-
+            /*
+            // Category
             RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
-            category = Category.createCategoryList(counter, catagories);
+            category = Category.createCategoryList(catagories);
             CategoryAdapter madapter = new CategoryAdapter(category, context);
             rvCategory.setAdapter(madapter);
             rvCategory.setLayoutManager(new LinearLayoutManager(context));
             LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
             rvCategory.setLayoutManager(mlayoutManager);
+             */
 
+            // Using dummy data and also almost every category in each recipe is too to be scrollable
+            RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
+            category = Category.createCategoryList(s);
+            CategoryAdapter madapter = new CategoryAdapter(category, context);
+            rvCategory.setAdapter(madapter);
+            rvCategory.setLayoutManager(new LinearLayoutManager(context));
+            LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+            rvCategory.setLayoutManager(mlayoutManager);
         }
-
-
-
         return root;
     }
 
@@ -157,6 +136,4 @@ public class RecipeFragment extends Fragment
     {
         return testName;
     }
-
-
 }
