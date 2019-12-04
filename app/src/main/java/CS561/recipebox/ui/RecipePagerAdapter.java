@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import CS561.recipebox.Instruction.InstructionsFragment;
 import CS561.recipebox.R;
-import CS561.recipebox.Recipe.RecipeFragment;
+import CS561.recipebox.RecipeFragment;
 
 public class RecipePagerAdapter extends FragmentPagerAdapter
 {
