@@ -1,11 +1,15 @@
 package CS561.recipebox.Recipe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -14,6 +18,8 @@ import com.squareup.picasso.Picasso;
 import CS561.recipebox.R;
 import CS561.recipebox.ui.HomePagerAdapter;
 import CS561.recipebox.ui.RecipePagerAdapter;
+
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 public class RecipeActivity extends AppCompatActivity
 {
@@ -78,6 +84,18 @@ public class RecipeActivity extends AppCompatActivity
 
 
         }*/
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     public String getName()
