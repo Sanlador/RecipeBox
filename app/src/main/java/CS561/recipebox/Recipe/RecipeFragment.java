@@ -15,8 +15,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
@@ -28,14 +33,15 @@ public class RecipeFragment extends Fragment
     private View root;
     Bundle extras;
 
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mlayoutManager;
+    private ArrayList<Category> category;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         root = inflater.inflate(R.layout.fragment_recipe, container, false);
         Context context = this.getContext();
-
-
-
         if (extras != null)
         {
             String name = testName = (String)extras.get("Name");
@@ -65,28 +71,44 @@ public class RecipeFragment extends Fragment
             TextView Info = (TextView) root.findViewById(R.id.instructions);
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
                     "\n\n" + "Ingredients:\n\n\t" + ingredients +
-                    "\n\n\nDirections:\n\n\t" + info +
-                    "\n\nCatagories:\n\n\t" + catagories + "\n" +
-                    "\nNutrition:\n\n" +
+                    "\n\n\nDirections:\n\n\t" + info
+            );
+            TextView info_rest = (TextView) root.findViewById(R.id.instructions_rest);
+            info_rest.setText("\nNutrition:\n\n" +
                     "\tFat: " + fat + " grams\n" +
                     "\tCarbs: " + carbs + " grams\n" +
                     "\tProteins: " + proteins + " grams\n" +
                     "\tCholesterol: " + cholesterol + " grams\n" +
-                    "\tSodium: " + sodium + " grams\n"
-            );
+                    "\tSodium: " + sodium + " grams\n");
+
             //setContentView(title);
 
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
 
+            String s = "Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test";
 
 
+            /*
+            // Category
+            RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
+            category = Category.createCategoryList(catagories);
+            CategoryAdapter madapter = new CategoryAdapter(category, context);
+            rvCategory.setAdapter(madapter);
+            rvCategory.setLayoutManager(new LinearLayoutManager(context));
+            LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+            rvCategory.setLayoutManager(mlayoutManager);
+             */
 
-
+            // Using dummy data and also almost every category in each recipe is too to be scrollable
+            RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
+            category = Category.createCategoryList(s);
+            CategoryAdapter madapter = new CategoryAdapter(category, context);
+            rvCategory.setAdapter(madapter);
+            rvCategory.setLayoutManager(new LinearLayoutManager(context));
+            LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+            rvCategory.setLayoutManager(mlayoutManager);
         }
-
-
-
         return root;
     }
 
@@ -114,6 +136,4 @@ public class RecipeFragment extends Fragment
     {
         return testName;
     }
-
-
 }
