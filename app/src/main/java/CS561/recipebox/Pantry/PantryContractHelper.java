@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Pantry;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,28 +10,29 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryContractHelper extends SQLiteOpenHelper
+public class PantryContractHelper extends SQLiteOpenHelper
 {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "pantry.db";
 
-    private static final String TABLE = InventoryContract.Inventory.TABLE_NAME;
+    private static final String TABLE = PantryContract.Inventory.TABLE_NAME;
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE IF NOT EXISTS " + InventoryContract.Inventory.TABLE_NAME + " (" +
-                    InventoryContract.Inventory._ID + " INTEGER PRIMARY KEY," +
-                    InventoryContract.Inventory.COLUMN_NAME_TITLE + " TEXT," +
-                    InventoryContract.Inventory.COLUMN_NAME_COUNT + " TEXT)";
+            "CREATE TABLE " + PantryContract.Inventory.TABLE_NAME + " (" +
+                    PantryContract.Inventory._ID + " INTEGER PRIMARY KEY," +
+                    PantryContract.Inventory.COLUMN_NAME_TITLE + " TEXT," +
+                    PantryContract.Inventory.COLUMN_NAME_COUNT + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + InventoryContract.Inventory.TABLE_NAME;
+            "DROP TABLE IF EXISTS " + PantryContract.Inventory.TABLE_NAME;
 
 
-    public InventoryContractHelper(Context context)
+    public PantryContractHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
@@ -62,12 +63,12 @@ public class InventoryContractHelper extends SQLiteOpenHelper
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        //values.put(InventoryContract.Inventory._ID, "0");
-        values.put(InventoryContract.Inventory.COLUMN_NAME_TITLE, name);
-        values.put(InventoryContract.Inventory.COLUMN_NAME_COUNT, count);
+        //values.put(PantryContract.Inventory._ID, "0");
+        values.put(PantryContract.Inventory.COLUMN_NAME_TITLE, name);
+        values.put(PantryContract.Inventory.COLUMN_NAME_COUNT, count);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(InventoryContract.Inventory.TABLE_NAME, null, values);
+        long newRowId = db.insert(PantryContract.Inventory.TABLE_NAME, null, values);
 
         if (-1 == newRowId)
         {
@@ -86,23 +87,8 @@ public class InventoryContractHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
-            return db.delete(TABLE, "title = ?", new String[] {name});
-        }
-        catch (Exception e)
-        {
-            Log.e("Database Exception:", e.toString());
-        }
-        return 0;
-    }
 
-    public int changeCountValue(String name, int newCount)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("count", newCount);
-        try
-        {
-            return db.update(TABLE, cv,"title = ?", new String[] {name});
+            return db.delete(TABLE, "title = ?", new String[] {name});
         }
         catch (Exception e)
         {
@@ -115,14 +101,14 @@ public class InventoryContractHelper extends SQLiteOpenHelper
     public List<String[]> readFromDatabase()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + InventoryContract.Inventory.TABLE_NAME;
+        String query = "SELECT * FROM " + PantryContract.Inventory.TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         List<String[]> dbOutput = new ArrayList<String[]>();
 
         List itemIds = new ArrayList<>();
         while(cursor.moveToNext())
         {
-            dbOutput.add(new String[]{cursor.getString(1), cursor.getString(2)});
+            dbOutput.add(new String[]{cursor.getString(0), cursor.getString(1)});
             Log.d("Output data", cursor.getString(0));
             Log.d("Output data", cursor.getString(1));
             Log.d("Output data", cursor.getString(2));

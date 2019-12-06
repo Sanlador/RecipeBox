@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Pantry;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import CS561.recipebox.R;
 import CS561.recipebox.ui.gallery.GalleryViewModel;
 
 public class PantryFragment extends Fragment

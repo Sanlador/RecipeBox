@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import CS561.recipebox.InstructionsFragment;
+import CS561.recipebox.Instruction.InstructionsFragment;
 import CS561.recipebox.R;
 import CS561.recipebox.RecipeFragment;
 

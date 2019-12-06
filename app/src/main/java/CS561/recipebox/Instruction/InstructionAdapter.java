@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Instruction;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import CS561.recipebox.Inventory.InventoryContractHelper;
+import CS561.recipebox.R;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 

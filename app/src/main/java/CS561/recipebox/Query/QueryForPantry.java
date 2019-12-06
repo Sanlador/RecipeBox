@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Query;
 
 import android.os.AsyncTask;
 import android.util.Log;

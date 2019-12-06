@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Spinner;
 
 import android.app.AlertDialog;
 import android.content.Context;

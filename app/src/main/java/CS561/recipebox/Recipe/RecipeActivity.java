@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
+import CS561.recipebox.R;
 import CS561.recipebox.ui.HomePagerAdapter;
 import CS561.recipebox.ui.RecipePagerAdapter;
 

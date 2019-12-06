@@ -1,10 +1,10 @@
-package CS561.recipebox;
+package CS561.recipebox.Pantry;
 
 import android.provider.BaseColumns;
 
-public final class pantryContract
+public final class PantryContract
 {
-    private pantryContract()
+    private PantryContract()
     {
 
     }

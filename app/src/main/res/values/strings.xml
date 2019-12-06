@@ -16,6 +16,7 @@
     <string name="app_label">test</string>
     <string name="search_hint">test2</string>
     <string name="search_text">Search</string>
+    <string name="diet_text">Diet Builder</string>
     <string name="pantry_text">Pantry</string>
     <string name="recipe_text">Recipe</string>
     <string name="instructions_text">Instructions</string>

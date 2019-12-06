@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import CS561.recipebox.R;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
