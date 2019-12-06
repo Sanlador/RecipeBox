@@ -39,7 +39,7 @@ public class QueryForPantry extends AsyncTask<String, String, String>
 
                 String query = params[0];
 
-                String selectSql = "select * from Webscrape WHERE Ingredients LIKE '%" + query + "%'";
+                String selectSql = "select * from RecipeScrape WHERE ingredients LIKE '%" + query + "%'";
 
                 Log.d("Query", selectSql);
                 try (Statement statement = connection.createStatement();
@@ -59,7 +59,10 @@ public class QueryForPantry extends AsyncTask<String, String, String>
                                 + resultSet.getString(10) + "```"
                                 + resultSet.getString(11) + "```"
                                 + resultSet.getString(12) + "```"
-                                + resultSet.getString(13))
+                                + resultSet.getString(13)) + "```"
+                                + resultSet.getString(14) + "```"
+                                + resultSet.getString(15) + "```"
+                                + resultSet.getString(16)
                                 + "~~~";
                     }
                     connection.close();

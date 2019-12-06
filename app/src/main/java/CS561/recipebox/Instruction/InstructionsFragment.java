@@ -33,7 +33,7 @@ public class InstructionsFragment extends Fragment
         if (extras != null)
         {
             String s = (String)extras.get("Info");
-            instructions = s.split("^");
+            instructions = s.split("\\^");
             recyclerView = (RecyclerView) root.findViewById(R.id.instructionsList);
             ArrayList<InstructionItem> instructionList = InstructionItem.createInstructionList(instructions);
             InstructionAdapter adapter = new InstructionAdapter(instructionList,context,this);

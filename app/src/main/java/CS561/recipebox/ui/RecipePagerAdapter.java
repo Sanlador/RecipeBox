@@ -17,7 +17,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter
 {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.recipe_text, R.string.instructions_text};
+    private static final int[] TAB_TITLES = new int[]{ R.string.recipe_text, R.string.instructions_text, R.string.nutrition_text};
     private final Context mContext;
     Bundle extras;
 
@@ -31,11 +31,15 @@ public class RecipePagerAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem(int position)
     {
+        int i = 0;
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        if (position == 0)
+        if (0 == position)
             return RecipeFragment.newInstance(position + 1, extras);
+        else if (1 == position)
+            return InstructionsFragment.newInstance(position + 1, extras);
         else
+            //Saurabh: Change this line
             return InstructionsFragment.newInstance(position + 1, extras);
     }
 
@@ -48,7 +52,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        // Show 3 total pages.
+        return 3;
     }
 }

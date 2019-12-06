@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment
     public String savedQuery;
     public String last;
     public int recyclerViewLen;
-    public String checkbox = "Recipe";
+    public String checkbox = "title";
 
     // Variables for spinners
     public List<KeyPairBoolData> listArray_ingredient = new ArrayList<>();
@@ -229,7 +229,7 @@ public class SearchFragment extends Fragment
                 if (radio_title.isChecked())
                 {
                     Log.d("Radio", "Title");
-                    checkbox = "Recipe";
+                    checkbox = "title";
                 }
                 else if (radio_ingredient.isChecked())
                 {
@@ -261,9 +261,9 @@ public class SearchFragment extends Fragment
                             parse = s.split("```");
                             parsedOutput.add(parse);
 
-                            // For autocomplete, 3 is title of recipes
+                            // For autocomplete, 1 is title of recipes
                             // use the array 'data' later for showing it on listView
-                            data.add(parse[3]);
+                            data.add(parse[1]);
                         }
                     }
                     else
@@ -291,7 +291,7 @@ public class SearchFragment extends Fragment
         //RECYCLER VIEW
 
         // Create a temporary "box" for attaching adapter
-        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
         // Create a temporary "box" for attaching adapter
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
@@ -631,9 +631,9 @@ public class SearchFragment extends Fragment
                                 parse = s.split("```");
                                 parsedOutput.add(parse);
 
-                                // For autocomplete, 3 is title of recipes
+                                // For autocomplete, 1 title of recipes
                                 // use the array 'string_autocomplete' later for showing it on listView
-                                string_autocomplete.add(parse[3]);
+                                string_autocomplete.add(parse[1]);
                             }
                         }
                         else
@@ -671,9 +671,9 @@ public class SearchFragment extends Fragment
                             {
                                 parse = s.split("```");
                                 parsedOutput.add(parse);
-                                // For autocomplete, 3 is title of recipes
+                                // For autocomplete, 1 is title of recipes
                                 // use the array 'data' later for showing it on listView
-                                string_autocomplete.add(parse[3]);
+                                string_autocomplete.add(parse[1]);
                             }
                         }
                         else
@@ -718,7 +718,7 @@ public class SearchFragment extends Fragment
                 try
                 {
                     loadCounter = 0;
-                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
+                    output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "title" + "#" + recipe_name).get();
                     Log.d("Query Output", output);
                     // get the biggest category from the result of search, which is all info from database of each recipe
                     List<String[]> parsedOutput = new ArrayList<String[]>();

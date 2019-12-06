@@ -45,6 +45,7 @@ public class DietFragment extends Fragment {
         Context context = this.getContext();
         contractHelper = new DietContractHelper(context);
         dietList = contractHelper.readFromDatabase();
+        dietList.add(dummyOutput("a"));
         adapter = new DietAdapter(dietList, context, this);
         recyclerView = (RecyclerView) root.findViewById(R.id.dietList);
         recyclerView.setAdapter(adapter);
