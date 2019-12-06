@@ -25,9 +25,6 @@ public class RecipeFragment extends Fragment
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
     Bundle extras;
-
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mlayoutManager;
     private ArrayList<Category> category;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,6 +32,8 @@ public class RecipeFragment extends Fragment
     {
         root = inflater.inflate(R.layout.fragment_recipe, container, false);
         Context context = this.getContext();
+
+
         if (extras != null)
         {
             String name = testName = (String)extras.get("Name");
@@ -62,27 +61,27 @@ public class RecipeFragment extends Fragment
             //TextView ing = (TextView)findViewById(R.id.ingredients);
             //ing.setText(ingredients);
             TextView Info = (TextView) root.findViewById(R.id.instructions);
-            Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
-                    "\n\n" + "Ingredients:\n\n\t" + ingredients +
-                    "\n\n\nDirections:\n\n\t" + info
-            );
-            TextView info_rest = (TextView) root.findViewById(R.id.instructions_rest);
-            info_rest.setText("\nNutrition:\n\n" +
-                    "\tFat: " + fat + " grams\n" +
-                    "\tCarbs: " + carbs + " grams\n" +
-                    "\tProteins: " + proteins + " grams\n" +
-                    "\tCholesterol: " + cholesterol + " grams\n" +
-                    "\tSodium: " + sodium + " grams\n");
+            TextView Servings = (TextView) root.findViewById(R.id.final_servings);
+            TextView Prep = (TextView) root.findViewById(R.id.final_prep);
+            TextView Cook = (TextView) root.findViewById(R.id.final_cook);
+            TextView Ready = (TextView) root.findViewById(R.id.final_ready);
+            //TextView Ingredients = (TextView) root.findViewById(R.id.recipe_ingredients);
 
+            Servings.setText("Servings:"+serving);
+            Prep.setText(" 10m  ");
+            Cook.setText("   20m  ");
+            Ready.setText("  30m  ");
+
+
+            //Ingredients.setText("Ingredients:\n\n\t"+ingredients);
+
+            Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
+                    "\n\n" + "Ingredients:\n\n\t" + ingredients
+            );
             //setContentView(title);
 
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
             Picasso.get().load(url).into(pictureLink);
-
-            String s = "Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test";
-
-
-
             // Category
             RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
             category = Category.createCategoryList(catagories);
@@ -92,9 +91,8 @@ public class RecipeFragment extends Fragment
             LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
             rvCategory.setLayoutManager(mlayoutManager);
 
-
-
         }
+
         return root;
     }
 
