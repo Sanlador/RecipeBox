@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class IngredientQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
-    private String checkbox = "Recipe";
+    private String checkbox = "title";
     private String prefer_tag = "";
 
     @Override
@@ -56,17 +56,17 @@ public class IngredientQuery extends AsyncTask<String, String, String> {
                 for (String s : indi_tag)
                 {
                     //Log.d("Tag", s);
-                    concat += "Categories like " + "'%" + s + "%' " + "and ";
+                    concat += "categories like " + "'%" + s + "%' " + "and ";
                 }
                 if (params[0].length() < 1)
                 {
-                    selectSql = "select * from Webscrape where " + concat;
+                    selectSql = "select * from RecipeScrape where " + concat;
                     selectSql = selectSql.substring(0, selectSql.length() - 4);
                 }
                 else
                 {
-                    concat += "Recipe like '%" + query + "%'";
-                    selectSql = "select * from Webscrape where " + concat;
+                    concat += "title like '%" + query + "%'";
+                    selectSql = "select * from RecipeScrape where " + concat;
                 }
 
                 Log.d("Query", selectSql);
@@ -85,7 +85,10 @@ public class IngredientQuery extends AsyncTask<String, String, String> {
                                 + resultSet.getString(10) + "```"
                                 + resultSet.getString(11) + "```"
                                 + resultSet.getString(12) + "```"
-                                + resultSet.getString(13))
+                                + resultSet.getString(13)) + "```"
+                                + resultSet.getString(14) + "```"
+                                + resultSet.getString(15) + "```"
+                                + resultSet.getString(16)
                                 + "~~~";
                     }
                     connection.close();

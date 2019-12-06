@@ -20,4 +20,5 @@
     <string name="pantry_text">Pantry</string>
     <string name="recipe_text">Recipe</string>
     <string name="instructions_text">Instructions</string>
+    <string name="nutrition_text">Nutrition</string>
 </resources>

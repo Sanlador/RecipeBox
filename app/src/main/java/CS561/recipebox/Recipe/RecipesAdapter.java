@@ -66,7 +66,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.inventory_name);
-            infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            //infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
             picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
             parent = itemView.findViewById(R.id.parent);
         }
@@ -105,7 +105,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         nameTextView.setText(recipe.getName());
 
         TextView infoTextView = viewHolder.infoTextView;
-        infoTextView.setText(recipe.getCatagories());
+        //infoTextView.setText(recipe.getCatagories());
 
         ImageView picImageView = viewHolder.picImageView;
         Picasso.get().load(recipe.getrPictureLink()).into(picImageView);
@@ -136,7 +136,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return mRecipes.size();
     }
 }

@@ -1,4 +1,4 @@
-package CS561.recipebox.Query;
+package CS561.recipebox;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class QueryForPantry extends AsyncTask<String, String, String>
+public class QueryForIngredient extends AsyncTask<String, String, String>
 {
 
     private int pageNumber = 10;
@@ -17,10 +17,11 @@ public class QueryForPantry extends AsyncTask<String, String, String>
     protected String doInBackground(String... params)
     {
         {
+            /*
             if (params[0].length() < 1) {
                 return null;
             }
-
+            */
 
             Log.d("Function", "Launching Query");
             String output = "";
@@ -33,50 +34,34 @@ public class QueryForPantry extends AsyncTask<String, String, String>
             String url = "jdbc:jtds:sqlserver://recipebox01.database.windows.net:1433;databaseName=RecipeDB;user=recipeOSU@recipebox01;password=recipe32!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;sendStringParametersAsUnicode=false";
             Connection connection = null;
 
-            try {
+            try
+            {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 connection = DriverManager.getConnection(url);
 
-                String query = params[0];
+                String selectSql = "select * from recipe_ing";
 
-                String selectSql = "select * from RecipeScrape WHERE ingredients LIKE '%" + query + "%'";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(selectSql);
 
-                Log.d("Query", selectSql);
-                try (Statement statement = connection.createStatement();
-                     ResultSet resultSet = statement.executeQuery(selectSql))
+                while (resultSet.next())
                 {
-                    while (resultSet.next())
-                    {
-                        output += (resultSet.getString(1) + "```"
-                                + resultSet.getString(2) + "```"
-                                + resultSet.getString(3) + "```"
-                                + resultSet.getString(4) + "```"
-                                + resultSet.getString(5) + "```"
-                                + resultSet.getString(6) + "```"
-                                + resultSet.getString(7) + "```"
-                                + resultSet.getString(8) + "```"
-                                + resultSet.getString(9) + "```"
-                                + resultSet.getString(10) + "```"
-                                + resultSet.getString(11) + "```"
-                                + resultSet.getString(12) + "```"
-                                + resultSet.getString(13)) + "```"
-                                + resultSet.getString(14) + "```"
-                                + resultSet.getString(15) + "```"
-                                + resultSet.getString(16)
-                                + "~~~";
-                    }
-                    connection.close();
+                    output += (resultSet.getString(1) + "~~~");
                 }
-            } catch (Exception e) {
+                connection.close();
+            }
+            catch (Exception e)
+            {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
             //temporary output. Will change once DB connection is implemented.
 
             if (output.length() > 0)
-                output = output.substring(0, output.length() - 1);
+                output = output.substring(0, output.length() - 3);
             //return params[0];
             Log.d("Test", "Exiting DBQuery");
+
             return output;
         }
     }

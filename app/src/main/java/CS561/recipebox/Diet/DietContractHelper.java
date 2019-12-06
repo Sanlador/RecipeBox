@@ -36,6 +36,9 @@ public class DietContractHelper extends SQLiteOpenHelper
                     DietContract.Diet.COLUMN_NAME_STRING_PROTEIN_BREAKFAST + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_CHOLESTEROL_BREAKFAST + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_SODIUM_BREAKFAST + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_TOTALTIME_BREAKFAST + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_SUGARS_BREAKFAST + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_PREPTIME_BREAKFAST + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_RECIPE_LUNCH + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_INFO_LUNCH + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_INGREDIENTS_LUNCH + " TEXT," +
@@ -49,6 +52,9 @@ public class DietContractHelper extends SQLiteOpenHelper
                     DietContract.Diet.COLUMN_NAME_STRING_PROTEIN_LUNCH + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_CHOLESTEROL_LUNCH + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_SODIUM_LUNCH + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_TOTALTIME_LUNCH + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_SUGARS_LUNCH + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_PREPTIME_LUNCH + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_RECIPE_DINNER + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_INFO_DINNER + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_INGREDIENTS_DINNER + " TEXT," +
@@ -61,7 +67,10 @@ public class DietContractHelper extends SQLiteOpenHelper
                     DietContract.Diet.COLUMN_NAME_CARBS_DINNER + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_STRING_PROTEIN_DINNER + " TEXT," +
                     DietContract.Diet.COLUMN_NAME_CHOLESTEROL_DINNER + " TEXT," +
-                    DietContract.Diet.COLUMN_NAME_SODIUM_DINNER + " TEXT" +
+                    DietContract.Diet.COLUMN_NAME_SODIUM_DINNER + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_TOTALTIME_DINNER + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_SUGARS_DINNER + " TEXT," +
+                    DietContract.Diet.COLUMN_NAME_PREPTIME_DINNER + " TEXT" +
                     ")";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -71,6 +80,7 @@ public class DietContractHelper extends SQLiteOpenHelper
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
+        //onDowngrade(db, 0, 0);
         onCreate(db);
     }
 
@@ -195,17 +205,20 @@ public class DietContractHelper extends SQLiteOpenHelper
             Recipe breakfast, lunch, dinner;
             List<Recipe> recipeList = new ArrayList<Recipe>();
             breakfast = new Recipe(cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),
-                    cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
-                    cursor.getString(11), cursor.getString(12), cursor.getString(13));
-            lunch = new Recipe( cursor.getString(14), cursor.getString(15),
-                cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19),
-                cursor.getString(20), cursor.getString(21), cursor.getString(22), cursor.getString(23),
-                cursor.getString(24), cursor.getString(25), cursor.getString(26));
-            dinner = new Recipe( cursor.getString(27), cursor.getString(28),
-                    cursor.getString(29), cursor.getString(30), cursor.getString(31), cursor.getString(32),
-                    cursor.getString(33), cursor.getString(34), cursor.getString(35), cursor.getString(36),
-                    cursor.getString(37), cursor.getString(38), cursor.getString(39));
+                cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6),
+                cursor.getString(7), cursor.getString(8), cursor.getString(9), cursor.getString(10),
+                cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14),
+                cursor.getString(15), cursor.getString(16));
+            lunch = new Recipe( cursor.getString(17), cursor.getString(18),
+                cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22),
+                cursor.getString(23), cursor.getString(24), cursor.getString(25), cursor.getString(26),
+                cursor.getString(27), cursor.getString(28), cursor.getString(29), cursor.getString(30),
+                cursor.getString(31), cursor.getString(32));
+            dinner = new Recipe( cursor.getString(33), cursor.getString(34),
+                cursor.getString(35), cursor.getString(36), cursor.getString(37), cursor.getString(38),
+            cursor.getString(39), cursor.getString(40), cursor.getString(41), cursor.getString(42),
+            cursor.getString(43), cursor.getString(44), cursor.getString(45), cursor.getString(46),
+            cursor.getString(47), cursor.getString(48));
             recipeList.add(breakfast);
             recipeList.add(lunch);
             recipeList.add(dinner);

@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class DBQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
-    private String checkbox = "Recipe";
+    private String checkbox = "title";
 
     @Override
     protected String doInBackground(String... params) {
@@ -46,9 +46,9 @@ public class DBQuery extends AsyncTask<String, String, String> {
 
                 String selectSql = "select *\n" +
                         "from (\n" +
-                        "\tselect *,ROW_NUMBER()Over(Order By Recipe) as rn\n" +
+                        "\tselect *,ROW_NUMBER()Over(Order By title) as rn\n" +
                         //"\tfrom RecipeBook  WHERE Title LIKE '%" + query + "%') t\n" +
-                        "\tfrom Webscrape WHERE " + checkbox + " LIKE '" + "%" + query + "%') t\n" +
+                        "\tfrom RecipeScrape WHERE " + checkbox + " LIKE '" + "%" + query + "%') t\n" +
                         "where t.rn between " + loadCounter * pageNumber +" and " + (loadCounter + 1) * pageNumber;
 
                 Log.d("Query", selectSql);
@@ -67,7 +67,10 @@ public class DBQuery extends AsyncTask<String, String, String> {
                                 + resultSet.getString(10) + "```"
                                 + resultSet.getString(11) + "```"
                                 + resultSet.getString(12) + "```"
-                                + resultSet.getString(13))
+                                + resultSet.getString(13)) + "```"
+                                + resultSet.getString(14) + "```"
+                                + resultSet.getString(15) + "```"
+                                + resultSet.getString(16)
                                 + "~~~";
                     }
                     connection.close();

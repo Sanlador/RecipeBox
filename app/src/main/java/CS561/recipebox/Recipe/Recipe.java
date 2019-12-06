@@ -12,13 +12,17 @@ public class Recipe
     private String rPictureLink;
     private String rCatagrories;
     private String rServing;
-    private String rCooktime;
+    private String rTotalTime;
     private String rCalories;
     private String rFat;
     private String rCarbs;
     private String rProteins;
     private String rCholesterol;
     private String rSodium;
+    private String rSugar;
+    private String rPrepTime;
+    private String rCookTime;
+
 
     public Recipe(String name,
                   String ingredients,
@@ -26,13 +30,16 @@ public class Recipe
                   String pictureLink,
                   String catagories,
                   String serving,
-                  String cooktime,
+                  String totalTime,
                   String calories,
                   String fat,
                   String carbs,
                   String proteins,
                   String cholesterol,
-                  String sodium)
+                  String sodium,
+                  String sugar,
+                  String prepTime,
+                  String cookTime)
     {
         rName = name;
         rInfo = info;
@@ -40,13 +47,16 @@ public class Recipe
         rPictureLink = pictureLink;
         rCatagrories = catagories;
         rServing = serving;
-        rCooktime = cooktime;
+        rTotalTime = totalTime;
         rCalories = calories;
         rFat = fat;
         rCarbs = carbs;
         rProteins = proteins;
         rCholesterol = cholesterol;
         rSodium = sodium;
+        rSugar = sugar;
+        rPrepTime = prepTime;
+        rCookTime = cookTime;
     }
 
     public String getName()
@@ -81,7 +91,7 @@ public class Recipe
 
     public String getCooktime()
     {
-        return rCooktime;
+        return rCookTime;
     }
 
     public String getCalories()
@@ -113,6 +123,21 @@ public class Recipe
         return rSodium;
     }
 
+    public String getSugar()
+    {
+        return rSugar;
+    }
+
+    public String getTotalTime()
+    {
+        return rTotalTime;
+    }
+
+    public String getPrepTime()
+    {
+        return rPrepTime;
+    }
+
     // not necessary
     private static int lastRecipeId = 0;
 
@@ -140,35 +165,41 @@ public class Recipe
         {
             if (i == numRecipes)
             {
-                recipes.add(new Recipe( parsedOutput.get(i)[3],     // 3 : Name
+                recipes.add(new Recipe( parsedOutput.get(i)[1],     // 3 : Name
                         parsedOutput.get(i)[4],     // 4 : Ingredients
                         parsedOutput.get(i)[5],     // 5 : Instructions
                         parsedOutput.get(i)[0],     // 0 : Picture Link
-                        parsedOutput.get(i)[1],     // 1 : Catagories
-                        parsedOutput.get(i)[2],     // 2 : Servings
-                        parsedOutput.get(i)[6],     // 6 : Cook Time
-                        parsedOutput.get(i)[7],     // 7 : Calories
-                        parsedOutput.get(i)[8],     // 8 : Fat
-                        parsedOutput.get(i)[9],     // 9 : Carbs
-                        parsedOutput.get(i)[10],    // 10 : Proteins
-                        parsedOutput.get(i)[11],    // 11 : Cholesterol
-                        parsedOutput.get(i)[12]    // 12 : Sodium
+                        parsedOutput.get(i)[2],     // 1 : Catagories
+                        parsedOutput.get(i)[3],     // 2 : Servings
+                        parsedOutput.get(i)[8],     // 6 : total Time
+                        parsedOutput.get(i)[9],     // 7 : Calories
+                        parsedOutput.get(i)[10],     // 8 : Fat
+                        parsedOutput.get(i)[11],     // 9 : Carbs
+                        parsedOutput.get(i)[12],    // 10 : Proteins
+                        parsedOutput.get(i)[13],    // 11 : Cholesterol
+                        parsedOutput.get(i)[14],   // 12 : Sodium
+                        parsedOutput.get(i)[15],    //sugar
+                        parsedOutput.get(i)[6],     //prep time
+                        parsedOutput.get(i)[7]      //cook time
                 ));
             }
             else
-                recipes.add(new Recipe( parsedOutput.get(i)[3],     // 3 : Name
+                recipes.add(new Recipe( parsedOutput.get(i)[1],     // 3 : Name
                         parsedOutput.get(i)[4],     // 4 : Ingredients
                         parsedOutput.get(i)[5],     // 5 : Instructions
                         parsedOutput.get(i)[0],     // 0 : Picture Link
-                        parsedOutput.get(i)[1],     // 1 : Catagories
-                        parsedOutput.get(i)[2],     // 2 : Servings
-                        parsedOutput.get(i)[6],     // 6 : Cook Time
-                        parsedOutput.get(i)[7],     // 7 : Calories
-                        parsedOutput.get(i)[8],     // 8 : Fat
-                        parsedOutput.get(i)[9],     // 9 : Carbs
-                        parsedOutput.get(i)[10],    // 10 : Proteins
-                        parsedOutput.get(i)[11],    // 11 : Cholesterol
-                        parsedOutput.get(i)[12]    // 12 : Sodium
+                        parsedOutput.get(i)[2],     // 1 : Catagories
+                        parsedOutput.get(i)[3],     // 2 : Servings
+                        parsedOutput.get(i)[8],     // 6 : total Time
+                        parsedOutput.get(i)[9],     // 7 : Calories
+                        parsedOutput.get(i)[10],     // 8 : Fat
+                        parsedOutput.get(i)[11],     // 9 : Carbs
+                        parsedOutput.get(i)[12],    // 10 : Proteins
+                        parsedOutput.get(i)[13],    // 11 : Cholesterol
+                        parsedOutput.get(i)[14],   // 12 : Sodium
+                        parsedOutput.get(i)[15],    //sugar
+                        parsedOutput.get(i)[6],     //prep time
+                        parsedOutput.get(i)[7]      //cook time
                 ));
         }
         return recipes;

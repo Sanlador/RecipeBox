@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class SpinnerQuery extends AsyncTask<String, String, String> {
 
     private int pageNumber = 10;
-    private String checkbox = "Recipe";
+    private String checkbox = "title";
     private String prefer_category = "";
     private String prefer_ingridient = "";
 
@@ -59,18 +59,18 @@ public class SpinnerQuery extends AsyncTask<String, String, String> {
                 String empty = "";
                 String concat_category = "";
                 String concat_ingredient = "";
-                String concat_query = concat_category + " Recipe like '%" + query + "%'";
-                String concat_search_all = "select * from Webscrape where ";
+                String concat_query = concat_category + " title like '%" + query + "%'";
+                String concat_search_all = "select * from RecipeScrape where ";
 
                 for (String s : tok_category)
                 {
                     //Log.d("Tag", s);
-                    concat_category += "Categories like " + "'%" + s + "%' " + "and ";
+                    concat_category += "category like " + "'%" + s + "%' " + "and ";
                 }
 
                 for (String s : tok_ingedient)
                 {
-                    concat_ingredient += "Ingredients like " + "'%" + s + "%'" + "and ";
+                    concat_ingredient += "ingredients like " + "'%" + s + "%'" + "and ";
                 }
 
                 if (params[0].length() < 1)
@@ -140,7 +140,10 @@ public class SpinnerQuery extends AsyncTask<String, String, String> {
                                 + resultSet.getString(10) + "```"
                                 + resultSet.getString(11) + "```"
                                 + resultSet.getString(12) + "```"
-                                + resultSet.getString(13))
+                                + resultSet.getString(13)) + "```"
+                                + resultSet.getString(14) + "```"
+                                + resultSet.getString(15) + "```"
+                                + resultSet.getString(16)
                                 + "~~~";
                     }
                     connection.close();

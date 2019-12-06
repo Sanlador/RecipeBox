@@ -25,6 +25,9 @@ public final class DietContract {
         public static final String COLUMN_NAME_STRING_PROTEIN_BREAKFAST = "breakfast_protein";
         public static final String COLUMN_NAME_CHOLESTEROL_BREAKFAST = "breakfast_cholesterol";
         public static final String COLUMN_NAME_SODIUM_BREAKFAST = "breakfast_sodium";
+        public static final String COLUMN_NAME_TOTALTIME_BREAKFAST = "breakfast_totaltime";
+        public static final String COLUMN_NAME_SUGARS_BREAKFAST = "breakfast_sugars";
+        public static final String COLUMN_NAME_PREPTIME_BREAKFAST = "breakfast_preptime";
 
         public static final String COLUMN_NAME_RECIPE_LUNCH = "lunch_recipe";
         public static final String COLUMN_NAME_INFO_LUNCH = "lunch_info";
@@ -39,6 +42,9 @@ public final class DietContract {
         public static final String COLUMN_NAME_STRING_PROTEIN_LUNCH = "lunch_protein";
         public static final String COLUMN_NAME_CHOLESTEROL_LUNCH = "lunch_cholesterol";
         public static final String COLUMN_NAME_SODIUM_LUNCH = "lunch_sodium";
+        public static final String COLUMN_NAME_TOTALTIME_LUNCH = "lunch_totaltime";
+        public static final String COLUMN_NAME_SUGARS_LUNCH = "lunch_sugars";
+        public static final String COLUMN_NAME_PREPTIME_LUNCH = "lunch_preptime";
 
         public static final String COLUMN_NAME_RECIPE_DINNER = "dinner_recipe";
         public static final String COLUMN_NAME_INFO_DINNER = "dinner_info";
@@ -53,5 +59,8 @@ public final class DietContract {
         public static final String COLUMN_NAME_STRING_PROTEIN_DINNER = "dinner_protein";
         public static final String COLUMN_NAME_CHOLESTEROL_DINNER = "dinner_cholesterol";
         public static final String COLUMN_NAME_SODIUM_DINNER = "dinner_sodium";
+        public static final String COLUMN_NAME_TOTALTIME_DINNER = "dinner_totaltime";
+        public static final String COLUMN_NAME_SUGARS_DINNER = "dinner_sugars";
+        public static final String COLUMN_NAME_PREPTIME_DINNER = "dinner_preptime";
     }
 }
