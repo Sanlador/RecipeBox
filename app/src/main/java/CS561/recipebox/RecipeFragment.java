@@ -56,6 +56,20 @@ public class RecipeFragment extends Fragment
             //TextView ing = (TextView)findViewById(R.id.ingredients);
             //ing.setText(ingredients);
             TextView Info = (TextView) root.findViewById(R.id.instructions);
+            TextView Servings = (TextView) root.findViewById(R.id.final_servings);
+            TextView Prep = (TextView) root.findViewById(R.id.final_prep);
+            TextView Cook = (TextView) root.findViewById(R.id.final_cook);
+            TextView Ready = (TextView) root.findViewById(R.id.final_ready);
+            //TextView Ingredients = (TextView) root.findViewById(R.id.recipe_ingredients);
+
+            Servings.setText("Servings:"+serving);
+            Prep.setText(" 10m  ");
+            Cook.setText("   20m  ");
+            Ready.setText("  30m  ");
+
+
+            //Ingredients.setText("Ingredients:\n\n\t"+ingredients);
+
             Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
                     "\n\n" + "Ingredients:\n\n\t" + ingredients +
                     "\n\n\nDirections:\n\n\t" + info +
