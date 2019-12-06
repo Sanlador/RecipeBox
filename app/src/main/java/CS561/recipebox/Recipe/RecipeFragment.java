@@ -1,19 +1,15 @@
 package CS561.recipebox;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 public class RecipeFragment extends Fragment
 {
@@ -89,7 +82,7 @@ public class RecipeFragment extends Fragment
             String s = "Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test, Test";
 
 
-            /*
+
             // Category
             RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
             category = Category.createCategoryList(catagories);
@@ -98,16 +91,9 @@ public class RecipeFragment extends Fragment
             rvCategory.setLayoutManager(new LinearLayoutManager(context));
             LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
             rvCategory.setLayoutManager(mlayoutManager);
-             */
 
-            // Using dummy data and also almost every category in each recipe is too to be scrollable
-            RecyclerView rvCategory = (RecyclerView) root.findViewById(R.id.rvCategory);
-            category = Category.createCategoryList(s);
-            CategoryAdapter madapter = new CategoryAdapter(category, context);
-            rvCategory.setAdapter(madapter);
-            rvCategory.setLayoutManager(new LinearLayoutManager(context));
-            LinearLayoutManager mlayoutManager= new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
-            rvCategory.setLayoutManager(mlayoutManager);
+
+
         }
         return root;
     }

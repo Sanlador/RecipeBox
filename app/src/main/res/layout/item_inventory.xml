@@ -84,19 +84,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/divider5">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/testImage"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/pantry_image" />
+                    app:srcCompat="@drawable/food" />
 
                 <ImageButton
                     android:id="@+id/subtractButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/testImage"
                     app:layout_constraintTop_toBottomOf="@+id/subtractText"
                     app:srcCompat="?attr/homeAsUpIndicator" />
 
@@ -152,7 +152,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="Remove items"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toEndOf="@+id/testImage"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView

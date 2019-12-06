@@ -34,6 +34,7 @@ import CS561.recipebox.Pantry.PantryContractHelper;
 import CS561.recipebox.Query.DBQuery;
 import CS561.recipebox.Query.QueryForCategory;
 import CS561.recipebox.Query.SpinnerQuery;
+import CS561.recipebox.QueryForIngredient;
 import CS561.recipebox.R;
 import CS561.recipebox.Recipe.Recipe;
 import CS561.recipebox.Recipe.RecipesAdapter;
@@ -291,7 +292,7 @@ public class SearchFragment extends Fragment
         //RECYCLER VIEW
 
         // Create a temporary "box" for attaching adapter
-        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+        String[] s = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
         // Create a temporary "box" for attaching adapter
         List<String[]> initializer = new ArrayList<String[]>();
         initializer.add(s);
@@ -633,7 +634,7 @@ public class SearchFragment extends Fragment
 
                                 // For autocomplete, 3 is title of recipes
                                 // use the array 'string_autocomplete' later for showing it on listView
-                                string_autocomplete.add(parse[3]);
+                                string_autocomplete.add(parse[1]);
                             }
                         }
                         else
@@ -673,7 +674,7 @@ public class SearchFragment extends Fragment
                                 parsedOutput.add(parse);
                                 // For autocomplete, 3 is title of recipes
                                 // use the array 'data' later for showing it on listView
-                                string_autocomplete.add(parse[3]);
+                                string_autocomplete.add(parse[1]);
                             }
                         }
                         else
@@ -731,7 +732,7 @@ public class SearchFragment extends Fragment
                 {
                     try {
                         loadCounter = 0;
-                        output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "Recipe" + "#" + recipe_name).get();
+                        output = new DBQuery().execute(Integer.toString(loadCounter) + "#" + "title" + "#" + recipe_name).get();
                         Log.d("Query Output", output);
                         // get the biggest category from the result of search, which is all info from database of each recipe
                         List<String[]> parsedOutput = new ArrayList<String[]>();

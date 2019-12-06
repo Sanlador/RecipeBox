@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class DietFragment extends Fragment {
     {
         root = inflater.inflate(R.layout.fragment_diet, container, false);
         Context context = this.getContext();
-        contractHelper = new DietContractHelper(context);
+        /*contractHelper = new DietContractHelper(context);
         dietList = contractHelper.readFromDatabase();
         dietList.add(dummyOutput("a"));
         adapter = new DietAdapter(dietList, context, this);
@@ -62,7 +61,7 @@ public class DietFragment extends Fragment {
                 //Play loading animation?
 
             }
-        });
+        });*/
 
         return root;
     }

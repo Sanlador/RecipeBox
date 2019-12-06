@@ -59,6 +59,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         public TextInputEditText subtractNum;
         public TextInputEditText addNum;
         public TextView itemCount;
+        public TextView itemCount2;
         public Button recommend;
         LinearLayout parent;
 
@@ -71,6 +72,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             subtractNum = (TextInputEditText) itemView.findViewById(R.id.subtractNumber);
             addNum = (TextInputEditText) itemView.findViewById(R.id.addNumber);
             itemCount = (TextView) itemView.findViewById(R.id.itemCount);
+            itemCount2 = (TextView) itemView.findViewById(R.id.itemCount2);
             parent = itemView.findViewById(R.id.inventoryParent);
             deleteButton = (ImageButton) itemView.findViewById(R.id.deleteButton);
             recommend = (Button) itemView.findViewById(R.id.reccomend);
@@ -106,7 +108,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         TextView name = viewHolder.title;
         name.setText(item.getName());
         TextView count = viewHolder.itemCount;
+        TextView count2 = viewHolder.itemCount2;
         count.setText(String.valueOf(item.getCount()));
+        count2.setText(String.valueOf(item.getCount()));
 
         ImageButton add = viewHolder.addButton;
         ImageButton subtract = viewHolder.subtractButton;
@@ -120,6 +124,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             {
                 int addition = item.getCount() + Integer.parseInt(viewHolder.addNum.getText().toString());
                 viewHolder.itemCount.setText(String.valueOf(addition));
+                viewHolder.itemCount2.setText(String.valueOf(addition));
                 item.setCount(addition);
                 helper.changeCountValue(item.getName(), addition);
             }
@@ -134,6 +139,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 if (subtraction <= 0)
                     subtraction = 0;
                 viewHolder.itemCount.setText(String.valueOf(subtraction));
+                viewHolder.itemCount2.setText(String.valueOf(subtraction));
                 item.setCount(subtraction);
                 helper.changeCountValue(item.getName(), subtraction);
             }
