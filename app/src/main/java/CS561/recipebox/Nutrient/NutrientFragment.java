@@ -2,6 +2,7 @@ package CS561.recipebox.Nutrient;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,19 +33,19 @@ public class NutrientFragment extends Fragment
 
         if (extras != null)
         {
-            String fat = (String)extras.get("FAT");
+            String fat = (String)extras.get("Fat");
             String carbs = (String)extras.get("Carbs");
             String proteins = (String)extras.get("Proteins");
             String cholesterol = (String)extras.get("Cholesterol");
             String sodium = (String)extras.get("Sodium");
 
-            String concat = "Fat : " + fat + "," +
-                            "Carbs : " + carbs + "," +
-                            "Proteins : " + proteins + "," +
-                            "Cholesterol :" + cholesterol + "," +
-                            "Sodium : " + sodium;
+            String concat = "Fat : " + fat + " grams," +
+                            "Carbs : " + carbs + " grams," +
+                            "Proteins : " + proteins + " grams," +
+                            "Cholesterol :" + cholesterol + " grams," +
+                            "Sodium : " + sodium +" grams";
 
-
+            Log.d("Nutrient", concat);
             nutrient = concat.split(",");
             recyclerView = (RecyclerView) root.findViewById(R.id.nutrientList);
             ArrayList<NutrientItem> nutrientList = NutrientItem.createNutrientList(nutrient);
