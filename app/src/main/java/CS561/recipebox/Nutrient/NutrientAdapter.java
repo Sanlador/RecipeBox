@@ -39,7 +39,7 @@ public class NutrientAdapter extends RecyclerView.Adapter<NutrientAdapter.ViewHo
         public ViewHolder(View itemView)
         {
             super(itemView);
-            text = (TextView) itemView.findViewById(R.id.nutrientCheck);
+            text = (TextView) itemView.findViewById(R.id.nutrientText);
         }
 
         @Override
