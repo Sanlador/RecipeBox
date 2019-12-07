@@ -65,10 +65,7 @@ public class PlaceholderFragment extends Fragment
         View root;
         if (0 == index)
             root = inflater.inflate(R.layout.fragment_search, container, false);
-        else if (1 == index)
-            root = inflater.inflate(R.layout.fragment_pantry, container, false);
         else
-            //Also change this one to your layout
             root = inflater.inflate(R.layout.fragment_pantry, container, false);
         return root;
     }
