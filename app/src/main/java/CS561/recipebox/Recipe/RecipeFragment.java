@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import CS561.recipebox.Category;
+import CS561.recipebox.CategoryAdapter;
+import CS561.recipebox.R;
 
 public class RecipeFragment extends Fragment
 {
