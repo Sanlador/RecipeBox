@@ -130,6 +130,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
                 intent.putExtra("Proteins", mRecipes.get(position).getProteins());
                 intent.putExtra("Cholesterol", mRecipes.get(position).getCholesterol());
                 intent.putExtra("Sodium", mRecipes.get(position).getSodium());
+                intent.putExtra("Sugar", mRecipes.get(position).getSugar());
                 mContext.startActivity(intent);
             }
         });

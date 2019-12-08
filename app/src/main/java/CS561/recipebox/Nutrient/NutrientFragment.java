@@ -38,12 +38,14 @@ public class NutrientFragment extends Fragment
             String proteins = (String)extras.get("Proteins");
             String cholesterol = (String)extras.get("Cholesterol");
             String sodium = (String)extras.get("Sodium");
+            String sugar = (String)extras.get("Sugar");
 
-            String concat = "Fat : " + fat + " grams," +
+            String concat = "Sugar : " + sugar.substring(0, sugar.length() - 2) + " grams," +
+                            "Fat : " + fat + " grams," +
                             "Carbs : " + carbs + " grams," +
                             "Proteins : " + proteins + " grams," +
-                            "Cholesterol :" + cholesterol + " grams," +
-                            "Sodium : " + sodium +" grams";
+                            "Cholesterol :" + cholesterol + " milligrams," +
+                            "Sodium : " + sodium +" milligrams ";
 
             Log.d("Nutrient", concat);
             nutrient = concat.split(",");
