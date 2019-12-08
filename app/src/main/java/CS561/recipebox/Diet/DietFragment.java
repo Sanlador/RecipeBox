@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import CS561.recipebox.Query.QueryForDiet;
 import CS561.recipebox.Query.QueryForPantry;
 import CS561.recipebox.R;
 import CS561.recipebox.Recipe.Recipe;
@@ -65,7 +64,7 @@ public class DietFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 try
                 {
-                    new QueryForDiet().execute("");
+                    new DietDP().execute("");
                 }
                 catch (Exception e)
                 {
@@ -123,117 +122,5 @@ public class DietFragment extends Fragment {
             Log.d("Exception", e.toString());
         }
         return null;
-    }
-
-    private class DietValues
-    {
-        public double proteinRec; //less than
-        public double fatRec; //less than
-        public double carbRec;   //more than
-        public double sugarRec;   //less than
-        public double sodiumRec; //less than
-        public double cholRec;    //less than
-        public double calorieRec;
-
-        public DietValues()
-        {
-            proteinRec = 50; //less than
-            fatRec = 85; //less than
-            carbRec = 300;   //more than
-            sugarRec = 50;   //less than
-            sodiumRec = 2.4; //less than
-            cholRec = .3;    //less than
-            calorieRec = 2000;
-        }
-
-        public void adjust(double factor)
-        {
-            proteinRec *= factor;
-            fatRec *= factor;
-            carbRec *= factor;
-            sugarRec *= factor;
-            sodiumRec *= factor;
-            cholRec *= factor;
-            calorieRec *= factor;
-        }
-    }
-
-    double coefficientLessEval(double val, double rec)
-    {
-        //
-        double threshold = .1;
-        if (Math.abs(val - rec) <= rec * threshold)
-            return 1;
-        else if (Math.abs(val - rec) <= rec * threshold * 2)
-            return .75;
-        else if (Math.abs(val - rec) <= rec * threshold * 3)
-            return .25;
-        else
-            return 0;
-    }
-
-    double coefficientGreaterEval(double val, double rec)
-    {
-        //
-        double threshold = .1;
-        if (val >= rec)
-            return 1;
-        else if (val >= rec - .1 * rec)
-            return .75;
-        else if (val >= rec - .2 * rec)
-            return .25;
-        else
-            return 0;
-    }
-
-    double evalDiet(DietValues vals, DietItem diet, List<String> recipeList)
-    {
-        //values can be adjusted here for algorithm optimization
-        double proteinWeight = 2;
-        double fatWeight = 2;
-        double carbWeight = 3;
-        double sugarWeight = 2;
-        double sodiumWeight = 2;
-        double cholWeight = 2;
-        double calWeight = 10;
-
-        double protein, fat, carb, sugar, sodium,  chol, cal;
-        double proteinScore, fatScore, carbScore, sugarScore, sodiumScore,  cholScore, calScore;
-        double score;
-
-        Recipe breakfast, lunch, dinner;
-        breakfast = diet.getBreakfast();
-        lunch = diet.getLunch();
-        dinner = diet.getDinner();
-
-        protein = Double.parseDouble(breakfast.getProteins()) + Double.parseDouble(lunch.getProteins()) +Double.parseDouble(dinner.getProteins());
-        fat = Double.parseDouble(breakfast.getFat()) + Double.parseDouble(lunch.getFat()) +Double.parseDouble(dinner.getFat());
-        carb = Double.parseDouble(breakfast.getCarbs()) + Double.parseDouble(lunch.getCarbs()) +Double.parseDouble(dinner.getCarbs());
-        sugar = Double.parseDouble(breakfast.getSugar()) + Double.parseDouble(lunch.getSugar()) +Double.parseDouble(dinner.getSugar());
-        sodium = Double.parseDouble(breakfast.getSodium()) + Double.parseDouble(lunch.getSodium()) +Double.parseDouble(dinner.getSodium());
-        chol = Double.parseDouble(breakfast.getCholesterol()) + Double.parseDouble(lunch.getCholesterol()) +Double.parseDouble(dinner.getCholesterol());
-        cal = Double.parseDouble(breakfast.getCalories()) + Double.parseDouble(lunch.getCalories()) +Double.parseDouble(dinner.getCalories());
-
-        proteinScore = coefficientLessEval(protein, vals.proteinRec) * proteinWeight;
-        fatScore = coefficientLessEval(fat, vals.fatRec) * fatWeight;
-        carbScore = coefficientGreaterEval(carb, vals.calorieRec) * carbWeight;
-        sugarScore = coefficientLessEval(sugar, vals.sugarRec) * sugarWeight;
-        sodiumScore = coefficientLessEval(sodium, vals.sodiumRec) * sodiumWeight;
-        cholScore = coefficientLessEval(chol, vals.cholRec) * cholWeight;
-        calScore = coefficientLessEval(cal, vals.calorieRec) * calWeight;
-        score = proteinScore + fatScore + carbScore + sugarScore + sodiumScore + cholScore + calScore;
-
-        //check if recipe already exists in list
-        for (int i = 0; i < recipeList.size(); i++)
-        {
-            if (breakfast.getName() == recipeList.get(i))
-                score *= .8;
-            if (lunch.getName() == recipeList.get(i))
-                score *= .8;
-            if (dinner.getName() == recipeList.get(i))
-                score *= .8;
-        }
-
-        return score;
     }
 }
