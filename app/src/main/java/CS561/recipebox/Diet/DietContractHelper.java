@@ -108,15 +108,13 @@ public class DietContractHelper extends SQLiteOpenHelper
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean writeToDatabase(List<Recipe> recipes, int id)
+    public boolean writeToDatabase(List<Recipe> recipes)
     {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-
-        values.put(DietContract.Diet._ID, id);
 
         values.put(DietContract.Diet.COLUMN_NAME_RECIPE_BREAKFAST, recipes.get(0).getName());
         values.put(DietContract.Diet.COLUMN_NAME_INFO_BREAKFAST, recipes.get(0).getInfo());

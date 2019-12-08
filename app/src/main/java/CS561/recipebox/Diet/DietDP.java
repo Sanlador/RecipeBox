@@ -1,5 +1,6 @@
 package CS561.recipebox.Diet;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import CS561.recipebox.Recipe.Recipe;
@@ -16,6 +18,13 @@ public class DietDP extends AsyncTask<String, String, String>
 {
 
     private int pageNumber = 1000;
+    private DietContractHelper contractHelper;
+    private Context context;
+
+    public DietDP(Context c)
+    {
+        context = c;
+    }
 
     @Override
     protected String doInBackground(String... params)
@@ -38,7 +47,7 @@ public class DietDP extends AsyncTask<String, String, String>
 
             String query = params[0];
 
-            String selectSql = "select * from RecipeScrape";
+            String selectSql = "select TOP 50 * from RecipeScrape";
 
             Log.d("Query", selectSql);
             try (Statement statement = connection.createStatement();
@@ -128,7 +137,7 @@ public class DietDP extends AsyncTask<String, String, String>
         super.onPreExecute();
     }
 
-    private void DP(String survey, List<Recipe> recipies)
+    private void DP(String survey, List<Recipe> recipes)
     {
         double calories = 2000;
         DietValues values = new DietValues();
@@ -138,6 +147,88 @@ public class DietDP extends AsyncTask<String, String, String>
         //adjust diet values based on calorie intake
         values.adjust(calories / 2000);
 
+        int iterations = 5;
+
+        contractHelper = new DietContractHelper(context);
+        ArrayList<DietItem> savedDiets;
+        int size = 0;
+
+        for (int i = 0; i < iterations; i++)
+        {
+            Collections.shuffle(recipes);
+            savedDiets = contractHelper.readFromDatabase();
+            savedDiets.size();
+            ArrayList<String> usedRecipes = new ArrayList<String>();
+            for (DietItem d: savedDiets)
+            {
+                usedRecipes.add(d.getBreakfast().getName());
+                usedRecipes.add(d.getLunch().getName());
+                usedRecipes.add(d.getDinner().getName());
+            }
+
+            List<Recipe> diet = KS(recipes.size() - 1, calories, 3, recipes, new ArrayList<Recipe>(), values, usedRecipes);
+            for (Recipe r: diet)
+            {
+                Log.d("Diet Output", r.getName());
+            }
+            contractHelper.writeToDatabase(diet);
+        }
+    }
+
+    private List<Recipe> KS(int n, double calories, int depth, List<Recipe> recipeList, List<Recipe> diet, DietValues values, List<String> usedRecipes)
+    {
+        if (n < 0 || calories <= 0 || depth == 0)
+            return diet;
+        else if (Double.parseDouble(recipeList.get(n).getCalories()) > calories)
+            return KS(n - 1, calories, depth, recipeList, diet, values, usedRecipes);
+        else
+        {
+            List<Recipe> diet1, diet2;
+            diet1 = KS(n - 1, calories, depth, recipeList, diet, values, usedRecipes);
+
+            List<Recipe> tempDiet = new ArrayList<Recipe>();
+            for (Recipe r:diet)
+            {
+                tempDiet.add(r);
+            }
+
+            tempDiet.add(recipeList.get(n));
+
+            List<String> tempNames = new ArrayList<String>();
+            for (String s: usedRecipes)
+            {
+                tempNames.add(s);
+            }
+
+            tempNames.add(recipeList.get(n).getName());
+
+            diet2 = KS(n - 1, calories - Double.parseDouble(recipeList.get(n).getCalories()), depth - 1, recipeList, tempDiet, values, tempNames);
+            //check for complete nutrition
+            if (evalDiet(values,diet2,tempNames) > 13)
+            {
+                return diet2;
+            }
+            else if(evalDiet(values,diet2,tempNames) > evalDiet(values,diet1,usedRecipes) || diet1.size() < 3)
+            {
+                //Log.d("Score:", Double.toString(evalDiet(values,diet2,tempNames)));
+                for (Recipe r: diet2)
+                {
+                    //Log.d("Diet Output", r.getName());
+                }
+                return diet2;
+            }
+            else
+            {
+                //Log.d("Score:", Double.toString(evalDiet(values,diet1,usedRecipes)));
+                int i = 0;
+                for (Recipe r: diet1)
+                {
+                    i++;
+                    //Log.d("Diet Output", r.getName());
+                }
+                return diet1;
+            }
+        }
     }
 
     private class DietValues
@@ -180,9 +271,11 @@ public class DietDP extends AsyncTask<String, String, String>
         double threshold = .1;
         if (Math.abs(val - rec) <= rec * threshold)
             return 1;
-        else if (Math.abs(val - rec) <= rec * threshold * 2)
+        else if ((rec- val) >= rec * threshold * 2.5)
             return .75;
-        else if (Math.abs(val - rec) <= rec * threshold * 3)
+        else if ((rec- val) >= rec * threshold * 5)
+            return .5;
+        else if ((rec- val) >= rec * threshold * 7.5)
             return .25;
         else
             return 0;
@@ -194,41 +287,91 @@ public class DietDP extends AsyncTask<String, String, String>
         double threshold = .1;
         if (val >= rec)
             return 1;
-        else if (val >= rec - .1 * rec)
+        else if (val >= rec - .25 * rec)
             return .75;
-        else if (val >= rec - .2 * rec)
-            return .25;
+        else if (val >= rec - .5 * rec)
+            return .5;
         else
             return 0;
     }
 
-    double evalDiet(DietValues vals, DietItem diet, List<String> recipeList)
+    double evalDiet(DietValues vals, List<Recipe> diet, List<String> recipeList)
     {
         //values can be adjusted here for algorithm optimization
         double proteinWeight = 2;
-        double fatWeight = 2;
+        double fatWeight = 3;
         double carbWeight = 3;
         double sugarWeight = 2;
         double sodiumWeight = 2;
         double cholWeight = 2;
-        double calWeight = 10;
 
-        double protein, fat, carb, sugar, sodium,  chol, cal;
-        double proteinScore, fatScore, carbScore, sugarScore, sodiumScore,  cholScore, calScore;
+        double protein, fat, carb, sugar, sodium,  chol;
+        double proteinScore, fatScore, carbScore, sugarScore, sodiumScore,  cholScore;
         double score;
 
-        Recipe breakfast, lunch, dinner;
-        breakfast = diet.getBreakfast();
-        lunch = diet.getLunch();
-        dinner = diet.getDinner();
+        protein = 0;
+        fat = 0;
+        carb = 0;
+        sugar = 0;
+        sodium = 0;
+        chol = 0;
 
-        protein = Double.parseDouble(breakfast.getProteins()) + Double.parseDouble(lunch.getProteins()) +Double.parseDouble(dinner.getProteins());
-        fat = Double.parseDouble(breakfast.getFat()) + Double.parseDouble(lunch.getFat()) +Double.parseDouble(dinner.getFat());
-        carb = Double.parseDouble(breakfast.getCarbs()) + Double.parseDouble(lunch.getCarbs()) +Double.parseDouble(dinner.getCarbs());
-        sugar = Double.parseDouble(breakfast.getSugar()) + Double.parseDouble(lunch.getSugar()) +Double.parseDouble(dinner.getSugar());
-        sodium = Double.parseDouble(breakfast.getSodium()) + Double.parseDouble(lunch.getSodium()) +Double.parseDouble(dinner.getSodium());
-        chol = Double.parseDouble(breakfast.getCholesterol()) + Double.parseDouble(lunch.getCholesterol()) +Double.parseDouble(dinner.getCholesterol());
-        cal = Double.parseDouble(breakfast.getCalories()) + Double.parseDouble(lunch.getCalories()) +Double.parseDouble(dinner.getCalories());
+        for (int i = 0; i < diet.size(); i++)
+        {
+            try
+            {
+                protein += Double.parseDouble(diet.get(i).getProteins());
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                fat += Double.parseDouble(diet.get(i).getFat());
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                carb += Double.parseDouble(diet.get(i).getCarbs());
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                sugar += Double.parseDouble(diet.get(i).getSugar());
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                sodium += Double.parseDouble(diet.get(i).getSodium());
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                chol = Double.parseDouble(diet.get(i).getCholesterol());
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
 
         proteinScore = coefficientLessEval(protein, vals.proteinRec) * proteinWeight;
         fatScore = coefficientLessEval(fat, vals.fatRec) * fatWeight;
@@ -236,18 +379,17 @@ public class DietDP extends AsyncTask<String, String, String>
         sugarScore = coefficientLessEval(sugar, vals.sugarRec) * sugarWeight;
         sodiumScore = coefficientLessEval(sodium, vals.sodiumRec) * sodiumWeight;
         cholScore = coefficientLessEval(chol, vals.cholRec) * cholWeight;
-        calScore = coefficientLessEval(cal, vals.calorieRec) * calWeight;
-        score = proteinScore + fatScore + carbScore + sugarScore + sodiumScore + cholScore + calScore;
+
+        score = proteinScore + fatScore + carbScore + sugarScore + sodiumScore + cholScore;
 
         //check if recipe already exists in list
         for (int i = 0; i < recipeList.size(); i++)
         {
-            if (breakfast.getName() == recipeList.get(i))
-                score *= .8;
-            if (lunch.getName() == recipeList.get(i))
-                score *= .8;
-            if (dinner.getName() == recipeList.get(i))
-                score *= .8;
+            for (Recipe r: diet)
+            {
+                if (r.getName() == recipeList.get(i))
+                    score *= .8;
+            }
         }
 
         return score;

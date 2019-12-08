@@ -23,7 +23,7 @@ import CS561.recipebox.Recipe.Recipe;
 public class DietFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View root;
-    private Button button;
+    private Button startButton, refreshButton;
     private ArrayList<DietItem> dietList;
     private DietAdapter adapter;
     private DietContractHelper contractHelper;
@@ -46,30 +46,54 @@ public class DietFragment extends Fragment {
         contractHelper = new DietContractHelper(context);
         dietList = contractHelper.readFromDatabase();
 
+
         adapter = new DietAdapter(dietList, context, this);
         recyclerView = (RecyclerView) root.findViewById(R.id.dietList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        refreshButton = (Button) root.findViewById(R.id.dietRefresh);
 
-        button = (Button) root.findViewById(R.id.dietButton);
-        button.setOnClickListener(new View.OnClickListener()
+        startButton = (Button) root.findViewById(R.id.dietButton);
+
+        if (dietList.size() > 0)
+        {
+            startButton.setVisibility(View.INVISIBLE);
+            refreshButton.setVisibility(View.VISIBLE);
+        }
+
+        startButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                button.setVisibility(View.INVISIBLE);
-                //Play loading animation?
-                dietList.add(dummyOutput("a"));
-                adapter.notifyDataSetChanged();
+                startButton.setVisibility(View.INVISIBLE);
+                refreshButton.setVisibility(View.VISIBLE);
                 try
                 {
-                    new DietDP().execute("");
+
+                    new DietDP(context).execute("");
                 }
                 catch (Exception e)
                 {
                     Log.d("Exception", e.toString());
                 }
+
+                refreshButton.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        List<DietItem> tempList = contractHelper.readFromDatabase();
+                        dietList.clear();
+                        for (DietItem d: tempList)
+                        {
+                            dietList.add(d);
+                        }
+                        adapter.notifyDataSetChanged();
+
+                    }
+                });
             }
         });
 
