@@ -25,7 +25,7 @@ public class InstructionItem
             if (i == 0)
                 list.add(new InstructionItem(Instructions[i]));
             else
-                list.add(new InstructionItem(Instructions[i].substring(1,Instructions[i].length())));
+                list.add(new InstructionItem(Instructions[i].substring(2,Instructions[i].length())));
         }
         return list;
     }
