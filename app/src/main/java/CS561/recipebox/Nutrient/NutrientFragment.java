@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import CS561.recipebox.R;
+import CS561.recipebox.Recipe.Recipe;
 
 public class NutrientFragment extends Fragment
 {
@@ -38,12 +39,19 @@ public class NutrientFragment extends Fragment
             String proteins = (String)extras.get("Proteins");
             String cholesterol = (String)extras.get("Cholesterol");
             String sodium = (String)extras.get("Sodium");
+            String sugar = (String)extras.get("Sugar");
 
-            String concat = "Fat : " + fat + " grams," +
+            // Where the issue was at
+            // sugar = sugar.substring(0, sugar.length()-1);
+
+            //sugar = sugar.substring(0, sugar.lastIndexOf("~~"));
+
+            String concat = "Sugar : " + sugar.substring(0, sugar.lastIndexOf("~~")) + " grams," +
+                            "Fat : " + fat + " grams," +
                             "Carbs : " + carbs + " grams," +
                             "Proteins : " + proteins + " grams," +
-                            "Cholesterol :" + cholesterol + " grams," +
-                            "Sodium : " + sodium +" grams";
+                            "Cholesterol :" + cholesterol + " milligrams," +
+                            "Sodium : " + sodium +" milligrams ";
 
             Log.d("Nutrient", concat);
             nutrient = concat.split(",");

@@ -1,4 +1,4 @@
-package CS561.recipebox;
+package CS561.recipebox.Recipe;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import CS561.recipebox.Category;
+import CS561.recipebox.CategoryAdapter;
+import CS561.recipebox.R;
 
 public class RecipeFragment extends Fragment
 {
@@ -75,9 +79,7 @@ public class RecipeFragment extends Fragment
 
             //Ingredients.setText("Ingredients:\n\n\t"+ingredients);
 
-            Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
-                    "\n\n" + "Ingredients:\n\n\t" + ingredients
-            );
+            Info.setText(   "Ingredients:\n\n\t" + ingredients);
             //setContentView(title);
 
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);

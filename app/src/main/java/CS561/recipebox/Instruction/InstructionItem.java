@@ -22,7 +22,10 @@ public class InstructionItem
 
         for (int i = 0; i < Instructions.length; i++)
         {
-            list.add(new InstructionItem(Instructions[i]));
+            if (i == 0)
+                list.add(new InstructionItem(Instructions[i]));
+            else
+                list.add(new InstructionItem(Instructions[i].substring(2,Instructions[i].length())));
         }
         return list;
     }
