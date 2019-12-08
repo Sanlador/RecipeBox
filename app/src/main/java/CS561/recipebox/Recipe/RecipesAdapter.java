@@ -52,7 +52,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
-        public TextView infoTextView;
+        public TextView servingsTextView;
+        public TextView cooktimeTextView;
+        public TextView caloriesTextView;
         public ImageView picImageView;
         public Button recipeButton;
         LinearLayout parent;
@@ -66,7 +68,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.inventory_name);
-            //infoTextView = (TextView) itemView.findViewById(R.id.recipe_info);
+            servingsTextView = (TextView) itemView.findViewById(R.id.recipe_servings);
+            cooktimeTextView = (TextView) itemView.findViewById(R.id.recipe_cookingtime);
+            caloriesTextView = (TextView) itemView.findViewById(R.id.recipe_calories);
             picImageView = (ImageView) itemView.findViewById(R.id.recipe_pic);
             parent = itemView.findViewById(R.id.parent);
         }
@@ -104,8 +108,14 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         TextView nameTextView = viewHolder.nameTextView;
         nameTextView.setText(recipe.getName());
 
-        TextView infoTextView = viewHolder.infoTextView;
-        //infoTextView.setText(recipe.getCatagories());
+        TextView servingsTextView = viewHolder.servingsTextView;
+        servingsTextView.setText("Servings:"+recipe.getServing());
+
+        TextView cookTimeTextView = viewHolder.cooktimeTextView;
+        cookTimeTextView.setText("Total Cooking time:"+recipe.getCooktime());
+
+        TextView caloriesTextView = viewHolder.caloriesTextView;
+        caloriesTextView.setText("Calories:"+recipe.getCalories()+" calories");
 
         ImageView picImageView = viewHolder.picImageView;
         Picasso.get().load(recipe.getrPictureLink()).into(picImageView);

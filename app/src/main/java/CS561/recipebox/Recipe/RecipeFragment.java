@@ -75,9 +75,7 @@ public class RecipeFragment extends Fragment
 
             //Ingredients.setText("Ingredients:\n\n\t"+ingredients);
 
-            Info.setText(   "Calories: "+ calories + " \t" + "Serving: " + serving + "\t" +  "Cook Time: " + cooktime + " (minutes)" +
-                    "\n\n" + "Ingredients:\n\n\t" + ingredients
-            );
+            Info.setText(   "Ingredients:\n\n\t" + ingredients);
             //setContentView(title);
 
             ImageView pictureLink = (ImageView) root.findViewById(R.id.ui_pic);
