@@ -43,8 +43,8 @@ public class NutrientFragment extends Fragment
             String concat = "Sugar : " + sugar.substring(0, sugar.length() - 2) + " grams," +
                             "Fat : " + fat + " grams," +
                             "Carbs : " + carbs + " grams," +
-                            "Proteins : " + proteins + " milligrams ," +
-                            "Cholesterol :" + cholesterol + " grams," +
+                            "Proteins : " + proteins + " grams," +
+                            "Cholesterol :" + cholesterol + " milligrams," +
                             "Sodium : " + sodium +" milligrams ";
 
             Log.d("Nutrient", concat);
