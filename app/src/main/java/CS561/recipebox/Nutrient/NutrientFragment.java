@@ -40,7 +40,12 @@ public class NutrientFragment extends Fragment
             String sodium = (String)extras.get("Sodium");
             String sugar = (String)extras.get("Sugar");
 
-            String concat = "Sugar : " + sugar.substring(0, sugar.length() - 2) + " grams," +
+            // Where the issue was at
+            // sugar = sugar.substring(0, sugar.length()-1);
+
+            sugar = sugar.substring(0, sugar.lastIndexOf("~~"));
+
+            String concat = "Sugar : " + sugar + " grams," +
                             "Fat : " + fat + " grams," +
                             "Carbs : " + carbs + " grams," +
                             "Proteins : " + proteins + " grams," +
