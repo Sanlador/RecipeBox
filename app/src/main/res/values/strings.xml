@@ -21,4 +21,10 @@
     <string name="recipe_text">Recipe</string>
     <string name="instructions_text">Instructions</string>
     <string name="nutrition_text">Nutrition</string>
+    <string-array name="activity_level">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+    <string name="activity_title">What is your general level of exercise</string>
 </resources>

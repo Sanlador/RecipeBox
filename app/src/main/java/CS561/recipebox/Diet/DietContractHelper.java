@@ -80,7 +80,7 @@ public class DietContractHelper extends SQLiteOpenHelper
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
-        //onDowngrade(db, 0, 0);
+        onDowngrade(db, 0, 0);
         onCreate(db);
     }
 

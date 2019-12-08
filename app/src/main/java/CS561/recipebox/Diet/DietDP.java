@@ -143,6 +143,7 @@ public class DietDP extends AsyncTask<String, String, String>
         DietValues values = new DietValues();
 
         //adjust calorie intake based on survey
+        double factor = Double.parseDouble(survey);
 
         //adjust diet values based on calorie intake
         values.adjust(calories / 2000);

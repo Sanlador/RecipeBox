@@ -1,12 +1,16 @@
 package CS561.recipebox.Diet;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -64,15 +68,88 @@ public class DietFragment extends Fragment {
 
         startButton.setOnClickListener(new View.OnClickListener()
         {
+            double factor = 1;
+
             @Override
             public void onClick(View view)
             {
-                startButton.setVisibility(View.INVISIBLE);
-                refreshButton.setVisibility(View.VISIBLE);
                 try
                 {
+                    AlertDialog.Builder factorWeight = new AlertDialog.Builder(context);
+                    factorWeight.setTitle("Enter your weight (in pounds)");
+                    final EditText inputWeight = new EditText(context);
+                    inputWeight.setInputType(InputType.TYPE_CLASS_TEXT);
+                    factorWeight.setView(inputWeight);
 
-                    new DietDP(context).execute("");
+                    factorWeight.setPositiveButton("Submit", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            try
+                            {
+                                factor *= Double.parseDouble(inputWeight.getText().toString()) / 170d;
+                            }
+                            catch (Exception e)
+                            {
+                                Log.d("Exception", e.toString());
+                            }
+                        }
+                    });
+
+                    factorWeight.show();
+
+                    AlertDialog.Builder factorHeight = new AlertDialog.Builder(context);
+                    factorHeight.setTitle("Enter your height (in inches)");
+                    final EditText inputHeight = new EditText(context);
+                    inputHeight.setInputType(InputType.TYPE_CLASS_TEXT);
+                    factorHeight.setView(inputHeight);
+
+                    factorHeight.setPositiveButton("Submit", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            try
+                            {
+                                factor *= Double.parseDouble(inputHeight.getText().toString()) / 69d;
+                            }
+                            catch (Exception e)
+                            {
+                                Log.d("Exception", e.toString());
+                            }
+                        }
+                    });
+
+                    factorHeight.show();
+
+                    AlertDialog.Builder factorActive = new AlertDialog.Builder(context);
+                    factorActive.setTitle("How many hours per week do you exercise (be honest)");
+                    final EditText inputActive = new EditText(context);
+                    inputActive.setInputType(InputType.TYPE_CLASS_TEXT);
+                    factorActive.setView(inputActive);
+
+                    factorActive.setPositiveButton("Submit", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            try
+                            {
+                                factor *= Double.parseDouble(inputHeight.getText().toString()) / 3 * 1.05;
+                            }
+                            catch (Exception e)
+                            {
+                                Log.d("Exception", e.toString());
+                            }
+                        }
+                    });
+
+                    factorActive.show();
+
+                    startButton.setVisibility(View.INVISIBLE);
+                    refreshButton.setVisibility(View.VISIBLE);
+                    new DietDP(context).execute(Double.toString(factor));
                 }
                 catch (Exception e)
                 {
