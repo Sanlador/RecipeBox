@@ -17,7 +17,8 @@ public class QueryForPantry extends AsyncTask<String, String, String>
     protected String doInBackground(String... params)
     {
         {
-            if (params[0].length() < 1) {
+            if (params[0].length() < 1)
+            {
                 return null;
             }
 
@@ -67,7 +68,9 @@ public class QueryForPantry extends AsyncTask<String, String, String>
                     }
                     connection.close();
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Log.d("Exception", "Connection failed");
                 Log.e("Exception:", e.toString());
             }
@@ -76,7 +79,7 @@ public class QueryForPantry extends AsyncTask<String, String, String>
             if (output.length() > 0)
                 output = output.substring(0, output.length() - 1);
             //return params[0];
-            Log.d("Test", "Exiting DBQuery");
+            Log.d("Query", "Exiting DBQuery");
             return output;
         }
     }

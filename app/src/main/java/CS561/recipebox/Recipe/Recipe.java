@@ -146,21 +146,7 @@ public class Recipe
     {
         ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 
-        // recipes is an array contains parsed category strings from query database
-        // 0 : Picture Link
-        // 1 : Catagories
-        // 2 : Servings
-        // 3 : Name
-        // 4 : Ingredients
-        // 5 : Instructions
-        // 6 : Cook Time
-        // 7 : Calories
-        // 8 : Fat
-        // 9 : Carbs
-        // 10 : Proteins
-        // 11 : Cholesterol
-        // 12 : Sodium
-        // 13 : Sugar(Imcoming soon!!
+
         for (int i = 0; i <= numRecipes; i++)
         {
             if (i == numRecipes)
