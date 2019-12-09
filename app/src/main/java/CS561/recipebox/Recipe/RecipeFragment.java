@@ -72,12 +72,13 @@ public class RecipeFragment extends Fragment
             //TextView Ingredients = (TextView) root.findViewById(R.id.recipe_ingredients);
 
             Servings.setText("Servings:"+serving);
-            Prep.setText(" 10m  ");
-            Cook.setText("   20m  ");
-            Ready.setText("  30m  ");
+            Prep.setText((String)extras.get("prepTime"));
+            Cook.setText(cooktime);
+            Ready.setText((String)extras.get("totalTime"));
 
 
             //Ingredients.setText("Ingredients:\n\n\t"+ingredients);
+            ingredients = ingredients.replaceAll("\\^", "");
 
             Info.setText(   "Ingredients:\n\n\t" + ingredients);
             //setContentView(title);

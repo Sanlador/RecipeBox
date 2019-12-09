@@ -1,5 +1,6 @@
 package CS561.recipebox;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 
@@ -9,6 +10,7 @@ import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Tap;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.rule.ActivityTestRule;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,14 +24,20 @@ import java.util.Random;
 
 import CS561.recipebox.Inventory.InventoryContractHelper;
 
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withInputType;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-public class RecipeTabAndInstructionsTests
+public class dietBuilderUITest
 {
+
     int main()
     {
         Log.d("Test", "Test");
@@ -63,23 +71,33 @@ public class RecipeTabAndInstructionsTests
         InventoryContractHelper helper = new InventoryContractHelper(activity.getApplicationContext());
         List<String[]> verify;
 
-        testInput.add("A");
-        testInput.add("fries");
-        testInput.add("fRies");
-        testInput.add("FRIES");
-        testInput.add("");
-        testInput.add("sTEAK");
-        testInput.add("STEAK");
 
+        Espresso.onView(withId(R.id.tabs)).perform(clickPosition(activity,1000,-50));
+        Espresso.onView(withId(R.id.dietButton)).perform(click());
+        /*Espresso.onView(withText("How many hours per week do you exercise (be honest)")).check(matches(isDisplayed()));
+        Espresso.onView(withId(android.R.id.button2)).perform(click());*/
 
-
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < testInput.size(); i++)
         {
 
-            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
-            Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(i) + "\n"));
-            Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,500,500));
-            Espresso.onView(withId(R.id.recipeTabs)).perform(clickPosition(activity,50,0));
+            Espresso.onView(withId(R.id.addItem)).perform(click());
+            Espresso.onView(withText("How many hours per week do you exercise (be honest)")).check(matches(isDisplayed()));
+            Espresso.onView(withInputType(InputType.TYPE_CLASS_TEXT)).perform(typeText("15"));
+            Espresso.onView(withId(android.R.id.button1)).perform(click());
+            Espresso.onView(withText("Enter your height (in inches)")).check(matches(isDisplayed()));
+            Espresso.onView(withInputType(InputType.TYPE_CLASS_TEXT)).perform(typeText("72"));
+            Espresso.onView(withId(android.R.id.button1)).perform(click());
+            Espresso.onView(withText("Enter your weight (in pounds)")).check(matches(isDisplayed()));
+            Espresso.onView(withInputType(InputType.TYPE_CLASS_TEXT)).perform(typeText("180"));
+            Espresso.onView(withId(android.R.id.button1)).perform(click());
+
+            verify = helper.readFromDatabase();
+            assert(verify.get(verify.size() - 1)[0] == testInput.get((i)));
+
+            Espresso.onView(withId(R.id.inventoryList)).perform(RecyclerViewActions.actionOnItemAtPosition(verify.size() - 1,
+                    MyViewAction.clickChildViewWithId(R.id.deleteButton)));
+            verify = helper.readFromDatabase();
+            assert(verify.get(verify.size() - 1)[0] != testInput.get((i)));
         }
     }
 

@@ -1,10 +1,7 @@
 package CS561.recipebox;
 
 
-import android.os.CountDownTimer;
-import android.text.InputType;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.SearchView;
 
@@ -14,12 +11,9 @@ import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Tap;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ActivityTestRule;
-
-import com.google.android.material.tabs.TabLayout;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,18 +22,10 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Handler;
 
-import static CS561.recipebox.testClass.clickXY;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withInputType;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -58,6 +44,7 @@ public class SpinnerTest {
         try
         {
             testFilterSearch();
+            testSpinner();
         }
         catch (Exception e)
         {
@@ -186,8 +173,8 @@ public class SpinnerTest {
          */
 
         Espresso.onView(withId(R.id.MultiSpinnerCategory)).perform(clickXY(0, 0));
-        Espresso.onView(withText("Bread")).perform(clickXY(0, 0));
-        Espresso.onView(withText("OK")).perform(clickXY(0, 0));
+        Espresso.onView(withText("Shellfish")).perform(clickXY(0, 0));
+        Espresso.onView(withText("Shrimp")).perform(clickXY(0, 0));
 
         Thread.sleep(2000);
 
@@ -205,6 +192,54 @@ public class SpinnerTest {
 
 
 
+
+
+
+       // Espresso.onView(withId(R.id.searchView)).perform(click()).perform(typeText(testInput.get(0)));
+
+
+    }
+
+    @Test
+    public void testSpinner() throws Exception
+    {
+        Log.d("Test", "Test executed");
+        MainActivity activity = rule.getActivity();
+        View searchView = activity.findViewById(R.id.searchView);
+
+        assertThat(searchView, notNullValue());
+        assertThat(searchView, instanceOf(SearchView.class));
+
+        Random rand = new Random();
+
+        List<String> testInput = new ArrayList<String>();
+        testInput.add("a");
+        testInput.add("b");
+        testInput.add("c");
+        testInput.add("d");
+        testInput.add("e");
+        testInput.add("f");
+        testInput.add("g");
+        testInput.add("h");
+        testInput.add("i");
+        testInput.add("j");
+        testInput.add("k");
+        testInput.add("l");
+        testInput.add("m");
+
+        String randInput;
+
+        for (int i = 0; i < 10; i++)
+        {
+            randInput = "";
+            int n = rand.nextInt(10) + 1;
+            for (int j = 0; j < n; j++)
+            {
+                randInput += (char)(rand.nextInt(26) + 'a');
+            }
+            testInput.add(randInput);
+        }
+
         Espresso.onView(withId(R.id.MultiSpinnerIngredient)).perform(clickXY(0, 0));
         Espresso.onView(withText("peeled apple")).perform(clickXY(0, 0));
         Espresso.onView(withText("OK")).perform(clickXY(0, 0));
@@ -213,13 +248,6 @@ public class SpinnerTest {
 
         Espresso.onView(withId(R.id.searchView)).perform(clickPosition(activity,20,20));
         Espresso.onView(withId(R.id.searchView)).perform(typeText(testInput.get(0) + "\n"));
-
-
-
-
-       // Espresso.onView(withId(R.id.searchView)).perform(click()).perform(typeText(testInput.get(0)));
-
-
     }
 
     public static ViewAction clickXY(final int x, final int y){
