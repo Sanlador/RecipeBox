@@ -203,7 +203,89 @@
 >* To do: 
 ><br/> ***End of sprint 2!!!Sprint retrospective now!***
 
+>November.18.2019 
+>* Achieved: 
+><br/> Determined meeting time and agenda for next day, following sprint turn in.
+>* To do: 
+><br/> Determine task list for new user stories.
 
+>November.19.2019 
+>* Achieved: 
+><br/> Developed majority of tasks for user stories, assigned each group member a task.
+>* To do: 
+><br/> Determine the details for diet builder algorithm.
+
+>November.20.2019 
+>* Achieved: 
+><br/> Decided on diet builder algorithm, began updating UI, begn developing new web scraper.
+>* To do: 
+><br/> Continue UI and web scraper development.
+
+>November.21.2019 
+>* Achieved: 
+><br/> Finished instruction UI and built protoype search spinner UI object, continued development of web scraper.
+>* To do:
+><br/>  Add more UI features and finish prototype of new web scraper. Finish integration tests.
+
+>November.22.2019 
+>* Achieved: 
+><br/> Finished prototype of web scraper, added UI spinner for search functionality, integration testing.
+>* To do:
+><br/> Connect spinner to search, run first round of web scraping.
+
+>November.25.2019 
+>* Achieved: 
+><br/> Assembled Diet UI, completed recipe main page overhaul, added additional spinners for tags and ingredients.
+>* To do: 
+><br/> Continue web scraping, adjust database for parsing tokens, continue UI development.
+
+>November.26.2019 
+>* Achieved: 
+><br/> Added recycler view for diet view. Fixed loading animation.
+>* To do: 
+><br/> Continue UI overhaul, adjust database contents.
+
+>November.27.2019 
+>* Achieved: 
+><br/> Finished database for diet builder and acompanying recycler view items. Performed integration testing.
+>* To do: 
+><br/> Finish UI overhaul, database updates.
+
+>December.2.2019 
+>* 
+><br/> Achieved: Reconveined following Thanksgiving break.
+>* To do: 
+><br/> Complete UI overhaul, database update and diet builder.
+
+>December.3.2019 
+>* Achieved: 
+><br/> Completed pantry UI update, new search functions.
+>* To do: 
+><br/> Complete Recipe UI updates, complete diet builder.
+
+>December.4.2019 
+>* Achieved: 
+><br/> Added dietary view. Finished database updates.
+>* To do: 
+><br/> Complete diet builder, merge all changes, and perform final integration testing.
+
+>December.5.2019 
+>* Achieved: 
+><br/> Began diet builder implementation, bagain integration of UI updates.
+>* To do: 
+><br/> Finish integration testing, diet builder.
+
+>December.6.2019 
+>* Achieved: 
+><br/> Integration test of completed works.
+>* To do: 
+><br/> Finish diet builder and complete sprint.
+
+>December.8.2019 
+>* Achieved: 
+><br/> Completed diet builder and final integration test.
+>* To do: 
+><br/> Complete sprint.
 
 <!--- Template
 >October..2019 
