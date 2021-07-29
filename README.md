@@ -13,24 +13,23 @@ An Android mobile application for recipe suggestion based on the ingredient name
 
 ## Screenshots of the application
 
-![Recipe Box Search](https://user-images.githubusercontent.com/56104768/127449596-e3a7a056-38ca-42bc-be8a-aceb6d364fa8.png)
-<img src = "https://user-images.githubusercontent.com/56104768/127449596-e3a7a056-38ca-42bc-be8a-aceb6d364fa8.png" width="250" height="600">
+<img src = "https://user-images.githubusercontent.com/56104768/127449596-e3a7a056-38ca-42bc-be8a-aceb6d364fa8.png" width="350" height="600">
 
 Example results when a search term (chicken, in this case) is used 
 
-![Individual recipe](https://user-images.githubusercontent.com/56104768/127449993-e8f47a4b-30c9-4c9d-82de-733d9442e7a5.png)
+<img src = "https://user-images.githubusercontent.com/56104768/127449993-e8f47a4b-30c9-4c9d-82de-733d9442e7a5.png" width="350" height="600">
 
 Example results of a single individual recipe page
 
-![nutrition_tab](https://user-images.githubusercontent.com/56104768/127450178-cd101304-41be-4be1-823f-0b965a0d4759.png)
+<img src = "https://user-images.githubusercontent.com/56104768/127450178-cd101304-41be-4be1-823f-0b965a0d4759.png" width="350" height="600">
 
 Nutritional information of a recipe
 
-![instructions](https://user-images.githubusercontent.com/56104768/127450261-31e582a1-78a2-46de-a49c-c2a09a0e62e2.JPG)
+<img src = "https://user-images.githubusercontent.com/56104768/127450261-31e582a1-78a2-46de-a49c-c2a09a0e62e2.JPG" width="350" height="600">
 
 Recipe instructions 
 
-![multiselect](https://user-images.githubusercontent.com/56104768/127451418-848eec0d-a0cd-4153-9b34-eb8e0b3b95c1.JPG)
+<img src = "https://user-images.githubusercontent.com/56104768/127451418-848eec0d-a0cd-4153-9b34-eb8e0b3b95c1.JPG" width="350" height="600">
 
 Multi-filter selection 
 
