@@ -29,3 +29,10 @@ Nutritional information of a recipe
 
 Recipe instructions 
 
+![multiselect](https://user-images.githubusercontent.com/56104768/127451418-848eec0d-a0cd-4153-9b34-eb8e0b3b95c1.JPG)
+
+Multi-filter selection 
+
+## Other
+
+This project was a part of the CS-561 (Software Engineering Methods) course folowing Agile Scrum development.
