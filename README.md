@@ -14,6 +14,7 @@ An Android mobile application for recipe suggestion based on the ingredient name
 ## Screenshots of the application
 
 ![Recipe Box Search](https://user-images.githubusercontent.com/56104768/127449596-e3a7a056-38ca-42bc-be8a-aceb6d364fa8.png)
+<img src = "https://user-images.githubusercontent.com/56104768/127449596-e3a7a056-38ca-42bc-be8a-aceb6d364fa8.png" width="250" height="600">
 
 Example results when a search term (chicken, in this case) is used 
 
