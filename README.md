@@ -4,9 +4,9 @@ An Android mobile application for recipe suggestion based on the ingredient name
 
 ## Technologies, Framework and Practices used
 
-* Amdroid Studio - Framework for mobile application development
+* Android Studio - IDE
 * Java - Programming language
-* MySQLlite - Database for web scraped recpies
+* Microsoft Azure - A platform which provides SQL database
 * Python Scrapy - For web scraping recipes
 * JUnit & Espresso - Automated unit and continous testing Java framework
 * Agile scrum methodology - Software development practice
